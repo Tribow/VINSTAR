@@ -1,0 +1,78 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &8840625772105739333
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6821199784106595177}
+  - component: {fileID: 4817796377849309405}
+  m_Layer: 0
+  m_Name: game_manager
+  m_TagString: manager
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6821199784106595177
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8840625772105739333}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4817796377849309405
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8840625772105739333}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 82fc494bef74d95489b5cfb997c6c8f9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  asteroids:
+  - {fileID: 3329601537422406105, guid: 38f62d268a552454e9d87d4ac86ab6fd, type: 3}
+  - {fileID: 4005224612505927894, guid: f424db7ebde528540b14ef7453ad888d, type: 3}
+  - {fileID: 2222431157006655968, guid: 0503258553d6f6c478d4df713a2d3ba4, type: 3}
+  - {fileID: 510855167503947935, guid: 7b0127fb410bde84aaabad083a78a31e, type: 3}
+  - {fileID: 6133973368421145349, guid: 2b721403a81d20341800e7c7ce6c5f44, type: 3}
+  - {fileID: 1479211495344642393, guid: b0fa9365b2d14cf478308d603bc59cee, type: 3}
+  enemies:
+  - {fileID: 3175554641267431086, guid: 16616eea6e239ed4fb8c24090ccafb7d, type: 3}
+  - {fileID: 6617199973551540211, guid: fecd7810d54369d45b39a457e262ec1b, type: 3}
+  score_text: {fileID: 0}
+  lives_text: {fileID: 0}
+  kills_text: {fileID: 0}
+  level_text: {fileID: 0}
+  next_level_text: {fileID: 8736584074854483878, guid: 98e6a1513a5528c429693a05b3ff9154,
+    type: 3}
+  enemy_score: 0
+  asteroid_score: 0
+  player: {fileID: 0}
+  player_object: {fileID: 7609688546690101207, guid: 89c33da81a99e674681bbfc2276d40f3,
+    type: 3}
+  player_bullet_damage: 1
+  player_lives: 3
+  total_score: 0
+  username: {fileID: 0}
+  submit: {fileID: 0}
+  leaderboard: {fileID: 0}
+  radar: {fileID: 0}
+  game_over: 0
+  title: {fileID: 0}
+  play_button: {fileID: 0}
+  start_game: 0
+  kills_left: 6

@@ -1,0 +1,265 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+//This enemy is better at picking up minerals than the reds are, but they move slower
+//It will also try to run away from the player
+//Will prioritize gathering minerals over anything else
+//Gets larger the more minerals it has. It will grow at a rate of .0667 based on how many minerals it has (should cap at 12)
+//It is planned that this enemy will get its upgrade at 13 minerals
+//When dying, it should will spawn blue_scatterers for every 4 minerals it has. If it never collected that many it wont do this
+
+public class bluesplitter_fighter : Base_Enemy_Script
+{
+    [Header("Splitter Fighter Variables")]
+    public GameObject blue_worker;
+    public GameObject splitter_part;
+    public Sprite bullet_sprite;
+
+
+    private List<GameObject> splitter_list = new List<GameObject>();
+    private Stopwatch fire_rate = new Stopwatch(.4f);
+
+    //Need to redo start event because the different idle values
+    private new void Start()
+    {
+        manager = GameObject.FindGameObjectWithTag("manager");
+        audiomanager = GameObject.FindGameObjectWithTag("audio manager").GetComponent<audio_manager>();
+        boundary = GameObject.FindGameObjectWithTag("boundary").GetComponent<Collider2D>();
+        player = GameObject.FindGameObjectWithTag("player");
+        speed = set_speed.Random;
+        ogspeed = speed;
+        maxspeed = ogspeed;
+        velocity_angle = transform.eulerAngles.z;
+        StartCoroutine(Base_Idle(new FloatRange(.45f, .8f), new FloatRange(1f, 7f), 8f)); //Starts the original coroutine
+        AI = State.Idle;
+        _material = gameObject.GetComponent<SpriteRenderer>().material;
+        my_canvas = Instantiate(enemy_canvas);
+        GameObject object1 = Instantiate(splitter_part, transform.position, Quaternion.identity);
+        object1.GetComponent<splitter_part_script>().my_leader = gameObject;
+        GameObject object2 = Instantiate(splitter_part, transform.position, Quaternion.identity);
+        object1.GetComponent<splitter_part_script>().my_leader = gameObject;
+        GameObject object3 = Instantiate(splitter_part, transform.position, Quaternion.identity);
+        object1.GetComponent<splitter_part_script>().my_leader = gameObject;
+        splitter_list.Add(object1);
+        splitter_list.Add(object2);
+        splitter_list.Add(object3);
+    }
+
+    //Need to redo OnTriggerEnter because the death handler is different here
+    public new void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag != "boundary" &&
+            collision.gameObject.tag != "mineral" &&
+            collision.gameObject.tag != "bullet" &&
+            collision.gameObject.tag != "ebullet" &&
+            collision.gameObject.tag != "bossbullet" &&
+            collision.gameObject.tag != "splitter") //All of these collision checks are for what the cant be bounced off of.
+        {
+            speed *= -2;
+        }
+
+        if (collision.gameObject.tag == "bullet") //Got hit by player's bullet? Take damage.
+        {
+            health = Take_Damage(health, collision.GetComponent<player_bullet_script>().damage);
+            Death_Splitter_Handler(true);
+            print("I hit!");
+        }
+
+        if (collision.gameObject.tag == "bossbullet")
+        {
+            Take_Damage(health, 10f);
+            Death_Splitter_Handler(false);
+        }
+
+        if (collision.gameObject.tag == "ebullet")
+        {
+            bool do_I_take_damage = true;
+            for (int i = 0; i < mybullets.Count; i++)
+            { //Loop through the mybullets list and make sure the enemy is not hitting itself with its own bullet
+                if (collision.gameObject == mybullets[i])
+                {
+                    do_I_take_damage = false;
+                    break;
+                }
+            }
+            if (do_I_take_damage)
+            { //If it's not the enemy's own bullet, take damage
+                health = Take_Damage(health, 1f);
+                Destroy(collision.gameObject);
+                Death_Splitter_Handler(false);
+            }
+        }
+
+        if (collision.gameObject.tag == "mineral")
+        {
+            upgrade_points++;
+            //if(upgrade_points / 3f % 1 == 0)
+            //{
+                GameObject the_object = Instantiate(splitter_part, transform.position, transform.rotation);
+                the_object.GetComponent<splitter_part_script>().my_leader = gameObject;
+                splitter_list.Add(the_object);
+
+            //}
+            Destroy(collision.gameObject);
+        }
+    }
+
+    private void Death_Splitter_Handler(bool do_give_points)
+    {
+        //I AM COPYING THE DEATH HANDLER METHOD HERE SINCE THIS ENEMY HANDLES THINGS DIFFERENTLY
+        if (health <= 0) //if health low enough, the time to kill it, dont do anything otherwise
+        {
+            if (do_give_points)
+            {
+                if (manager != null)
+                {
+                    manager.GetComponent<manager_script>().Add_Score(1);
+                    manager.GetComponent<manager_script>().Enemy_Death(am_i_the_boss);
+                }
+            }
+
+            //Particle
+            Instantiate(death_particles, gameObject.transform.position, gameObject.transform.rotation);
+
+            //Sound
+            audiomanager.Play_Sound(audio_manager.Sound.explosion_01, transform.position);
+
+            //How many workers do I spawn?
+            int spawncheck = 0;
+            for (int i = 0; i < upgrade_points; i++)
+            {
+                spawncheck++;
+                if (spawncheck == 4)
+                { //If spawncheck counts to 4, that means you can spawn a scatterer
+                    Quaternion new_rotation = Quaternion.Euler(0.0f, 0.0f, Random.Range(0.0f, 360f));
+                    GameObject new_enemy = Instantiate(blue_worker, gameObject.transform.position, new_rotation);
+                    manager.GetComponent<manager_script>().Add_To_Enemy_List(new_enemy);
+                    spawncheck = 0;
+                }
+            }
+
+            //Be sure to destroy extra objects
+            Destroy(my_canvas);
+            Destroy(gameObject);
+        }
+    }
+
+    private void FixedUpdate()
+    {
+        if (player == null)
+        {
+            player = GameObject.FindGameObjectWithTag("player");
+        }
+        int amount_nearby = Physics2D.OverlapCircleNonAlloc(new Vector2(transform.position.x, transform.position.y), mineral_radius, nearby_minerals, 1 << 8);
+        //DrawThis.Polygon(gameObject, 50, 60f, new Vector3(transform.position.x, transform.position.y, -5f), .2f, .2f);
+
+        
+        
+        for(int i = 1; i < splitter_list.Count + 1; i++)
+        {
+            float angle = Get_Angle(transform.position, splitter_list[i-1].transform.position);
+            splitter_list[i-1].transform.rotation = Get_Desired_Rotation(angle);
+
+            float distance = Vector3.Distance(transform.position, splitter_list[i-1].transform.position);
+
+            if (distance > .5f * i)
+            {
+                float move_distance = distance - .5f * i;
+                float x = Mathf.Cos(angle * Mathf.Deg2Rad) * move_distance;
+                float y = Mathf.Sin(angle * Mathf.Deg2Rad) * move_distance;
+
+                Vector3 new_position = new Vector3(x, y, 0f) + splitter_list[i-1].transform.position;
+                splitter_list[i-1].transform.position = new_position;
+            }
+        }
+
+        if (player != null)
+        {
+            if (Vector2.Distance(transform.position, player.transform.position) < 30f && AI != State.Mine)
+            {
+                fire_rate.Countdown();
+                if (fire_rate.isFinished())
+                {
+                    GameObject bullet = Instantiate(my_bullet, splitter_list[splitter_list.Count - 1].transform.position, Quaternion.identity);
+                    bullet.GetComponent<enemy_bullet_script>().speed = 0;
+                    bullet.GetComponent<enemy_bullet_script>().destroy_timer = 600;
+                    bullet.GetComponent<SpriteRenderer>().sprite = bullet_sprite;
+                    mybullets.Add(bullet);
+                    fire_rate.Reset();
+                    audiomanager.Play_Sound(audio_manager.Sound.shoot_01, transform.position, 1.8f);
+                }
+            }
+        }
+
+        switch (AI)
+        {
+            case State.Idle:
+                if (transform.position.x > 160f || transform.position.x < -160f || transform.position.y > 137.5f || transform.position.y < -137.5f)
+                { //Switch to the Edge AI if it gets too close to the edge of the arena
+                    StopAllCoroutines();
+                    StartCoroutine(Edge_Movement(20f, new FloatRange(5f, 8f)));
+                    AI = State.Edge;
+                }
+                if (amount_nearby > 0)
+                {//Switch to the Mine AI the moment there's a mineral nearby and gun for it
+                    StopAllCoroutines();
+                    StartCoroutine(Mineral_Movement(nearby_minerals, new Stopwatch(2), 10f, 5f, .8f, 20f));
+                    AI = State.Mine;
+                }
+                if (player != null)
+                {
+                    if (Vector2.Distance(transform.position, player.transform.position) <= 15f)
+                    { //Switch to Evade AI if the player gets too close
+                        StopAllCoroutines();
+                        StartCoroutine(Evade_Movement(player, 150f, new FloatRange(4f, 7f)));
+                        AI = State.Evade;
+                    }
+                }
+                break;
+
+            case State.Edge:
+                if (boundary.bounds.Contains(new Vector2(Mathf.Abs(transform.position.x), Mathf.Abs(transform.position.y))))
+                { //Switch to the Idle if you made it back
+                    StopAllCoroutines();
+                    StartCoroutine(Base_Idle(new FloatRange(.45f, .8f), new FloatRange(1f, 7f), 8f));
+                    AI = State.Idle;
+                }
+                break;
+
+            case State.Mine:
+                if (amount_nearby == 0)
+                { //Switch to Idle if there's no more minerals around
+                    StopAllCoroutines();
+                    StartCoroutine(Base_Idle(new FloatRange(.45f, .8f), new FloatRange(1f, 7f), 8f));
+                    maxspeed = ogspeed;
+                    turning_speed = 0;
+                    AI = State.Idle;
+                }
+                break;
+
+            case State.Evade:
+                //Currently, the splitter worker will evade off screen if need be, idk if I should allow it to get trapped if it's getting chased or not
+                if (player != null)
+                {
+                    if (Vector2.Distance(transform.position, player.transform.position) > 30f)
+                    { //Return to Idle if it manages to get 45 units away while evading
+                        StopAllCoroutines();
+                        StartCoroutine(Base_Idle(new FloatRange(.45f, .8f), new FloatRange(1f, 7f), 8f));
+                        AI = State.Idle;
+                    }
+                }
+
+                if (amount_nearby > 0)
+                {//Will immediately get distracted if there are minerals nearby
+                    StopAllCoroutines();
+                    StartCoroutine(Mineral_Movement(nearby_minerals, new Stopwatch(2), 10f, 5f, .8f, 20f));
+                    AI = State.Mine;
+                }
+                break;
+        }
+
+        velocity = Speed_Management(transform, maxspeed);
+        Transform_Management(transform, turning_speed, velocity, 1.6f);
+    }
+}
