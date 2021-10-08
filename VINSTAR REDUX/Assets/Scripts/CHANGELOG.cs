@@ -4,26 +4,6 @@
  
 Changelog:
 --------------------------------------------------------------------------
--Fixed the enemy spawn count resetting to the wrong number after starting a new run without closing the game
--Fixed the manager performing a useless check if enemies exist even though it already checked if enemies exist
--Fixed the issue where enemies would not have randomized rotations when spawned
--Enemy spawn count at the start is 20 instead of 10
--Cleaned up manager script in general to get rid of redundant code
--Boss added to the game
--The chances of the boss spawning becomes more likely each time an enemy dies. Value resets after death.
--New bullet added
--Camera zooms out when close enough to the boss
--Boss health scales with the current power of the player at the time it spawns. It will not scale afterward
--The size of the asteroids are now randomized
--Most sprites have now been given a new material and shader
--Enemies now flash when damage is dealt to them
--Sounds that play a certain distance away from the camera will not be heard.
--Enemy's bullets now gets destroyed the moment they die
--Added a boss health bar
--Enemies give different amount of points instead of all being the same
--Magnet for minerals activates if the player has stopped shooting for 1.5 seconds. The magnet's range is small
--Tutorial text no longer disappears when the camera is a certain distance away
--Added extra tutorial text for level 2 and 3
 
  
 

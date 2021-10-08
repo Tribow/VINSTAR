@@ -9,9 +9,10 @@ public class splitter_part_script : MonoBehaviour
 
     private void Start()
     {
-        if (enemy_script != null)
+        if (my_leader != null)
         {
             enemy_script = my_leader.GetComponent<bluesplitter_fighter>();
+            print("bruh?");
         }
     }
 
@@ -19,18 +20,27 @@ public class splitter_part_script : MonoBehaviour
     {
         if (enemy_script != null)
         {
-            if (collision.gameObject.tag == "bullet" || collision.gameObject.tag == "bossbullet")
+            if (collision.gameObject.tag == "bullet") //Got hit by player's bullet? Take damage.
             {
-                enemy_script.OnTriggerEnter2D(collision);
+                enemy_script.health = enemy_script.Take_Damage(enemy_script.health, collision.GetComponent<player_bullet_script>().damage);
+                enemy_script.Death_Splitter_Handler(true);
+                print("yup!");
+            }
+
+            if (collision.gameObject.tag == "bossbullet")
+            {
+                enemy_script.health = enemy_script.Take_Damage(enemy_script.health, 10f);
+                enemy_script.Death_Splitter_Handler(false);
             }
         }
     }
 
     private void FixedUpdate()
     {
-        if (enemy_script != null)
+        if (my_leader != null)
         {
             enemy_script = my_leader.GetComponent<bluesplitter_fighter>();
+            print("really nigga");
         }
     }
 }

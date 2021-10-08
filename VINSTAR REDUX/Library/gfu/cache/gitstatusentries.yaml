@@ -1,0 +1,408 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &1
+MonoBehaviour:
+  m_ObjectHideFlags: 61
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 995438498, guid: 68c7e4565cde54155bb78d8e935f1ddb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cacheType: 6
+  lastUpdatedAtString: 2021-10-08T00:11:46.067-04:00
+  initializedAtString: 2021-10-07T20:10:04.713-04:00
+  entries:
+  - path: VINSTAR REDUX\Assets\Prefabs\splitter_part.prefab
+    fullPath: C:\Users\Tribow Trinity\Desktop\VINSTAR REDUX\VINSTAR REDUX\Assets\Prefabs\splitter_part.prefab
+    projectPath: Assets\Prefabs\splitter_part.prefab
+    originalPath: 
+    indexStatus: 0
+    workTreeStatus: 3
+  - path: VINSTAR REDUX\Assets\Scenes\Game.unity
+    fullPath: C:\Users\Tribow Trinity\Desktop\VINSTAR REDUX\VINSTAR REDUX\Assets\Scenes\Game.unity
+    projectPath: Assets\Scenes\Game.unity
+    originalPath: 
+    indexStatus: 0
+    workTreeStatus: 3
+  - path: VINSTAR REDUX\Assets\Scripts\bluesplitter_fighter.cs
+    fullPath: C:\Users\Tribow Trinity\Desktop\VINSTAR REDUX\VINSTAR REDUX\Assets\Scripts\bluesplitter_fighter.cs
+    projectPath: Assets\Scripts\bluesplitter_fighter.cs
+    originalPath: 
+    indexStatus: 0
+    workTreeStatus: 3
+  - path: VINSTAR REDUX\Assets\Scripts\CHANGELOG.cs
+    fullPath: C:\Users\Tribow Trinity\Desktop\VINSTAR REDUX\VINSTAR REDUX\Assets\Scripts\CHANGELOG.cs
+    projectPath: Assets\Scripts\CHANGELOG.cs
+    originalPath: 
+    indexStatus: 0
+    workTreeStatus: 3
+  - path: VINSTAR REDUX\Assets\Scripts\splitter_part_script.cs
+    fullPath: C:\Users\Tribow Trinity\Desktop\VINSTAR REDUX\VINSTAR REDUX\Assets\Scripts\splitter_part_script.cs
+    projectPath: Assets\Scripts\splitter_part_script.cs
+    originalPath: 
+    indexStatus: 0
+    workTreeStatus: 3
+  - path: VINSTAR REDUX\Library\Artifacts\2e\2e8978ba3f7d985bb7707d47c9046ff2
+    fullPath: C:\Users\Tribow Trinity\Desktop\VINSTAR REDUX\VINSTAR REDUX\Library\Artifacts\2e\2e8978ba3f7d985bb7707d47c9046ff2
+    projectPath: Library\Artifacts\2e\2e8978ba3f7d985bb7707d47c9046ff2
+    originalPath: 
+    indexStatus: 1
+    workTreeStatus: 1
+  - path: VINSTAR REDUX\Library\Artifacts\3c\3cf556156085668843621b09960e538c
+    fullPath: C:\Users\Tribow Trinity\Desktop\VINSTAR REDUX\VINSTAR REDUX\Library\Artifacts\3c\3cf556156085668843621b09960e538c
+    projectPath: Library\Artifacts\3c\3cf556156085668843621b09960e538c
+    originalPath: 
+    indexStatus: 1
+    workTreeStatus: 1
+  - path: VINSTAR REDUX\Library\Artifacts\40\4003526d7bc295fcee1e5ba2de07173d
+    fullPath: C:\Users\Tribow Trinity\Desktop\VINSTAR REDUX\VINSTAR REDUX\Library\Artifacts\40\4003526d7bc295fcee1e5ba2de07173d
+    projectPath: Library\Artifacts\40\4003526d7bc295fcee1e5ba2de07173d
+    originalPath: 
+    indexStatus: 1
+    workTreeStatus: 1
+  - path: VINSTAR REDUX\Library\Artifacts\41\41a774a69ec9786003a4c0480b08608f
+    fullPath: C:\Users\Tribow Trinity\Desktop\VINSTAR REDUX\VINSTAR REDUX\Library\Artifacts\41\41a774a69ec9786003a4c0480b08608f
+    projectPath: Library\Artifacts\41\41a774a69ec9786003a4c0480b08608f
+    originalPath: 
+    indexStatus: 1
+    workTreeStatus: 1
+  - path: VINSTAR REDUX\Library\Artifacts\4c\4c82b52c6f4589ee8b3f9ddea9150740
+    fullPath: C:\Users\Tribow Trinity\Desktop\VINSTAR REDUX\VINSTAR REDUX\Library\Artifacts\4c\4c82b52c6f4589ee8b3f9ddea9150740
+    projectPath: Library\Artifacts\4c\4c82b52c6f4589ee8b3f9ddea9150740
+    originalPath: 
+    indexStatus: 1
+    workTreeStatus: 1
+  - path: VINSTAR REDUX\Library\Artifacts\51\51a3652c6856d13f6e38cdffefe7573c
+    fullPath: C:\Users\Tribow Trinity\Desktop\VINSTAR REDUX\VINSTAR REDUX\Library\Artifacts\51\51a3652c6856d13f6e38cdffefe7573c
+    projectPath: Library\Artifacts\51\51a3652c6856d13f6e38cdffefe7573c
+    originalPath: 
+    indexStatus: 0
+    workTreeStatus: 5
+  - path: VINSTAR REDUX\Library\Artifacts\57\578807dc9f962ce8b108894eb42905d7
+    fullPath: C:\Users\Tribow Trinity\Desktop\VINSTAR REDUX\VINSTAR REDUX\Library\Artifacts\57\578807dc9f962ce8b108894eb42905d7
+    projectPath: Library\Artifacts\57\578807dc9f962ce8b108894eb42905d7
+    originalPath: 
+    indexStatus: 1
+    workTreeStatus: 1
+  - path: VINSTAR REDUX\Library\Artifacts\5f\5f2318a263a8289c888cd210b3c4ad31
+    fullPath: C:\Users\Tribow Trinity\Desktop\VINSTAR REDUX\VINSTAR REDUX\Library\Artifacts\5f\5f2318a263a8289c888cd210b3c4ad31
+    projectPath: Library\Artifacts\5f\5f2318a263a8289c888cd210b3c4ad31
+    originalPath: 
+    indexStatus: 1
+    workTreeStatus: 1
+  - path: VINSTAR REDUX\Library\Artifacts\61\612cdc20252e6779a73a1f88b33b295f
+    fullPath: C:\Users\Tribow Trinity\Desktop\VINSTAR REDUX\VINSTAR REDUX\Library\Artifacts\61\612cdc20252e6779a73a1f88b33b295f
+    projectPath: Library\Artifacts\61\612cdc20252e6779a73a1f88b33b295f
+    originalPath: 
+    indexStatus: 1
+    workTreeStatus: 1
+  - path: VINSTAR REDUX\Library\Artifacts\9b\9b07f3f547dcb4ca02305ce878765eab
+    fullPath: C:\Users\Tribow Trinity\Desktop\VINSTAR REDUX\VINSTAR REDUX\Library\Artifacts\9b\9b07f3f547dcb4ca02305ce878765eab
+    projectPath: Library\Artifacts\9b\9b07f3f547dcb4ca02305ce878765eab
+    originalPath: 
+    indexStatus: 1
+    workTreeStatus: 1
+  - path: VINSTAR REDUX\Library\Artifacts\aa\aa90d50a186ba309e2a5c1d911a3d4b1
+    fullPath: C:\Users\Tribow Trinity\Desktop\VINSTAR REDUX\VINSTAR REDUX\Library\Artifacts\aa\aa90d50a186ba309e2a5c1d911a3d4b1
+    projectPath: Library\Artifacts\aa\aa90d50a186ba309e2a5c1d911a3d4b1
+    originalPath: 
+    indexStatus: 0
+    workTreeStatus: 5
+  - path: VINSTAR REDUX\Library\Artifacts\c5\c592e29795d2d74b16551df4892d698d
+    fullPath: C:\Users\Tribow Trinity\Desktop\VINSTAR REDUX\VINSTAR REDUX\Library\Artifacts\c5\c592e29795d2d74b16551df4892d698d
+    projectPath: Library\Artifacts\c5\c592e29795d2d74b16551df4892d698d
+    originalPath: 
+    indexStatus: 1
+    workTreeStatus: 1
+  - path: VINSTAR REDUX\Library\Artifacts\c8\c820e915611333fd7eae421401078408
+    fullPath: C:\Users\Tribow Trinity\Desktop\VINSTAR REDUX\VINSTAR REDUX\Library\Artifacts\c8\c820e915611333fd7eae421401078408
+    projectPath: Library\Artifacts\c8\c820e915611333fd7eae421401078408
+    originalPath: 
+    indexStatus: 1
+    workTreeStatus: 1
+  - path: VINSTAR REDUX\Library\Artifacts\dc\dc6644c2d73dc5e0884cc948f372fe38
+    fullPath: C:\Users\Tribow Trinity\Desktop\VINSTAR REDUX\VINSTAR REDUX\Library\Artifacts\dc\dc6644c2d73dc5e0884cc948f372fe38
+    projectPath: Library\Artifacts\dc\dc6644c2d73dc5e0884cc948f372fe38
+    originalPath: 
+    indexStatus: 1
+    workTreeStatus: 1
+  - path: VINSTAR REDUX\Library\Artifacts\e2\e21eadee734bc55075fb9b9cb1b32198
+    fullPath: C:\Users\Tribow Trinity\Desktop\VINSTAR REDUX\VINSTAR REDUX\Library\Artifacts\e2\e21eadee734bc55075fb9b9cb1b32198
+    projectPath: Library\Artifacts\e2\e21eadee734bc55075fb9b9cb1b32198
+    originalPath: 
+    indexStatus: 1
+    workTreeStatus: 1
+  - path: VINSTAR REDUX\Library\Artifacts\f6\f62f9654987a569c848437ab2d2b56ec
+    fullPath: C:\Users\Tribow Trinity\Desktop\VINSTAR REDUX\VINSTAR REDUX\Library\Artifacts\f6\f62f9654987a569c848437ab2d2b56ec
+    projectPath: Library\Artifacts\f6\f62f9654987a569c848437ab2d2b56ec
+    originalPath: 
+    indexStatus: 1
+    workTreeStatus: 1
+  - path: VINSTAR REDUX\Library\CurrentLayout-default.dwlt
+    fullPath: C:\Users\Tribow Trinity\Desktop\VINSTAR REDUX\VINSTAR REDUX\Library\CurrentLayout-default.dwlt
+    projectPath: Library\CurrentLayout-default.dwlt
+    originalPath: 
+    indexStatus: 0
+    workTreeStatus: 3
+  - path: VINSTAR REDUX\Library\CurrentMaximizeLayout.dwlt
+    fullPath: C:\Users\Tribow Trinity\Desktop\VINSTAR REDUX\VINSTAR REDUX\Library\CurrentMaximizeLayout.dwlt
+    projectPath: Library\CurrentMaximizeLayout.dwlt
+    originalPath: 
+    indexStatus: 0
+    workTreeStatus: 3
+  - path: VINSTAR REDUX\Library\EditorInstance.json
+    fullPath: C:\Users\Tribow Trinity\Desktop\VINSTAR REDUX\VINSTAR REDUX\Library\EditorInstance.json
+    projectPath: Library\EditorInstance.json
+    originalPath: 
+    indexStatus: 1
+    workTreeStatus: 1
+  - path: VINSTAR REDUX\Library\gfu\cache\branches.yaml
+    fullPath: C:\Users\Tribow Trinity\Desktop\VINSTAR REDUX\VINSTAR REDUX\Library\gfu\cache\branches.yaml
+    projectPath: Library\gfu\cache\branches.yaml
+    originalPath: 
+    indexStatus: 1
+    workTreeStatus: 1
+  - path: VINSTAR REDUX\Library\gfu\cache\gitlocks.yaml
+    fullPath: C:\Users\Tribow Trinity\Desktop\VINSTAR REDUX\VINSTAR REDUX\Library\gfu\cache\gitlocks.yaml
+    projectPath: Library\gfu\cache\gitlocks.yaml
+    originalPath: 
+    indexStatus: 1
+    workTreeStatus: 1
+  - path: VINSTAR REDUX\Library\gfu\cache\gitlog.yaml
+    fullPath: C:\Users\Tribow Trinity\Desktop\VINSTAR REDUX\VINSTAR REDUX\Library\gfu\cache\gitlog.yaml
+    projectPath: Library\gfu\cache\gitlog.yaml
+    originalPath: 
+    indexStatus: 1
+    workTreeStatus: 1
+  - path: VINSTAR REDUX\Library\gfu\cache\gitstatusentries.yaml
+    fullPath: C:\Users\Tribow Trinity\Desktop\VINSTAR REDUX\VINSTAR REDUX\Library\gfu\cache\gitstatusentries.yaml
+    projectPath: Library\gfu\cache\gitstatusentries.yaml
+    originalPath: 
+    indexStatus: 1
+    workTreeStatus: 1
+  - path: VINSTAR REDUX\Library\gfu\cache\gittrackingstatus.yaml
+    fullPath: C:\Users\Tribow Trinity\Desktop\VINSTAR REDUX\VINSTAR REDUX\Library\gfu\cache\gittrackingstatus.yaml
+    projectPath: Library\gfu\cache\gittrackingstatus.yaml
+    originalPath: 
+    indexStatus: 1
+    workTreeStatus: 1
+  - path: VINSTAR REDUX\Library\gfu\cache\gituser.yaml
+    fullPath: C:\Users\Tribow Trinity\Desktop\VINSTAR REDUX\VINSTAR REDUX\Library\gfu\cache\gituser.yaml
+    projectPath: Library\gfu\cache\gituser.yaml
+    originalPath: 
+    indexStatus: 0
+    workTreeStatus: 3
+  - path: VINSTAR REDUX\Library\gfu\cache\repoinfo.yaml
+    fullPath: C:\Users\Tribow Trinity\Desktop\VINSTAR REDUX\VINSTAR REDUX\Library\gfu\cache\repoinfo.yaml
+    projectPath: Library\gfu\cache\repoinfo.yaml
+    originalPath: 
+    indexStatus: 1
+    workTreeStatus: 1
+  - path: VINSTAR REDUX\Library\SceneVisibilityState.asset
+    fullPath: C:\Users\Tribow Trinity\Desktop\VINSTAR REDUX\VINSTAR REDUX\Library\SceneVisibilityState.asset
+    projectPath: Library\SceneVisibilityState.asset
+    originalPath: 
+    indexStatus: 0
+    workTreeStatus: 3
+  - path: VINSTAR REDUX\Library\ScriptAssemblies\Assembly-CSharp.dll
+    fullPath: C:\Users\Tribow Trinity\Desktop\VINSTAR REDUX\VINSTAR REDUX\Library\ScriptAssemblies\Assembly-CSharp.dll
+    projectPath: Library\ScriptAssemblies\Assembly-CSharp.dll
+    originalPath: 
+    indexStatus: 0
+    workTreeStatus: 3
+  - path: VINSTAR REDUX\Library\ShaderCache\EditorEncounteredVariants
+    fullPath: C:\Users\Tribow Trinity\Desktop\VINSTAR REDUX\VINSTAR REDUX\Library\ShaderCache\EditorEncounteredVariants
+    projectPath: Library\ShaderCache\EditorEncounteredVariants
+    originalPath: 
+    indexStatus: 0
+    workTreeStatus: 3
+  - path: VINSTAR REDUX\Library\shadercompiler-UnityShaderCompiler.exe0.log
+    fullPath: C:\Users\Tribow Trinity\Desktop\VINSTAR REDUX\VINSTAR REDUX\Library\shadercompiler-UnityShaderCompiler.exe0.log
+    projectPath: Library\shadercompiler-UnityShaderCompiler.exe0.log
+    originalPath: 
+    indexStatus: 0
+    workTreeStatus: 3
+  - path: VINSTAR REDUX\Library\shadercompiler-UnityShaderCompiler.exe1.log
+    fullPath: C:\Users\Tribow Trinity\Desktop\VINSTAR REDUX\VINSTAR REDUX\Library\shadercompiler-UnityShaderCompiler.exe1.log
+    projectPath: Library\shadercompiler-UnityShaderCompiler.exe1.log
+    originalPath: 
+    indexStatus: 0
+    workTreeStatus: 3
+  - path: VINSTAR REDUX\Library\shadercompiler-UnityShaderCompiler.exe10.log
+    fullPath: C:\Users\Tribow Trinity\Desktop\VINSTAR REDUX\VINSTAR REDUX\Library\shadercompiler-UnityShaderCompiler.exe10.log
+    projectPath: Library\shadercompiler-UnityShaderCompiler.exe10.log
+    originalPath: 
+    indexStatus: 0
+    workTreeStatus: 3
+  - path: VINSTAR REDUX\Library\shadercompiler-UnityShaderCompiler.exe11.log
+    fullPath: C:\Users\Tribow Trinity\Desktop\VINSTAR REDUX\VINSTAR REDUX\Library\shadercompiler-UnityShaderCompiler.exe11.log
+    projectPath: Library\shadercompiler-UnityShaderCompiler.exe11.log
+    originalPath: 
+    indexStatus: 0
+    workTreeStatus: 3
+  - path: VINSTAR REDUX\Library\shadercompiler-UnityShaderCompiler.exe2.log
+    fullPath: C:\Users\Tribow Trinity\Desktop\VINSTAR REDUX\VINSTAR REDUX\Library\shadercompiler-UnityShaderCompiler.exe2.log
+    projectPath: Library\shadercompiler-UnityShaderCompiler.exe2.log
+    originalPath: 
+    indexStatus: 0
+    workTreeStatus: 3
+  - path: VINSTAR REDUX\Library\shadercompiler-UnityShaderCompiler.exe3.log
+    fullPath: C:\Users\Tribow Trinity\Desktop\VINSTAR REDUX\VINSTAR REDUX\Library\shadercompiler-UnityShaderCompiler.exe3.log
+    projectPath: Library\shadercompiler-UnityShaderCompiler.exe3.log
+    originalPath: 
+    indexStatus: 0
+    workTreeStatus: 3
+  - path: VINSTAR REDUX\Library\shadercompiler-UnityShaderCompiler.exe4.log
+    fullPath: C:\Users\Tribow Trinity\Desktop\VINSTAR REDUX\VINSTAR REDUX\Library\shadercompiler-UnityShaderCompiler.exe4.log
+    projectPath: Library\shadercompiler-UnityShaderCompiler.exe4.log
+    originalPath: 
+    indexStatus: 0
+    workTreeStatus: 3
+  - path: VINSTAR REDUX\Library\shadercompiler-UnityShaderCompiler.exe5.log
+    fullPath: C:\Users\Tribow Trinity\Desktop\VINSTAR REDUX\VINSTAR REDUX\Library\shadercompiler-UnityShaderCompiler.exe5.log
+    projectPath: Library\shadercompiler-UnityShaderCompiler.exe5.log
+    originalPath: 
+    indexStatus: 0
+    workTreeStatus: 3
+  - path: VINSTAR REDUX\Library\shadercompiler-UnityShaderCompiler.exe6.log
+    fullPath: C:\Users\Tribow Trinity\Desktop\VINSTAR REDUX\VINSTAR REDUX\Library\shadercompiler-UnityShaderCompiler.exe6.log
+    projectPath: Library\shadercompiler-UnityShaderCompiler.exe6.log
+    originalPath: 
+    indexStatus: 0
+    workTreeStatus: 3
+  - path: VINSTAR REDUX\Library\shadercompiler-UnityShaderCompiler.exe7.log
+    fullPath: C:\Users\Tribow Trinity\Desktop\VINSTAR REDUX\VINSTAR REDUX\Library\shadercompiler-UnityShaderCompiler.exe7.log
+    projectPath: Library\shadercompiler-UnityShaderCompiler.exe7.log
+    originalPath: 
+    indexStatus: 0
+    workTreeStatus: 3
+  - path: VINSTAR REDUX\Library\shadercompiler-UnityShaderCompiler.exe8.log
+    fullPath: C:\Users\Tribow Trinity\Desktop\VINSTAR REDUX\VINSTAR REDUX\Library\shadercompiler-UnityShaderCompiler.exe8.log
+    projectPath: Library\shadercompiler-UnityShaderCompiler.exe8.log
+    originalPath: 
+    indexStatus: 0
+    workTreeStatus: 3
+  - path: VINSTAR REDUX\Library\shadercompiler-UnityShaderCompiler.exe9.log
+    fullPath: C:\Users\Tribow Trinity\Desktop\VINSTAR REDUX\VINSTAR REDUX\Library\shadercompiler-UnityShaderCompiler.exe9.log
+    projectPath: Library\shadercompiler-UnityShaderCompiler.exe9.log
+    originalPath: 
+    indexStatus: 0
+    workTreeStatus: 3
+  - path: VINSTAR REDUX\Library\SourceAssetDB
+    fullPath: C:\Users\Tribow Trinity\Desktop\VINSTAR REDUX\VINSTAR REDUX\Library\SourceAssetDB
+    projectPath: Library\SourceAssetDB
+    originalPath: 
+    indexStatus: 0
+    workTreeStatus: 3
+  - path: VINSTAR REDUX\Library\StateCache\Hierarchy\735d29-d93ab679d77c9ad44a.json
+    fullPath: C:\Users\Tribow Trinity\Desktop\VINSTAR REDUX\VINSTAR REDUX\Library\StateCache\Hierarchy\735d29-d93ab679d77c9ad44a.json
+    projectPath: Library\StateCache\Hierarchy\735d29-d93ab679d77c9ad44a.json
+    originalPath: 
+    indexStatus: 1
+    workTreeStatus: 1
+  - path: VINSTAR REDUX\Library\StateCache\Hierarchy\735d29-mainStage.json
+    fullPath: C:\Users\Tribow Trinity\Desktop\VINSTAR REDUX\VINSTAR REDUX\Library\StateCache\Hierarchy\735d29-mainStage.json
+    projectPath: Library\StateCache\Hierarchy\735d29-mainStage.json
+    originalPath: 
+    indexStatus: 0
+    workTreeStatus: 3
+  - path: VINSTAR REDUX\Library\StateCache\SceneView\1de4b7-d93ab679d77c9ad44a.json
+    fullPath: C:\Users\Tribow Trinity\Desktop\VINSTAR REDUX\VINSTAR REDUX\Library\StateCache\SceneView\1de4b7-d93ab679d77c9ad44a.json
+    projectPath: Library\StateCache\SceneView\1de4b7-d93ab679d77c9ad44a.json
+    originalPath: 
+    indexStatus: 1
+    workTreeStatus: 1
+  - path: VINSTAR REDUX\obj\Debug\Assembly-CSharp-Editor-firstpass.csproj.CoreCompileInputs.cache
+    fullPath: C:\Users\Tribow Trinity\Desktop\VINSTAR REDUX\VINSTAR REDUX\obj\Debug\Assembly-CSharp-Editor-firstpass.csproj.CoreCompileInputs.cache
+    projectPath: obj\Debug\Assembly-CSharp-Editor-firstpass.csproj.CoreCompileInputs.cache
+    originalPath: 
+    indexStatus: 1
+    workTreeStatus: 1
+  - path: VINSTAR REDUX\obj\Debug\Assembly-CSharp-Editor-firstpass.csprojAssemblyReference.cache
+    fullPath: C:\Users\Tribow Trinity\Desktop\VINSTAR REDUX\VINSTAR REDUX\obj\Debug\Assembly-CSharp-Editor-firstpass.csprojAssemblyReference.cache
+    projectPath: obj\Debug\Assembly-CSharp-Editor-firstpass.csprojAssemblyReference.cache
+    originalPath: 
+    indexStatus: 1
+    workTreeStatus: 1
+  - path: VINSTAR REDUX\Temp\__Backupscenes\0.backup
+    fullPath: C:\Users\Tribow Trinity\Desktop\VINSTAR REDUX\VINSTAR REDUX\Temp\__Backupscenes\0.backup
+    projectPath: Temp\__Backupscenes\0.backup
+    originalPath: 
+    indexStatus: 1
+    workTreeStatus: 1
+  - path: VINSTAR REDUX\Temp\UnityLockfile
+    fullPath: C:\Users\Tribow Trinity\Desktop\VINSTAR REDUX\VINSTAR REDUX\Temp\UnityLockfile
+    projectPath: Temp\UnityLockfile
+    originalPath: 
+    indexStatus: 1
+    workTreeStatus: 1
+  - path: VINSTAR REDUX\Temp\UnityTempFile-2a37ec06da4336d47bc78dad136c6bd3
+    fullPath: C:\Users\Tribow Trinity\Desktop\VINSTAR REDUX\VINSTAR REDUX\Temp\UnityTempFile-2a37ec06da4336d47bc78dad136c6bd3
+    projectPath: Temp\UnityTempFile-2a37ec06da4336d47bc78dad136c6bd3
+    originalPath: 
+    indexStatus: 1
+    workTreeStatus: 1
+  - path: VINSTAR REDUX\Temp\UnityTempFile-48aa3054911d3144ba0826ab0695f3ca
+    fullPath: C:\Users\Tribow Trinity\Desktop\VINSTAR REDUX\VINSTAR REDUX\Temp\UnityTempFile-48aa3054911d3144ba0826ab0695f3ca
+    projectPath: Temp\UnityTempFile-48aa3054911d3144ba0826ab0695f3ca
+    originalPath: 
+    indexStatus: 1
+    workTreeStatus: 1
+  - path: VINSTAR REDUX\Temp\UnityTempFile-5e8c03d49ca021f41a18f912ad19fc22
+    fullPath: C:\Users\Tribow Trinity\Desktop\VINSTAR REDUX\VINSTAR REDUX\Temp\UnityTempFile-5e8c03d49ca021f41a18f912ad19fc22
+    projectPath: Temp\UnityTempFile-5e8c03d49ca021f41a18f912ad19fc22
+    originalPath: 
+    indexStatus: 1
+    workTreeStatus: 1
+  - path: VINSTAR REDUX\Temp\UnityTempFile-81e0e2905fd4eab43acf232bab0be4d1
+    fullPath: C:\Users\Tribow Trinity\Desktop\VINSTAR REDUX\VINSTAR REDUX\Temp\UnityTempFile-81e0e2905fd4eab43acf232bab0be4d1
+    projectPath: Temp\UnityTempFile-81e0e2905fd4eab43acf232bab0be4d1
+    originalPath: 
+    indexStatus: 1
+    workTreeStatus: 1
+  - path: VINSTAR REDUX\Temp\UnityTempFile-8b79b32d06499f94eabcb05d0beba383
+    fullPath: C:\Users\Tribow Trinity\Desktop\VINSTAR REDUX\VINSTAR REDUX\Temp\UnityTempFile-8b79b32d06499f94eabcb05d0beba383
+    projectPath: Temp\UnityTempFile-8b79b32d06499f94eabcb05d0beba383
+    originalPath: 
+    indexStatus: 1
+    workTreeStatus: 1
+  - path: VINSTAR REDUX\Temp\UnityTempFile-9cca07d73296c0e439a07f674a5382d3
+    fullPath: C:\Users\Tribow Trinity\Desktop\VINSTAR REDUX\VINSTAR REDUX\Temp\UnityTempFile-9cca07d73296c0e439a07f674a5382d3
+    projectPath: Temp\UnityTempFile-9cca07d73296c0e439a07f674a5382d3
+    originalPath: 
+    indexStatus: 1
+    workTreeStatus: 1
+  - path: VINSTAR REDUX\Temp\UnityTempFile-9dfcde7268ba2aa4a868335b53583fc8
+    fullPath: C:\Users\Tribow Trinity\Desktop\VINSTAR REDUX\VINSTAR REDUX\Temp\UnityTempFile-9dfcde7268ba2aa4a868335b53583fc8
+    projectPath: Temp\UnityTempFile-9dfcde7268ba2aa4a868335b53583fc8
+    originalPath: 
+    indexStatus: 1
+    workTreeStatus: 1
+  - path: VINSTAR REDUX\Temp\UnityTempFile-a848284a74e653a44b0c44d418d2c4e8
+    fullPath: C:\Users\Tribow Trinity\Desktop\VINSTAR REDUX\VINSTAR REDUX\Temp\UnityTempFile-a848284a74e653a44b0c44d418d2c4e8
+    projectPath: Temp\UnityTempFile-a848284a74e653a44b0c44d418d2c4e8
+    originalPath: 
+    indexStatus: 1
+    workTreeStatus: 1
+  - path: VINSTAR REDUX\Temp\UnityTempFile-bf60a30891bced94f8010143c85fcca3
+    fullPath: C:\Users\Tribow Trinity\Desktop\VINSTAR REDUX\VINSTAR REDUX\Temp\UnityTempFile-bf60a30891bced94f8010143c85fcca3
+    projectPath: Temp\UnityTempFile-bf60a30891bced94f8010143c85fcca3
+    originalPath: 
+    indexStatus: 1
+    workTreeStatus: 1
+  - path: VINSTAR REDUX\Temp\UnityTempFile-cbf9d58f5eb06d44b811782f268437bb
+    fullPath: C:\Users\Tribow Trinity\Desktop\VINSTAR REDUX\VINSTAR REDUX\Temp\UnityTempFile-cbf9d58f5eb06d44b811782f268437bb
+    projectPath: Temp\UnityTempFile-cbf9d58f5eb06d44b811782f268437bb
+    originalPath: 
+    indexStatus: 1
+    workTreeStatus: 1
+  - path: VINSTAR REDUX\Temp\UnityTempFile-f4b9e3b99fc55ca48a23c712e0f50a82
+    fullPath: C:\Users\Tribow Trinity\Desktop\VINSTAR REDUX\VINSTAR REDUX\Temp\UnityTempFile-f4b9e3b99fc55ca48a23c712e0f50a82
+    projectPath: Temp\UnityTempFile-f4b9e3b99fc55ca48a23c712e0f50a82
+    originalPath: 
+    indexStatus: 1
+    workTreeStatus: 1

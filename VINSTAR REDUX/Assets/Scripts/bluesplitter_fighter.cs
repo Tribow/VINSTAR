@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 //This enemy is better at picking up minerals than the reds are, but they move slower
 //It will also try to run away from the player
@@ -18,6 +19,7 @@ public class bluesplitter_fighter : Base_Enemy_Script
 
 
     private List<GameObject> splitter_list = new List<GameObject>();
+    private List<Material> material_part = new List<Material>();
     private Stopwatch fire_rate = new Stopwatch(.4f);
 
     //Need to redo start event because the different idle values
@@ -44,10 +46,13 @@ public class bluesplitter_fighter : Base_Enemy_Script
         splitter_list.Add(object1);
         splitter_list.Add(object2);
         splitter_list.Add(object3);
+        material_part.Add(object1.GetComponent<SpriteRenderer>().material);
+        material_part.Add(object2.GetComponent<SpriteRenderer>().material);
+        material_part.Add(object3.GetComponent<SpriteRenderer>().material);
     }
 
     //Need to redo OnTriggerEnter because the death handler is different here
-    public new void OnTriggerEnter2D(Collider2D collision)
+    private new void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.tag != "boundary" &&
             collision.gameObject.tag != "mineral" &&
@@ -68,7 +73,7 @@ public class bluesplitter_fighter : Base_Enemy_Script
 
         if (collision.gameObject.tag == "bossbullet")
         {
-            Take_Damage(health, 10f);
+            health = Take_Damage(health, 10f);
             Death_Splitter_Handler(false);
         }
 
@@ -99,13 +104,38 @@ public class bluesplitter_fighter : Base_Enemy_Script
                 GameObject the_object = Instantiate(splitter_part, transform.position, transform.rotation);
                 the_object.GetComponent<splitter_part_script>().my_leader = gameObject;
                 splitter_list.Add(the_object);
+                material_part.Add(the_object.GetComponent<SpriteRenderer>().material);
 
             //}
             Destroy(collision.gameObject);
         }
     }
 
-    private void Death_Splitter_Handler(bool do_give_points)
+    private IEnumerator Splitter_Flash_Off(Material the_material)
+    {
+        yield return new WaitForSeconds(.05f);
+        the_material.SetFloat("_FlashAlpha", 0f);
+    }
+
+    public new float Take_Damage(float current_health, float bullet_strength)
+    {
+        if (my_canvas != null)
+        {
+            GameObject temp_text = Instantiate(damage_text); //Make the text object (this is to display the damage being dealt)
+            temp_text.GetComponent<Text>().text = "" + (int)(bullet_strength * 10); //Display the damage amount
+            temp_text.transform.SetParent(my_canvas.transform, false); //Make sure it is a child of the canvas
+            _material.SetFloat("_FlashAlpha", .5f);
+            Invoke("Flash_Off", .05f);
+            for (int i = 0; i < material_part.Count; i++)
+            {
+                material_part[i].SetFloat("_FlashAlpha", .5f);
+                StartCoroutine(Splitter_Flash_Off(material_part[i]));
+            }
+        }
+        return current_health - bullet_strength; //lower health;
+    }
+
+    public void Death_Splitter_Handler(bool do_give_points)
     {
         //I AM COPYING THE DEATH HANDLER METHOD HERE SINCE THIS ENEMY HANDLES THINGS DIFFERENTLY
         if (health <= 0) //if health low enough, the time to kill it, dont do anything otherwise
