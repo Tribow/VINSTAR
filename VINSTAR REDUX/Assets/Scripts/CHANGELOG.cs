@@ -4,13 +4,14 @@
  
 Changelog:
 --------------------------------------------------------------------------
+Adjusted boss particle settings
+Added new enemy to the game
 
  
 
 
 To-do: 
 --------------------------GAMEPLAY SHET------------------------------------
--Fix Splitter_Fighter so that the trailing parts collision still affects the front
 -Add a pointer in the radar when the boss spawns so the player can find it more easily
 -Bullets need velocity data (forgot why)
 -Change the tiled background to just an image since that would actually make sense

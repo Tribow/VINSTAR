@@ -3,6 +3,7 @@ ScriptsOnlyBuild:
     Assembly-CSharp.dll:
     - asteroid_script
     - audio_manager
+    - bluesplitter_fighter
     - bluesplitter_scatterer
     - bluesplitter_worker
     - boss_spiral
@@ -22,6 +23,7 @@ ScriptsOnlyBuild:
     - red_fighter
     - red_warrior
     - red_worker
+    - splitter_part_script
     - ui_script
     - username_input
     Unity.2D.Tilemap.Editor.dll:
@@ -73,6 +75,7 @@ ScriptsOnlyBuild:
     Unity.Rider.Editor.dll:
     - Packages.Rider.Editor.UnitTesting.CallbackData
     Unity.ShaderGraph.Editor.dll:
+    - UnityEditor.ShaderGraph.Drawing.MaterialGraphEditWindow
     - UnityEditor.ShaderGraph.SubGraphAsset
     UnityEditor.TestRunner.dll:
     - UnityEditor.TestTools.TestRunner.Api.CallbacksHolder
@@ -133,147 +136,151 @@ ScriptsOnlyBuild:
     - Class: 104
       Script: {instanceID: 0}
     - Class: 114
-      Script: {instanceID: 802}
+      Script: {instanceID: 836}
     - Class: 114
-      Script: {instanceID: 11522}
+      Script: {instanceID: 11556}
     - Class: 114
-      Script: {instanceID: 11524}
+      Script: {instanceID: 11558}
     - Class: 114
-      Script: {instanceID: 11526}
+      Script: {instanceID: 11560}
     - Class: 114
-      Script: {instanceID: 11528}
+      Script: {instanceID: 11562}
     - Class: 114
-      Script: {instanceID: 11530}
+      Script: {instanceID: 11564}
     - Class: 114
-      Script: {instanceID: 11532}
+      Script: {instanceID: 11566}
     - Class: 114
-      Script: {instanceID: 11752}
+      Script: {instanceID: 11786}
     - Class: 114
-      Script: {instanceID: 11846}
+      Script: {instanceID: 11880}
     - Class: 114
-      Script: {instanceID: 11928}
+      Script: {instanceID: 11962}
     - Class: 114
-      Script: {instanceID: 11964}
+      Script: {instanceID: 11998}
     - Class: 114
-      Script: {instanceID: 12120}
+      Script: {instanceID: 12156}
     - Class: 114
-      Script: {instanceID: 12154}
+      Script: {instanceID: 12190}
     - Class: 114
-      Script: {instanceID: 12290}
+      Script: {instanceID: 12326}
     - Class: 114
-      Script: {instanceID: 12504}
+      Script: {instanceID: 12540}
     - Class: 114
-      Script: {instanceID: 12554}
+      Script: {instanceID: 12590}
     - Class: 114
-      Script: {instanceID: 12786}
+      Script: {instanceID: 12822}
     - Class: 114
-      Script: {instanceID: 12808}
+      Script: {instanceID: 12844}
     - Class: 114
-      Script: {instanceID: 13050}
+      Script: {instanceID: 13086}
     - Class: 114
-      Script: {instanceID: 13100}
+      Script: {instanceID: 13136}
     - Class: 114
-      Script: {instanceID: 13106}
+      Script: {instanceID: 13142}
     - Class: 114
-      Script: {instanceID: 13196}
+      Script: {instanceID: 13186}
     - Class: 114
-      Script: {instanceID: 13216}
+      Script: {instanceID: 13238}
     - Class: 114
-      Script: {instanceID: 13312}
+      Script: {instanceID: 13258}
     - Class: 114
-      Script: {instanceID: 13322}
+      Script: {instanceID: 13354}
     - Class: 114
-      Script: {instanceID: 13428}
+      Script: {instanceID: 13364}
     - Class: 114
-      Script: {instanceID: 13452}
+      Script: {instanceID: 13474}
     - Class: 114
-      Script: {instanceID: 13488}
+      Script: {instanceID: 13498}
     - Class: 114
-      Script: {instanceID: 13562}
+      Script: {instanceID: 13534}
     - Class: 114
-      Script: {instanceID: 13618}
+      Script: {instanceID: 13608}
     - Class: 114
-      Script: {instanceID: 13834}
+      Script: {instanceID: 13664}
     - Class: 114
-      Script: {instanceID: 13886}
+      Script: {instanceID: 13882}
     - Class: 114
-      Script: {instanceID: 13988}
+      Script: {instanceID: 13936}
     - Class: 114
-      Script: {instanceID: 14066}
+      Script: {instanceID: 14038}
     - Class: 114
-      Script: {instanceID: 14170}
+      Script: {instanceID: 14204}
     - Class: 114
-      Script: {instanceID: 14342}
+      Script: {instanceID: 14308}
     - Class: 114
-      Script: {instanceID: 14452}
+      Script: {instanceID: 14480}
     - Class: 114
-      Script: {instanceID: 14706}
+      Script: {instanceID: 14590}
     - Class: 114
-      Script: {instanceID: 14776}
+      Script: {instanceID: 14846}
     - Class: 114
-      Script: {instanceID: 14870}
+      Script: {instanceID: 14916}
     - Class: 114
-      Script: {instanceID: 14904}
+      Script: {instanceID: 15010}
     - Class: 114
-      Script: {instanceID: 14920}
+      Script: {instanceID: 15044}
     - Class: 114
-      Script: {instanceID: 15146}
+      Script: {instanceID: 15060}
     - Class: 114
-      Script: {instanceID: 15182}
+      Script: {instanceID: 15286}
     - Class: 114
-      Script: {instanceID: 15224}
+      Script: {instanceID: 15322}
     - Class: 114
-      Script: {instanceID: 15384}
+      Script: {instanceID: 15364}
     - Class: 114
-      Script: {instanceID: 15466}
+      Script: {instanceID: 15526}
     - Class: 114
-      Script: {instanceID: 15494}
+      Script: {instanceID: 15608}
     - Class: 114
-      Script: {instanceID: 15520}
+      Script: {instanceID: 15636}
     - Class: 114
-      Script: {instanceID: 15740}
+      Script: {instanceID: 15662}
     - Class: 114
-      Script: {instanceID: 15782}
+      Script: {instanceID: 15884}
     - Class: 114
-      Script: {instanceID: 15796}
+      Script: {instanceID: 15926}
     - Class: 114
-      Script: {instanceID: 15866}
+      Script: {instanceID: 15940}
     - Class: 114
-      Script: {instanceID: 16022}
+      Script: {instanceID: 15984}
     - Class: 114
-      Script: {instanceID: 16080}
+      Script: {instanceID: 16012}
     - Class: 114
-      Script: {instanceID: 16272}
+      Script: {instanceID: 16168}
     - Class: 114
-      Script: {instanceID: 16348}
+      Script: {instanceID: 16226}
     - Class: 114
-      Script: {instanceID: 16380}
+      Script: {instanceID: 16420}
     - Class: 114
-      Script: {instanceID: 16566}
+      Script: {instanceID: 16498}
     - Class: 114
-      Script: {instanceID: 16754}
+      Script: {instanceID: 16530}
     - Class: 114
-      Script: {instanceID: 17038}
+      Script: {instanceID: 16716}
     - Class: 114
-      Script: {instanceID: 17114}
+      Script: {instanceID: 16906}
     - Class: 114
-      Script: {instanceID: 17318}
+      Script: {instanceID: 17194}
     - Class: 114
-      Script: {instanceID: 17334}
+      Script: {instanceID: 17270}
     - Class: 114
-      Script: {instanceID: 17442}
+      Script: {instanceID: 17476}
     - Class: 114
-      Script: {instanceID: 17446}
+      Script: {instanceID: 17494}
     - Class: 114
-      Script: {instanceID: 17512}
+      Script: {instanceID: 17602}
     - Class: 114
-      Script: {instanceID: 17544}
+      Script: {instanceID: 17606}
     - Class: 114
-      Script: {instanceID: 17594}
+      Script: {instanceID: 17672}
     - Class: 114
-      Script: {instanceID: 17728}
+      Script: {instanceID: 17704}
     - Class: 114
-      Script: {instanceID: 17736}
+      Script: {instanceID: 17754}
+    - Class: 114
+      Script: {instanceID: 17888}
+    - Class: 114
+      Script: {instanceID: 17896}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 124
@@ -721,6 +728,12 @@ ScriptsOnlyBuild:
     className: mineral_script
   - hash:
       serializedVersion: 2
+      Hash: aa636839481d4daa562850f3c4bf4dcf
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: splitter_part_script
+  - hash:
+      serializedVersion: 2
       Hash: d251bf88db6c95a6b1aa0b69298da9ef
     assemblyName: UnityEngine.SpatialTracking.dll
     namespaceName: UnityEngine.SpatialTracking
@@ -751,7 +764,7 @@ ScriptsOnlyBuild:
     className: player_ship_script
   - hash:
       serializedVersion: 2
-      Hash: 87be004286ee12b2782d8a633963ebe7
+      Hash: b62f611ccc8a20bbfe02c93e20b71f75
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: bluesplitter_worker
@@ -799,7 +812,7 @@ ScriptsOnlyBuild:
     className: TMP_SpriteAsset
   - hash:
       serializedVersion: 2
-      Hash: 593fd10b3c5740b36d5abef14e682463
+      Hash: a2e62138306b2a375d9e4dac449a709c
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: red_warrior
@@ -961,7 +974,7 @@ ScriptsOnlyBuild:
     className: NetworkManager
   - hash:
       serializedVersion: 2
-      Hash: 593fd10b3c5740b36d5abef14e682463
+      Hash: a2e62138306b2a375d9e4dac449a709c
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: red_worker
@@ -1243,6 +1256,12 @@ ScriptsOnlyBuild:
     className: ShadowsMidtonesHighlights
   - hash:
       serializedVersion: 2
+      Hash: f597fd9c0c45993a9b970fdb5ed4215d
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: bluesplitter_fighter
+  - hash:
+      serializedVersion: 2
       Hash: c73b38d1734fde2c84da7bd282f19e54
     assemblyName: Unity.RenderPipelines.Universal.Runtime.dll
     namespaceName: UnityEngine.Rendering.Universal
@@ -1327,7 +1346,7 @@ ScriptsOnlyBuild:
     className: DebugUIHandlerVector2
   - hash:
       serializedVersion: 2
-      Hash: 593fd10b3c5740b36d5abef14e682463
+      Hash: a2e62138306b2a375d9e4dac449a709c
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: boss_spiral
@@ -1351,7 +1370,7 @@ ScriptsOnlyBuild:
     className: CinemachineUniversalPixelPerfect
   - hash:
       serializedVersion: 2
-      Hash: 593fd10b3c5740b36d5abef14e682463
+      Hash: a2e62138306b2a375d9e4dac449a709c
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: red_fighter
@@ -1363,7 +1382,7 @@ ScriptsOnlyBuild:
     className: LiftGammaGain
   - hash:
       serializedVersion: 2
-      Hash: 593fd10b3c5740b36d5abef14e682463
+      Hash: a2e62138306b2a375d9e4dac449a709c
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: Base_Enemy_Script
@@ -1501,7 +1520,7 @@ ScriptsOnlyBuild:
     className: input_rebind_script
   - hash:
       serializedVersion: 2
-      Hash: 593fd10b3c5740b36d5abef14e682463
+      Hash: a2e62138306b2a375d9e4dac449a709c
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: bluesplitter_scatterer
@@ -1649,18 +1668,6 @@ ScriptsOnlyBuild:
     assemblyName: Unity.Timeline.dll
     namespaceName: UnityEngine.Timeline
     className: PlayableTrack
-  - hash:
-      serializedVersion: 2
-      Hash: 301303d6dcb38b6e60b426fda7673bff
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: 
-    className: bluesplitter_fighter
-  - hash:
-      serializedVersion: 2
-      Hash: aa636839481d4daa562850f3c4bf4dcf
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: 
-    className: splitter_part_script
   platform: 19
   scenePathNames:
   - Assets/Scenes/Game.unity

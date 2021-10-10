@@ -11,7 +11,7 @@ using UnityEngine;
 
 public class bluesplitter_worker : Base_Enemy_Script
 {
-
+    [Header("Splitter Worker Data")]
     public GameObject blue_scatterer;
 
     //Need to redo start event because the different idle values
@@ -88,8 +88,11 @@ public class bluesplitter_worker : Base_Enemy_Script
         {
             if (do_give_points)
             {
-                manager.GetComponent<manager_script>().Add_Score(1);
-                manager.GetComponent<manager_script>().Enemy_Death(am_i_the_boss);
+                if (manager != null)
+                {
+                    manager.GetComponent<manager_script>().Add_Score(1);
+                    manager.GetComponent<manager_script>().Enemy_Death(am_i_the_boss);
+                }
             }
 
             //Particle
@@ -198,6 +201,7 @@ public class bluesplitter_worker : Base_Enemy_Script
 
         velocity = Speed_Management(transform, maxspeed);
         Transform_Management(transform, turning_speed, velocity, 1.6f);
+        Upgrade_Enemy(upgrade_points, 15, upgrade_object);
 
         //This object will adjust its scale depending on how many minerals it has.
         float scale_modifier = 1f + (upgrade_points * .0667f);

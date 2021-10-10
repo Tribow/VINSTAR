@@ -218,7 +218,7 @@ public class manager_script : MonoBehaviour
             player_rotation = player.transform.rotation;
 
             //Checking Enemies
-            if (enemy_amount.Count < 10 && !make_next_level && !boss_exist) //If the amount of enemies fall under this number, make a new one.
+            if (enemy_amount.Count < 20 && !make_next_level && !boss_exist) //If the amount of enemies fall under this number, make a new one.
             {
                 Spawn_Enemy();
             }
@@ -427,7 +427,7 @@ public class manager_script : MonoBehaviour
         if (enemy_index < tier3_spawnrate)
         {
             GameObject the_enemy;
-            the_enemy = Instantiate(enemies[3], enemy_position, enemy_rotation); //spawn tier 3 enemies
+            the_enemy = Instantiate(enemies[Choice.Choose(3, 4)], enemy_position, enemy_rotation); //spawn tier 3 enemies
             Add_To_Enemy_List(the_enemy);
         }
         else if (enemy_index < tier2_spawnrate)

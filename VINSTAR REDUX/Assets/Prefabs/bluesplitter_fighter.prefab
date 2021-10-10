@@ -147,7 +147,7 @@ MonoBehaviour:
   upgrade_object: {fileID: 0}
   set_speed:
     minNum: 6
-    maxNum: 10
+    maxNum: 12
   am_i_the_boss: 0
   score: 3
   health: 200
@@ -155,6 +155,7 @@ MonoBehaviour:
   deceleration: 0
   mineral_radius: 70
   velocity: {x: 0, y: 0, z: 0}
+  upgrade_points: 0
   blue_worker: {fileID: 8477967443975902732, guid: 97f010862a3f7984eb5f747bcf32eee5,
     type: 3}
   splitter_part: {fileID: 5938300612690686641, guid: d93ab679d77c9ad44a05bd9ede93c1f5,

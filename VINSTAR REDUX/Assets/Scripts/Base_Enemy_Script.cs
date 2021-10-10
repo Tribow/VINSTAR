@@ -37,7 +37,6 @@ public class Base_Enemy_Script : MonoBehaviour
     protected bool decelerating = false;
     protected bool flash = false;
     protected bool outline = false;
-    protected int upgrade_points; //Current amount of points needed for 
     protected float speed; //This is used for the current speed at all times
     protected float ogspeed; //This is meant to log to initial speed the enemy starts at
     protected float maxspeed; //absolute top speed the enemy can manage
@@ -47,6 +46,7 @@ public class Base_Enemy_Script : MonoBehaviour
     [Header("Public Data - DO NOT EDIT")]
     public Vector3 velocity; //The velocity at any given time
     public enum State { Idle, Edge, Mine, Attack, Evade };
+    public int upgrade_points; //The amount of upgrade points it has at any given time
 
     // Start is called before the first frame update
     public void Start()

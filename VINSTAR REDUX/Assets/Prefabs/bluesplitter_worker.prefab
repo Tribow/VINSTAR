@@ -143,7 +143,8 @@ MonoBehaviour:
   my_bullet: {fileID: 0}
   death_particles: {fileID: 3767474889071653246, guid: f1d07c9346fc05445bbbbe06c8086929,
     type: 3}
-  upgrade_object: {fileID: 0}
+  upgrade_object: {fileID: 5485258455619913583, guid: 59c70dcaa7b1b784b9484153797498d8,
+    type: 3}
   set_speed:
     minNum: 3
     maxNum: 6
@@ -154,6 +155,7 @@ MonoBehaviour:
   deceleration: 0
   mineral_radius: 85
   velocity: {x: 0, y: 0, z: 0}
+  upgrade_points: 0
   blue_scatterer: {fileID: 2858978662265631694, guid: 219987f1945217543a873e6955b4e975,
     type: 3}
 --- !u!1001 &349015865276885923

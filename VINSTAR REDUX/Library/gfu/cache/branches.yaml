@@ -13,9 +13,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cacheType: 2
-  lastUpdatedAtString: 2021-10-08T00:11:43.006-04:00
-  initializedAtString: 2021-10-07T20:10:04.682-04:00
-  localBranches: []
+  lastUpdatedAtString: 2021-10-09T16:23:31.209-04:00
+  initializedAtString: 2021-10-09T16:23:31.191-04:00
+  localBranches:
+  - name: master
+    tracking: origin/master
   remoteBranches:
   - name: origin/master
     tracking: '[None]'
@@ -28,8 +30,14 @@ MonoBehaviour:
     function: 0
     token: 
   localConfigBranches:
-    keys: []
-    values: []
+    keys:
+    - master
+    values:
+    - name: master
+      remote:
+        name: origin
+        url: https://github.com/Tribow/VINSTAR.git
+      trackingBranch: master
   remoteConfigBranches:
     keys:
     - origin

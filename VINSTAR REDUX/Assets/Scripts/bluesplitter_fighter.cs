@@ -12,7 +12,7 @@ using UnityEngine.UI;
 
 public class bluesplitter_fighter : Base_Enemy_Script
 {
-    [Header("Splitter Fighter Variables")]
+    [Header("Splitter Fighter Data")]
     public GameObject blue_worker;
     public GameObject splitter_part;
     public Sprite bullet_sprite;
@@ -21,11 +21,13 @@ public class bluesplitter_fighter : Base_Enemy_Script
     private List<GameObject> splitter_list = new List<GameObject>();
     private List<Material> material_part = new List<Material>();
     private Stopwatch fire_rate = new Stopwatch(.4f);
+    private manager_script mango;
 
     //Need to redo start event because the different idle values
     private new void Start()
     {
         manager = GameObject.FindGameObjectWithTag("manager");
+        mango = manager.GetComponent<manager_script>();
         audiomanager = GameObject.FindGameObjectWithTag("audio manager").GetComponent<audio_manager>();
         boundary = GameObject.FindGameObjectWithTag("boundary").GetComponent<Collider2D>();
         player = GameObject.FindGameObjectWithTag("player");
@@ -40,12 +42,15 @@ public class bluesplitter_fighter : Base_Enemy_Script
         GameObject object1 = Instantiate(splitter_part, transform.position, Quaternion.identity);
         object1.GetComponent<splitter_part_script>().my_leader = gameObject;
         GameObject object2 = Instantiate(splitter_part, transform.position, Quaternion.identity);
-        object1.GetComponent<splitter_part_script>().my_leader = gameObject;
+        object2.GetComponent<splitter_part_script>().my_leader = gameObject;
         GameObject object3 = Instantiate(splitter_part, transform.position, Quaternion.identity);
-        object1.GetComponent<splitter_part_script>().my_leader = gameObject;
+        object3.GetComponent<splitter_part_script>().my_leader = gameObject;
         splitter_list.Add(object1);
         splitter_list.Add(object2);
         splitter_list.Add(object3);
+        mango.Add_To_Enemy_List(object1);
+        mango.Add_To_Enemy_List(object2);
+        mango.Add_To_Enemy_List(object3);
         material_part.Add(object1.GetComponent<SpriteRenderer>().material);
         material_part.Add(object2.GetComponent<SpriteRenderer>().material);
         material_part.Add(object3.GetComponent<SpriteRenderer>().material);
@@ -68,7 +73,6 @@ public class bluesplitter_fighter : Base_Enemy_Script
         {
             health = Take_Damage(health, collision.GetComponent<player_bullet_script>().damage);
             Death_Splitter_Handler(true);
-            print("I hit!");
         }
 
         if (collision.gameObject.tag == "bossbullet")
@@ -99,14 +103,15 @@ public class bluesplitter_fighter : Base_Enemy_Script
         if (collision.gameObject.tag == "mineral")
         {
             upgrade_points++;
-            //if(upgrade_points / 3f % 1 == 0)
-            //{
+            if(upgrade_points / 6f % 1 == 0)
+            {
                 GameObject the_object = Instantiate(splitter_part, transform.position, transform.rotation);
                 the_object.GetComponent<splitter_part_script>().my_leader = gameObject;
                 splitter_list.Add(the_object);
+                mango.Add_To_Enemy_List(the_object);
                 material_part.Add(the_object.GetComponent<SpriteRenderer>().material);
-
-            //}
+                health += 10;
+            }
             Destroy(collision.gameObject);
         }
     }
@@ -144,7 +149,7 @@ public class bluesplitter_fighter : Base_Enemy_Script
             {
                 if (manager != null)
                 {
-                    manager.GetComponent<manager_script>().Add_Score(1);
+                    manager.GetComponent<manager_script>().Add_Score(score);
                     manager.GetComponent<manager_script>().Enemy_Death(am_i_the_boss);
                 }
             }
@@ -155,18 +160,14 @@ public class bluesplitter_fighter : Base_Enemy_Script
             //Sound
             audiomanager.Play_Sound(audio_manager.Sound.explosion_01, transform.position);
 
-            //How many workers do I spawn?
-            int spawncheck = 0;
-            for (int i = 0; i < upgrade_points; i++)
+            for (int i = 0; i < splitter_list.Count; i++)
             {
-                spawncheck++;
-                if (spawncheck == 4)
-                { //If spawncheck counts to 4, that means you can spawn a scatterer
-                    Quaternion new_rotation = Quaternion.Euler(0.0f, 0.0f, Random.Range(0.0f, 360f));
-                    GameObject new_enemy = Instantiate(blue_worker, gameObject.transform.position, new_rotation);
-                    manager.GetComponent<manager_script>().Add_To_Enemy_List(new_enemy);
-                    spawncheck = 0;
-                }
+                //For every splitter worker in the splitter list, spawn a worker
+                Quaternion new_rotation = Quaternion.Euler(0.0f, 0.0f, Random.Range(0.0f, 360f));
+                GameObject new_enemy = Instantiate(blue_worker, gameObject.transform.position, new_rotation);
+                new_enemy.GetComponent<bluesplitter_worker>().upgrade_points = 12;
+                manager.GetComponent<manager_script>().Add_To_Enemy_List(new_enemy);
+                Destroy(splitter_list[i]);
             }
 
             //Be sure to destroy extra objects
