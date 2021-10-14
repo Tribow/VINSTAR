@@ -8,7 +8,7 @@ public class instruction_script : MonoBehaviour
     public Text slow_text;
     public Text magnet_text;
     public GameObject manager_object;
-    public GameObject main_menu;
+    //public GameObject main_menu;
     public GameObject parent_tutorial_object;
     public GameObject username_input;
     public GameObject leaderboard;
@@ -33,7 +33,7 @@ public class instruction_script : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (manager.current_level == 1 && !main_menu.activeInHierarchy)
+        if (manager.current_level == 1 && manager_object.activeInHierarchy)
         {
             if (username_input.activeInHierarchy || leaderboard.activeInHierarchy)
             {

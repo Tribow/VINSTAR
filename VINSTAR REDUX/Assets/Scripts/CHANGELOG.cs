@@ -4,8 +4,8 @@
  
 Changelog:
 --------------------------------------------------------------------------
-Adjusted boss particle settings
-Added new enemy to the game
+WEBGL VERSION IS BACK BABY!
+Fixed the issue where the tutorial text would appear if you select options when in the main menu
 
  
 

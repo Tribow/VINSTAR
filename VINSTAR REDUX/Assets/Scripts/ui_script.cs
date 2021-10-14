@@ -4,9 +4,11 @@ using UnityEngine.EventSystems;
 
 public class ui_script : MonoBehaviour
 {
+    [Header("Public Data")]
     public GameObject manager;
     public GameObject main_menu;
     public GameObject options_menu;
+    public GameObject lmao_text;
     public GameObject rebinds_menu;
     public Button reset_all_button_1;
     public Button reset_all_button_2;
@@ -17,8 +19,9 @@ public class ui_script : MonoBehaviour
     public GameObject instruction_text;
     public GameObject boss_health;
     public EventSystem event_system;
-    manager_script mango;
 
+
+    private manager_script mango;
     private bool controls = false;
     private Vector3 options_pos;
     private Vector3 rebinds_pos;
@@ -33,6 +36,9 @@ public class ui_script : MonoBehaviour
     public void Start()
     {
         options_pos = options_menu.transform.position;
+        #if (UNITY_WEBGL)
+            rebinds_menu.transform.position += new Vector3(2000f, 0f, 0f);
+        #endif
         rebinds_pos = rebinds_menu.transform.position;
         controller_toggle = rebinds_menu.transform.GetChild(2).gameObject;
         keyboard_toggle = rebinds_menu.transform.GetChild(3).gameObject;
@@ -127,7 +133,11 @@ public class ui_script : MonoBehaviour
 
     public void Quit_Game()
     {
+    #if (UNITY_STANDALONE)
         Application.Quit();
+    #elif (UNITY_WEBGL)
+        lmao_text.SetActive(true);
+    #endif
     }
 
     public void Options_Menu()

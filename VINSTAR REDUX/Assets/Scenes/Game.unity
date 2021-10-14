@@ -98,7 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 1
+  m_UseShadowmask: 0
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -12185,6 +12185,7 @@ MonoBehaviour:
   manager: {fileID: 1655998461}
   main_menu: {fileID: 2002117865}
   options_menu: {fileID: 828971785}
+  lmao_text: {fileID: 880206257}
   rebinds_menu: {fileID: 895008171}
   reset_all_button_1: {fileID: 1197167574}
   reset_all_button_2: {fileID: 1711946824}
