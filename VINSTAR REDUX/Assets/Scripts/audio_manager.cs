@@ -26,7 +26,8 @@ public class audio_manager : MonoBehaviour
 
     private void Start()
     {
-        audio_mixer.SetFloat("master volume", -20f);
+        audio_mixer.SetFloat("master volume", Mathf.Log10(.2f) * 20);
+        //audio_mixer.SetFloat("master volume",-20);
     }
 
     /// <summary>
@@ -137,8 +138,9 @@ public class audio_manager : MonoBehaviour
     //Put this into the volume slider to change the master volume of the game
     public void Set_Volume(float volume)
     {
-        audio_mixer.SetFloat("master volume", volume);
-        //print(volume);
+        audio_mixer.SetFloat("master volume", Mathf.Log10(volume) * 20);
+        //audio_mixer.SetFloat("master volume", volume);
+        //print(Mathf.Log10(volume) * 20);
     }
 
     //This should get the sound requested from the array

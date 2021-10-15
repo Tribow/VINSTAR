@@ -6,13 +6,15 @@ Changelog:
 --------------------------------------------------------------------------
 WEBGL VERSION IS BACK BABY!
 Fixed the issue where the tutorial text would appear if you select options when in the main menu
+Added a pointer in the radar that activates when the boss spawns so the player knows which direction the boss is in
+Changed volume slider to be logarithmic and not linear
+
 
  
 
 
 To-do: 
 --------------------------GAMEPLAY SHET------------------------------------
--Add a pointer in the radar when the boss spawns so the player can find it more easily
 -Bullets need velocity data (forgot why)
 -Change the tiled background to just an image since that would actually make sense
 
@@ -31,7 +33,6 @@ To-do:
 -Add sound effects for a level change
 -Add sound effects for when the leaderboard comes up
 -Add sound effects for an asteroid getting hit
--Fix audio slider so it is logarithmic and not linear
 
 --------------------------PARTICLE SHET------------------------------------
 -Add a particle effect manager
@@ -42,6 +43,5 @@ To-do:
 Issues:
 -Occassionally when firing the bullets wont actually appear (They get warped to a random position??)
 -If you click on the menu it will remove the keyboard's access to it until you go to a new menu
--Boss appears to be no longer able to spawn after it spawns once
  
  */ 

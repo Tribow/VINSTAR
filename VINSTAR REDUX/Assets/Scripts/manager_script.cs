@@ -24,6 +24,7 @@ public class manager_script : MonoBehaviour
     public GameObject radar;
     public GameObject player_object; //The literal prefab of player
     public GameObject main_menu;
+    public GameObject boss_pointer;
 
     [Header("Public Data - DO NOT EDIT")]
     public GameObject player; //what is used to see player in the scene
@@ -52,7 +53,7 @@ public class manager_script : MonoBehaviour
     int kills_needed = 6; //Kills needed to move on
     int enemies_spawned = 20; //amount of enemies that spawn
     int enemy_difficulty = 500; //this number may not change, it is the number used to decide what spawns
-    int boss_likelihood = 2000; //this number will likely not change for same reasons
+    int boss_likelihood = 2; //this number will likely not change for same reasons
     int tier2_spawnrate = 0; //How likely enemies in tier 2 will spawn (tier 2 are just harder than the base enemies)
     int tier3_spawnrate = 0; //How likely enemies in tier 3 will spawn (should stay lower than tier 2)
     int boss_spawnrate = 0; //How likely the boss will spawn. This value should get reset after 
@@ -317,10 +318,16 @@ public class manager_script : MonoBehaviour
         if (boss_object == null)
         {
             boss_exist = false;
+            boss_pointer.SetActive(false);
         }
         else
         {
             kills_text.text = "BOSS";
+            boss_pointer.SetActive(true);
+            boss_pointer.transform.position = player_position;
+            Vector3 dir = boss_object.transform.position - boss_pointer.transform.position;
+            boss_pointer.transform.rotation = Quaternion.AngleAxis(Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg, Vector3.forward);
+            //boss_pointer.transform.eulerAngles = new Vector3(boss_pointer.transform.eulerAngles.x, 0, 0);
         }
 
         if (boss_died)

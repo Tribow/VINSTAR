@@ -37,7 +37,7 @@ public class ui_script : MonoBehaviour
     {
         options_pos = options_menu.transform.position;
         #if (UNITY_WEBGL)
-            rebinds_menu.transform.position += new Vector3(2000f, 0f, 0f);
+            rebinds_menu.transform.position += new Vector3(700f, 0f, 0f);
         #endif
         rebinds_pos = rebinds_menu.transform.position;
         controller_toggle = rebinds_menu.transform.GetChild(2).gameObject;

@@ -99,8 +99,6 @@ ScriptsOnlyBuild:
     - UnityEngine.UI.Text
     - UnityEngine.UI.Toggle
     - UnityEngine.UI.VerticalLayoutGroup
-    com.unity.multiplayer-hlapi.Runtime.dll:
-    - UnityEngine.Networking.NetworkCallbacks
   sceneClasses:
     Assets/Scenes/Game.unity:
     - Class: 1
@@ -1004,7 +1002,7 @@ ScriptsOnlyBuild:
     className: BaseInputOverride
   - hash:
       serializedVersion: 2
-      Hash: 743057397741a6c7291de5014b467668
+      Hash: d0da2401d831891ce07aee3011cabd52
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: instruction_script
@@ -1268,7 +1266,7 @@ ScriptsOnlyBuild:
     className: Tonemapping
   - hash:
       serializedVersion: 2
-      Hash: 7f35cfd1356f56259fc3c5f9aea21f6e
+      Hash: 075f4ff516b7bd56530b164d922f4289
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: manager_script
