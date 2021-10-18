@@ -29,6 +29,7 @@ public class manager_script : MonoBehaviour
     [Header("Public Data - DO NOT EDIT")]
     public GameObject player; //what is used to see player in the scene
     public GameObject boss_object; //what is used to see the boss on the scene
+    public Vector2 level_bounds;
     public int current_level = 1; //What level are you currently on
     public int enemy_score = 0;
     public int asteroid_score = 0;
@@ -53,7 +54,7 @@ public class manager_script : MonoBehaviour
     int kills_needed = 6; //Kills needed to move on
     int enemies_spawned = 20; //amount of enemies that spawn
     int enemy_difficulty = 500; //this number may not change, it is the number used to decide what spawns
-    int boss_likelihood = 2; //this number will likely not change for same reasons
+    int boss_likelihood = 2000; //this number will likely not change for same reasons
     int tier2_spawnrate = 0; //How likely enemies in tier 2 will spawn (tier 2 are just harder than the base enemies)
     int tier3_spawnrate = 0; //How likely enemies in tier 3 will spawn (should stay lower than tier 2)
     int boss_spawnrate = 0; //How likely the boss will spawn. This value should get reset after 
@@ -340,20 +341,20 @@ public class manager_script : MonoBehaviour
         if (make_next_level == true)
         {
             kills_left = kills_needed;
-            generate_level();
+            Generate_Level();
 
             make_next_level = false;
         }
     }
 
     //This is to make the levels, adjustments may need to be made to produce future levels
-    void generate_level()
+    public void Generate_Level()
     {
         for (int i = 0; i < 100; i++)
         {
             int asteroid_index = Random.Range(0, 5);
             float asteroid_scale = Random.Range(.6f, 1.5f);
-            Vector2 asteroid_position = new Vector2(Random.Range(-178f, 178f), Random.Range(-150f, 150f));
+            Vector2 asteroid_position = new Vector2(Random.Range(-level_bounds.x, level_bounds.x), Random.Range(-level_bounds.y, level_bounds.y));
             GameObject the_asteroid = Instantiate(asteroids[asteroid_index], asteroid_position, Quaternion.identity);
             the_asteroid.transform.localScale *= asteroid_scale;
             the_asteroid.transform.GetChild(0).transform.localScale /= asteroid_scale;
@@ -409,7 +410,7 @@ public class manager_script : MonoBehaviour
     void Spawn_Enemy()
     {
         int safety_net = 0;
-        Vector2 enemy_position = new Vector2(Random.Range(-178, 178), Random.Range(-151, 151)); //make the random enemy position
+        Vector2 enemy_position = new Vector2(Random.Range(-level_bounds.x, level_bounds.x), Random.Range(-level_bounds.y, level_bounds.y)); //make the random enemy position
         Quaternion enemy_rotation = new Quaternion();
         enemy_rotation.eulerAngles = new Vector3(0.0f, 0.0f, Random.Range(0.0f, 360f)); //set the rotation
 

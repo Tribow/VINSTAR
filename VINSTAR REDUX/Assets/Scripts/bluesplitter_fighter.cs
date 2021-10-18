@@ -3,12 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-//This enemy is better at picking up minerals than the reds are, but they move slower
-//It will also try to run away from the player
-//Will prioritize gathering minerals over anything else
-//Gets larger the more minerals it has. It will grow at a rate of .0667 based on how many minerals it has (should cap at 12)
-//It is planned that this enemy will get its upgrade at 13 minerals
-//When dying, it should will spawn blue_scatterers for every 4 minerals it has. If it never collected that many it wont do this
+//This Enemy is way better at gathering minerals than most enemies
+//Much faster than most enemies
+//Leaves a trail of bullets behind and runs away if player is nearby
+//Will prioritize mining over running away from player, but is very fast at going in and out
 
 public class bluesplitter_fighter : Base_Enemy_Script
 {
@@ -21,10 +19,9 @@ public class bluesplitter_fighter : Base_Enemy_Script
     private List<GameObject> splitter_list = new List<GameObject>();
     private List<Material> material_part = new List<Material>();
     private Stopwatch fire_rate = new Stopwatch(.4f);
-    private manager_script mango;
 
     //Need to redo start event because the different idle values
-    private new void Start()
+    private new void Awake()
     {
         manager = GameObject.FindGameObjectWithTag("manager");
         mango = manager.GetComponent<manager_script>();
@@ -39,6 +36,7 @@ public class bluesplitter_fighter : Base_Enemy_Script
         AI = State.Idle;
         _material = gameObject.GetComponent<SpriteRenderer>().material;
         my_canvas = Instantiate(enemy_canvas);
+        //By default, this must have 3 parts following it
         GameObject object1 = Instantiate(splitter_part, transform.position, Quaternion.identity);
         object1.GetComponent<splitter_part_script>().my_leader = gameObject;
         GameObject object2 = Instantiate(splitter_part, transform.position, Quaternion.identity);
@@ -61,6 +59,7 @@ public class bluesplitter_fighter : Base_Enemy_Script
     {
         if (collision.gameObject.tag != "boundary" &&
             collision.gameObject.tag != "mineral" &&
+            collision.gameObject.tag != "whitemineral" &&
             collision.gameObject.tag != "bullet" &&
             collision.gameObject.tag != "ebullet" &&
             collision.gameObject.tag != "bossbullet" &&
@@ -114,6 +113,12 @@ public class bluesplitter_fighter : Base_Enemy_Script
             }
             Destroy(collision.gameObject);
         }
+
+        if (collision.gameObject.tag == "whitemineral")
+        {
+            Im_White();
+            Destroy(collision.gameObject);
+        }
     }
 
     private IEnumerator Splitter_Flash_Off(Material the_material)
@@ -149,8 +154,8 @@ public class bluesplitter_fighter : Base_Enemy_Script
             {
                 if (manager != null)
                 {
-                    manager.GetComponent<manager_script>().Add_Score(score);
-                    manager.GetComponent<manager_script>().Enemy_Death(am_i_the_boss);
+                    mango.Add_Score(score);
+                    mango.Enemy_Death(am_i_the_boss);
                 }
             }
 

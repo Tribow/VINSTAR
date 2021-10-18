@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 //Even more aggressive than the fighter. Does a better job of chasing and decelerates better as well. However, it needs to be closer to the player to detect it
 //Shoots a bullet with an arc. It's 4 bullets instead of just 1.

@@ -11,11 +11,13 @@ public class Base_Enemy_Script : MonoBehaviour
     public GameObject enemy_canvas; //The canvas
     public GameObject damage_text; //text used for canvas
     public GameObject collected_minerals; //This is actually the prefab for minerals, but the enemy will blow up with how many minerals it has
+    public GameObject white_mineral;
     public GameObject my_bullet;
     public GameObject death_particles; //Particle objects
     public GameObject upgrade_object; //The object the enemy can upgrade to
     public FloatRange set_speed; //The random values the enemy will choose from for its speed
     public bool am_i_the_boss; //This is needed for the death handler
+    public bool am_i_white;
     public int score;
     public float health;
     public float acceleration; //How fast the enemy can reach max speed
@@ -25,6 +27,7 @@ public class Base_Enemy_Script : MonoBehaviour
     protected GameObject manager; //The manager of the object
     protected GameObject player;
     protected GameObject my_canvas; //reference for instantiation of the canvas
+    protected manager_script mango;
     protected List<GameObject> mybullets = new List<GameObject>();
     protected Collider2D boundary; //The boundaries the enemy can travel too
     protected Collider2D[] nearby_minerals = new Collider2D[5]; //The ship can see up to 5 minerals within its radius
@@ -48,10 +51,11 @@ public class Base_Enemy_Script : MonoBehaviour
     public enum State { Idle, Edge, Mine, Attack, Evade };
     public int upgrade_points; //The amount of upgrade points it has at any given time
 
-    // Start is called before the first frame update
-    public void Start()
+    // Awake is called the moment it is initialized
+    public void Awake()
     {
         manager = GameObject.FindGameObjectWithTag("manager");
+        mango = manager.GetComponent<manager_script>();
         audiomanager = GameObject.FindGameObjectWithTag("audio manager").GetComponent<audio_manager>();
         boundary = GameObject.FindGameObjectWithTag("boundary").GetComponent<Collider2D>();
         player = GameObject.FindGameObjectWithTag("player");
@@ -59,10 +63,19 @@ public class Base_Enemy_Script : MonoBehaviour
         ogspeed = speed;
         maxspeed = ogspeed;
         velocity_angle = transform.eulerAngles.z;
-        StartCoroutine(Base_Idle(new FloatRange(.1667f,.25f), new FloatRange(4f,6f), 2)); //Starts the original coroutine
+        StartCoroutine(Base_Idle(new FloatRange(.1667f, .25f), new FloatRange(4f, 6f), 2)); //Starts the original coroutine
         AI = State.Idle;
         _material = gameObject.GetComponent<SpriteRenderer>().material;
         my_canvas = Instantiate(enemy_canvas);
+    }
+
+    // Start is called before the first frame update
+    public void Start() 
+    {
+        if (am_i_white) //If this enemy has am_i_white as true right at the start then give it the white buffs
+        {
+            Im_White();
+        }
     }
 
     public void OnDestroy()
@@ -77,7 +90,8 @@ public class Base_Enemy_Script : MonoBehaviour
     public void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.tag != "boundary" && 
-            collision.gameObject.tag != "mineral" && 
+            collision.gameObject.tag != "mineral" &&
+            collision.gameObject.tag != "whitemineral" &&
             collision.gameObject.tag != "bullet" && 
             collision.gameObject.tag != "ebullet" &&
             collision.gameObject.tag != "bossbullet") //All of these collision checks are for what cant be bounced off of.
@@ -119,6 +133,12 @@ public class Base_Enemy_Script : MonoBehaviour
         if (collision.gameObject.tag == "mineral")
         { //Raise the upgrade points when coming into contact with mineral
             upgrade_points++;
+            Destroy(collision.gameObject);
+        }
+
+        if (collision.gameObject.tag == "whitemineral")
+        {
+            Im_White();
             Destroy(collision.gameObject);
         }
     }
@@ -272,8 +292,8 @@ public class Base_Enemy_Script : MonoBehaviour
             {
                 if (manager != null)
                 {
-                    manager.GetComponent<manager_script>().Add_Score(score);
-                    manager.GetComponent<manager_script>().Enemy_Death(am_i_the_boss);
+                    mango.Add_Score(score);
+                    mango.Enemy_Death(am_i_the_boss);
                 }
             }
             //Particle
@@ -287,6 +307,16 @@ public class Base_Enemy_Script : MonoBehaviour
                 for (int drop = upgrade_points / 2; drop > 0; drop--)
                 {   //For every upgrade point drop a mineral when dead
                     Instantiate(collected_minerals, gameObject.transform.position, gameObject.transform.rotation);
+                }
+            }
+
+            if (am_i_white)
+            {
+                int tempRan = Random.Range(0, 4);
+                if(tempRan == 0)
+                {
+                    //1/4th of a chance to spawn a white mineral if it got one
+                    Instantiate(white_mineral, gameObject.transform.position, gameObject.transform.rotation);
                 }
             }
             //Be sure to destroy extra objects
@@ -309,10 +339,32 @@ public class Base_Enemy_Script : MonoBehaviour
         if (minerals_got == minerals_needed)
             {
             new_object = Instantiate(upgraded_object, gameObject.transform.position,gameObject.transform.rotation);
-            manager.GetComponent<manager_script>().Add_To_Enemy_List(new_object);
+            if(manager == null) //Be doubly sure to access the manager script
+            {
+                manager = GameObject.FindGameObjectWithTag("manager");
+                mango = manager.GetComponent<manager_script>();
+            }
+            mango.Add_To_Enemy_List(new_object);
+            if (am_i_white) //Make sure that the upgraded object is also white
+            {
+                new_object.GetComponent<Base_Enemy_Script>().am_i_white = true;
+            }
             Destroy(my_canvas);
             Destroy(gameObject);
             }
+    }
+
+    public void Im_White()
+    {
+        am_i_white = true;
+        if (manager == null) //Be doubly sure to access the manager script
+        {
+            manager = GameObject.FindGameObjectWithTag("manager");
+            mango = manager.GetComponent<manager_script>();
+        }
+        health += mango.player_bullet_damage;
+        _material.SetColor("_OutlineColor", Color.white);
+        _material.SetFloat("_OutlineThickness", 1f);
     }
 
     /// <summary>

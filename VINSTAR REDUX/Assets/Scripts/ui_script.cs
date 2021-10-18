@@ -4,7 +4,7 @@ using UnityEngine.EventSystems;
 
 public class ui_script : MonoBehaviour
 {
-    [Header("Public Data")]
+    [Header("Requirements")]
     public GameObject manager;
     public GameObject main_menu;
     public GameObject options_menu;
@@ -19,6 +19,7 @@ public class ui_script : MonoBehaviour
     public GameObject instruction_text;
     public GameObject boss_health;
     public EventSystem event_system;
+    public SpriteRenderer background;
 
 
     private manager_script mango;
@@ -45,6 +46,7 @@ public class ui_script : MonoBehaviour
         reset_all_button_1.onClick.AddListener(() => input_manager_script.Reset_All_Bindings());
         reset_all_button_2.onClick.AddListener(() => input_manager_script.Reset_All_Bindings());
         mango = manager.GetComponent<manager_script>();
+        mango.level_bounds = new Vector2(background.bounds.extents.x, background.bounds.extents.y); //Setting level bounds for the manager as it isn't active yet
         boss_health_red = boss_health.transform.GetChild(0).gameObject.GetComponent<Slider>();
         boss_health_white = boss_health.transform.GetChild(1).gameObject.GetComponent<Slider>();
         //PlayerPrefs.DeleteAll();
@@ -90,35 +92,14 @@ public class ui_script : MonoBehaviour
 
     public void Start_Game()
     {
-        manager_script mango = manager.GetComponent<manager_script>();
-
         main_menu.SetActive(false);
         radar.SetActive(true);
-        mango.player = Instantiate(player_object);
         manager.SetActive(true);
+        mango.player = Instantiate(player_object);
         Instantiate(radar_camera);
         instruction_text.SetActive(true);
 
-        for (int i = 0; i < 100; i++)
-        {
-            int index = Random.Range(0, 5);
-            float asteroid_scale = Random.Range(.6f, 1.5f);
-            Vector2 asteroid_position = new Vector2(Random.Range(-178f, 178f), Random.Range(-150f, 150f));
-            GameObject the_asteroid = Instantiate(mango.asteroids[index], asteroid_position, Quaternion.identity);
-            the_asteroid.transform.localScale *= asteroid_scale;
-            the_asteroid.transform.GetChild(0).transform.localScale /= asteroid_scale;
-            mango.Add_To_Asteroid_List(the_asteroid);
-        }
-
-        for (int i = 0; i < 20; i++)
-        {
-            GameObject the_enemy;
-            Vector2 enemy_position = new Vector2(Random.Range(-178, 178), Random.Range(-150, 150)); //make the random enemy position
-            Quaternion enemy_rotation = new Quaternion();
-            enemy_rotation.eulerAngles = new Vector3(0.0f, 0.0f, Random.Range(0.0f, 360f));
-            the_enemy = Instantiate(mango.enemies[0], enemy_position, enemy_rotation);
-            mango.Add_To_Enemy_List(the_enemy);
-        }
+        mango.Generate_Level();
 
         mango.game_over = false;
         mango.player_lives = 3;

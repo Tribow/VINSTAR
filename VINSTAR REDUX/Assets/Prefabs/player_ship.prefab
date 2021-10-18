@@ -100,7 +100,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bullet: {fileID: 5322074791067669643, guid: b1c5d333fba6cb741a2fe88b1c25ed92, type: 3}
   immune_timer: 0
-  bullet_damage: 1
   engine: {fileID: 2478023180810004219}
   the_particles: {fileID: 2246368570154069649, guid: 1ed1a12deecc4f74c8319c1b58e3fed7,
     type: 3}
@@ -131,7 +130,7 @@ PolygonCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1.5, y: 1.5}
+    oldSize: {x: 2, y: 2}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -276,10 +275,25 @@ PrefabInstance:
       propertyPath: m_Name
       value: player_radar
       objectReference: {fileID: 0}
+    - target: {fileID: 6101359031893885253, guid: cb9b1660f9f457f4ea2edef32d02a20f,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7973334424017657564, guid: cb9b1660f9f457f4ea2edef32d02a20f,
         type: 3}
       propertyPath: m_RootOrder
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7973334424017657564, guid: cb9b1660f9f457f4ea2edef32d02a20f,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 7973334424017657564, guid: cb9b1660f9f457f4ea2edef32d02a20f,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 7973334424017657564, guid: cb9b1660f9f457f4ea2edef32d02a20f,
         type: 3}

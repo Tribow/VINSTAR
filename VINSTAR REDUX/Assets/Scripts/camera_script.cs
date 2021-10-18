@@ -124,25 +124,25 @@ public class camera_script : MonoBehaviour
 
         //Boundary check
         //The number here are the current edges of the camera screen. If you ever change the size, please check these numbers.
-        if (transform.position.x > 178.4f - cam.orthographicSize*1.77f) // Right
+        if (transform.position.x > manager.level_bounds.x - cam.orthographicSize* (16f / 9f)) // Right
         {
             transitioning = true;
-            transform.position = new Vector3(178.4f - cam.orthographicSize*1.77f, transform.position.y, transform.position.z);
+            transform.position = new Vector3(manager.level_bounds.x - cam.orthographicSize* (16f / 9f), transform.position.y, transform.position.z);
         }
-        if (transform.position.x < -178.4f + cam.orthographicSize * 1.77f) // Left
+        if (transform.position.x < -manager.level_bounds.x + cam.orthographicSize * (16f/9f)) // Left
         {
             transitioning = true;
-            transform.position = new Vector3(-178.4f + cam.orthographicSize * 1.77f, transform.position.y, transform.position.z);
+            transform.position = new Vector3(-manager.level_bounds.x + cam.orthographicSize * (16f / 9f), transform.position.y, transform.position.z);
         }
-        if (transform.position.y > 151.2f - cam.orthographicSize) //Top
+        if (transform.position.y > manager.level_bounds.y - cam.orthographicSize) //Top
         {
             transitioning = true;
-            transform.position = new Vector3(transform.position.x, 151.2f - cam.orthographicSize, transform.position.z);
+            transform.position = new Vector3(transform.position.x, manager.level_bounds.y - cam.orthographicSize, transform.position.z);
         }
-        if (transform.position.y < -151.2f + cam.orthographicSize) //Bottom
+        if (transform.position.y < -manager.level_bounds.y + cam.orthographicSize) //Bottom
         {
             transitioning = true;
-            transform.position = new Vector3(transform.position.x, -151.2f + cam.orthographicSize, transform.position.z);
+            transform.position = new Vector3(transform.position.x, -manager.level_bounds.y + cam.orthographicSize, transform.position.z);
         }
 
         //DrawThis.Polygon(gameObject, 10, 2f, new Vector3(transform.position.x, transform.position.y, -5f), .1f, .1f);

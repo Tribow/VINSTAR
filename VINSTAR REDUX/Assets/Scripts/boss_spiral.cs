@@ -6,16 +6,19 @@ public class boss_spiral : Base_Enemy_Script
     private Stopwatch fire_rate = new Stopwatch(.16f);
     private Stopwatch berserk_wait;
     private Stopwatch berserk_time;
+    private Vector2 boss_size;
     private float oghealth;
     private bool got_hit = false;
     private bool berserk_phase;
 
-    private new void Start()
+    private new void Awake()
     {
         manager = GameObject.FindGameObjectWithTag("manager");
+        mango = manager.GetComponent<manager_script>();
         audiomanager = GameObject.FindGameObjectWithTag("audio manager").GetComponent<audio_manager>();
         boundary = GameObject.FindGameObjectWithTag("boundary").GetComponent<Collider2D>();
         player = GameObject.FindGameObjectWithTag("player");
+        boss_size = new Vector2(GetComponent<Collider2D>().bounds.extents.x, GetComponent<Collider2D>().bounds.extents.y);
         speed = set_speed.Random;
         ogspeed = speed;
         maxspeed = ogspeed;
@@ -23,8 +26,9 @@ public class boss_spiral : Base_Enemy_Script
         AI = State.Idle;
         _material = gameObject.GetComponent<SpriteRenderer>().material;
         my_canvas = Instantiate(enemy_canvas);
-        health = health * manager.GetComponent<manager_script>().player_bullet_damage;
+        health = health * mango.player_bullet_damage;
         oghealth = health;
+        //Randomizing how the boss acts a bit when at half health
         berserk_wait = new Stopwatch(Random.Range(10f, 15f));
         berserk_time = new Stopwatch(Random.Range(2f, 4f));
     }
@@ -33,6 +37,7 @@ public class boss_spiral : Base_Enemy_Script
     {
         if (collision.gameObject.tag != "boundary" &&
             collision.gameObject.tag != "mineral" &&
+            collision.gameObject.tag != "whitemineral" &&
             collision.gameObject.tag != "bullet" &&
             collision.gameObject.tag != "ebullet" &&
             collision.gameObject.tag != "bossbullet") //All of these collision checks are for what the cant be bounced off of.
@@ -64,6 +69,18 @@ public class boss_spiral : Base_Enemy_Script
                 Destroy(collision.gameObject);
                 Death_Handler(false);
             }
+        }
+
+        if (collision.gameObject.tag == "mineral")
+        { //Raise the upgrade points when coming into contact with mineral
+            upgrade_points++;
+            Destroy(collision.gameObject);
+        }
+
+        if (collision.gameObject.tag == "whitemineral")
+        {
+            Im_White();
+            Destroy(collision.gameObject);
         }
     }
 
@@ -151,27 +168,28 @@ public class boss_spiral : Base_Enemy_Script
                 berserk_wait.Countdown();
         }
 
-        if (transform.position.x > 168f)
+        //Boss bounces off of the sides of the level itself as well to stay in bounds
+        if (transform.position.x > mango.level_bounds.x - boss_size.x)
         {
-            transform.position = new Vector3(168f, transform.position.y, transform.position.z);
+            transform.position = new Vector3(mango.level_bounds.x - boss_size.x, transform.position.y, transform.position.z);
             velocity_angle += 90f;
         }
 
-        if (transform.position.x < -168f)
+        if (transform.position.x < -mango.level_bounds.x + boss_size.x)
         {
-            transform.position = new Vector3(-168f, transform.position.y, transform.position.z);
+            transform.position = new Vector3(-mango.level_bounds.x + boss_size.x, transform.position.y, transform.position.z);
             velocity_angle += 90f;
         }
 
-        if (transform.position.y > 140.7f)
+        if (transform.position.y > mango.level_bounds.y - boss_size.y)
         {
-            transform.position = new Vector3(transform.position.x, 140.7f, transform.position.z);
+            transform.position = new Vector3(transform.position.x, mango.level_bounds.y - boss_size.y, transform.position.z);
             velocity_angle += 90f;
         }
 
-        if (transform.position.y < -140.7f)
+        if (transform.position.y < -mango.level_bounds.y + boss_size.y)
         {
-            transform.position = new Vector3(transform.position.x, -140.7f, transform.position.z);
+            transform.position = new Vector3(transform.position.x, -mango.level_bounds.y + boss_size.y, transform.position.z);
             velocity_angle += 90f;
         }
 

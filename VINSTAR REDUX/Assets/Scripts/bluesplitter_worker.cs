@@ -6,7 +6,6 @@ using UnityEngine;
 //It will also try to run away from the player
 //Will prioritize gathering minerals over anything else
 //Gets larger the more minerals it has. It will grow at a rate of .0667 based on how many minerals it has (should cap at 12)
-//It is planned that this enemy will get its upgrade at 13 minerals
 //When dying, it should will spawn blue_scatterers for every 4 minerals it has. If it never collected that many it wont do this
 
 public class bluesplitter_worker : Base_Enemy_Script
@@ -15,7 +14,7 @@ public class bluesplitter_worker : Base_Enemy_Script
     public GameObject blue_scatterer;
 
     //Need to redo start event because the different idle values
-    private new void Start()
+    private new void Awake()
     {
         manager = GameObject.FindGameObjectWithTag("manager");
         audiomanager = GameObject.FindGameObjectWithTag("audio manager").GetComponent<audio_manager>();
@@ -36,6 +35,7 @@ public class bluesplitter_worker : Base_Enemy_Script
     {
         if (collision.gameObject.tag != "boundary" &&
             collision.gameObject.tag != "mineral" &&
+            collision.gameObject.tag != "whitemineral" &&
             collision.gameObject.tag != "bullet" &&
             collision.gameObject.tag != "ebullet" &&
             collision.gameObject.tag != "bossbullet") //All of these collision checks are for what the cant be bounced off of.
@@ -79,6 +79,12 @@ public class bluesplitter_worker : Base_Enemy_Script
             upgrade_points++;
             Destroy(collision.gameObject);
         }
+
+        if (collision.gameObject.tag == "whitemineral")
+        {
+            Im_White();
+            Destroy(collision.gameObject);
+        }
     }
 
     private void Death_Splitter_Handler(bool do_give_points)
@@ -99,7 +105,10 @@ public class bluesplitter_worker : Base_Enemy_Script
             Instantiate(death_particles, gameObject.transform.position, gameObject.transform.rotation);
 
             //Sound
-            audiomanager.Play_Sound(audio_manager.Sound.explosion_01, transform.position);
+            if (audiomanager != null)
+            {
+                audiomanager.Play_Sound(audio_manager.Sound.explosion_01, transform.position);
+            }
 
             //Do I spawn scatterer?
             int spawncheck = 0;

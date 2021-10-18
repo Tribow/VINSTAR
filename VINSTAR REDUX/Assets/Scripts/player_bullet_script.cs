@@ -2,17 +2,22 @@
 
 public class player_bullet_script : MonoBehaviour
 {
-    GameObject player;
-    int destroy_timer = 60;
     public float damage = 1;
-    Vector3 velocity;
+
+    GameObject player;
+    manager_script manager;
+    Stopwatch destroy_timer;
+    Vector3 velocity; //Not set to anything atm
 
     // Start is called before the first frame update
     void Start()
     {
+        manager = GameObject.FindGameObjectWithTag("manager").GetComponent<manager_script>();
         player = GameObject.FindGameObjectWithTag("player");
         transform.position = player.transform.position;
         transform.rotation = player.transform.rotation;
+
+        destroy_timer = new Stopwatch(1f);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -26,15 +31,12 @@ public class player_bullet_script : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        destroy_timer--;
         transform.position += transform.right * Time.deltaTime * 30;
 
-        if (player != null)
-        {
-            damage = player.GetComponent<player_ship_script>().bullet_damage;
-        }
+        damage = manager.player_bullet_damage;
 
-        if (destroy_timer == 0)
+        destroy_timer.Countdown();
+        if (destroy_timer.isFinished()) //Destroy bullet once the timer is done
         {
             Destroy(gameObject);
         }

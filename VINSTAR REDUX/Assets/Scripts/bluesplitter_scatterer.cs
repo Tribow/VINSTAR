@@ -9,9 +9,10 @@ using UnityEngine;
 public class bluesplitter_scatterer : Base_Enemy_Script
 {
     //Need to redo start event because the different idle values also upgrade points start at 4
-    private new void Start()
+    private new void Awake()
     {
         manager = GameObject.FindGameObjectWithTag("manager");
+        mango = manager.GetComponent<manager_script>();
         audiomanager = GameObject.FindGameObjectWithTag("audio manager").GetComponent<audio_manager>();
         boundary = GameObject.FindGameObjectWithTag("boundary").GetComponent<Collider2D>();
         player = GameObject.FindGameObjectWithTag("player");

@@ -18,6 +18,8 @@ TagManager:
   - audio manager
   - bossbullet
   - splitter
+  - background
+  - whitemineral
   layers:
   - Default
   - TransparentFX

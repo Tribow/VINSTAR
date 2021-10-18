@@ -99,6 +99,8 @@ ScriptsOnlyBuild:
     - UnityEngine.UI.Text
     - UnityEngine.UI.Toggle
     - UnityEngine.UI.VerticalLayoutGroup
+    com.unity.multiplayer-hlapi.Runtime.dll:
+    - UnityEngine.Networking.NetworkCallbacks
   sceneClasses:
     Assets/Scenes/Game.unity:
     - Class: 1
@@ -133,8 +135,6 @@ ScriptsOnlyBuild:
       Script: {instanceID: 0}
     - Class: 104
       Script: {instanceID: 0}
-    - Class: 114
-      Script: {instanceID: 808}
     - Class: 114
       Script: {instanceID: 11528}
     - Class: 114
@@ -308,12 +308,6 @@ ScriptsOnlyBuild:
     - Class: 243
       Script: {instanceID: 0}
     - Class: 245
-      Script: {instanceID: 0}
-    - Class: 156049354
-      Script: {instanceID: 0}
-    - Class: 483693784
-      Script: {instanceID: 0}
-    - Class: 1839735485
       Script: {instanceID: 0}
   scriptHashData:
   - hash:
@@ -756,13 +750,13 @@ ScriptsOnlyBuild:
     className: InputSystemUIInputModule
   - hash:
       serializedVersion: 2
-      Hash: 7ac9655588469c30913d6ab6d402eac8
+      Hash: 3d4d15c9364c5855e9c2ea591f500b3e
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: player_ship_script
   - hash:
       serializedVersion: 2
-      Hash: b62f611ccc8a20bbfe02c93e20b71f75
+      Hash: 09d719c38d5008e047d614a9e88f7737
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: bluesplitter_worker
@@ -810,7 +804,7 @@ ScriptsOnlyBuild:
     className: TMP_SpriteAsset
   - hash:
       serializedVersion: 2
-      Hash: a2e62138306b2a375d9e4dac449a709c
+      Hash: 6b4686dd3035d574a0cd06828426655f
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: red_warrior
@@ -972,7 +966,7 @@ ScriptsOnlyBuild:
     className: NetworkManager
   - hash:
       serializedVersion: 2
-      Hash: a2e62138306b2a375d9e4dac449a709c
+      Hash: 6b4686dd3035d574a0cd06828426655f
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: red_worker
@@ -1014,7 +1008,7 @@ ScriptsOnlyBuild:
     className: Placeholder
   - hash:
       serializedVersion: 2
-      Hash: 94739bc0951fa7aebc590b1c4bc0eb2a
+      Hash: 6fb303ebb44cdf09626e604096499d82
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: ui_script
@@ -1158,7 +1152,7 @@ ScriptsOnlyBuild:
     className: InputActionAssetEditor
   - hash:
       serializedVersion: 2
-      Hash: 9760684e9627927460898bb3ccb46b10
+      Hash: 40d73985d788c358e0e7899ba30a8d59
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: asteroid_script
@@ -1254,7 +1248,7 @@ ScriptsOnlyBuild:
     className: ShadowsMidtonesHighlights
   - hash:
       serializedVersion: 2
-      Hash: f597fd9c0c45993a9b970fdb5ed4215d
+      Hash: 1f7f4d89e424ad098e8173bbe82281f4
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: bluesplitter_fighter
@@ -1266,7 +1260,7 @@ ScriptsOnlyBuild:
     className: Tonemapping
   - hash:
       serializedVersion: 2
-      Hash: 075f4ff516b7bd56530b164d922f4289
+      Hash: 3e3f8f7dc46c8a0d42c0ee502645ad88
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: manager_script
@@ -1344,7 +1338,7 @@ ScriptsOnlyBuild:
     className: DebugUIHandlerVector2
   - hash:
       serializedVersion: 2
-      Hash: a2e62138306b2a375d9e4dac449a709c
+      Hash: 6b4686dd3035d574a0cd06828426655f
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: boss_spiral
@@ -1368,7 +1362,7 @@ ScriptsOnlyBuild:
     className: CinemachineUniversalPixelPerfect
   - hash:
       serializedVersion: 2
-      Hash: a2e62138306b2a375d9e4dac449a709c
+      Hash: 6b4686dd3035d574a0cd06828426655f
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: red_fighter
@@ -1380,7 +1374,7 @@ ScriptsOnlyBuild:
     className: LiftGammaGain
   - hash:
       serializedVersion: 2
-      Hash: a2e62138306b2a375d9e4dac449a709c
+      Hash: 6b4686dd3035d574a0cd06828426655f
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: Base_Enemy_Script
@@ -1518,7 +1512,7 @@ ScriptsOnlyBuild:
     className: input_rebind_script
   - hash:
       serializedVersion: 2
-      Hash: a2e62138306b2a375d9e4dac449a709c
+      Hash: 6b4686dd3035d574a0cd06828426655f
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: bluesplitter_scatterer

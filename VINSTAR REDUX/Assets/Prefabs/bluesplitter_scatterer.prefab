@@ -140,6 +140,8 @@ MonoBehaviour:
     type: 3}
   collected_minerals: {fileID: 1009187946944207903, guid: 6e2bd77757133f5478459750b899758a,
     type: 3}
+  white_mineral: {fileID: 1009187946944207903, guid: 32ad5582a100171429ece5680027146c,
+    type: 3}
   my_bullet: {fileID: 0}
   death_particles: {fileID: 3767474889071653246, guid: f1d07c9346fc05445bbbbe06c8086929,
     type: 3}
@@ -149,12 +151,14 @@ MonoBehaviour:
     minNum: 10
     maxNum: 12
   am_i_the_boss: 0
+  am_i_white: 0
   score: 1
   health: 2
   acceleration: 0.7
   deceleration: 0
   mineral_radius: 85
   velocity: {x: 0, y: 0, z: 0}
+  upgrade_points: 0
 --- !u!1001 &4892645844923325238
 PrefabInstance:
   m_ObjectHideFlags: 0

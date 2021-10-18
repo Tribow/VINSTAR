@@ -53,7 +53,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: e6ccfb2793291be449db3414fc4efc71, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -135,6 +135,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mineral: {fileID: 1009187946944207903, guid: 6e2bd77757133f5478459750b899758a, type: 3}
+  white_mineral: {fileID: 1009187946944207903, guid: 32ad5582a100171429ece5680027146c,
+    type: 3}
+  death_particle: {fileID: 2246368570154069649, guid: 0760020d946d51d4f82097ff56c07a09,
+    type: 3}
+  is_baby_asteroid: 0
 --- !u!1 &8503632870847181581
 GameObject:
   m_ObjectHideFlags: 0

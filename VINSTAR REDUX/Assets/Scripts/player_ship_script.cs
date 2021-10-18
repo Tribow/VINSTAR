@@ -1,13 +1,11 @@
 ﻿using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.Audio;
 
 public class player_ship_script : MonoBehaviour
 {
-    
+    [Header("Required Fields")]
     public GameObject bullet;
     public int immune_timer;
-    public float bullet_damage = 1;
     public AudioSource engine;
     public GameObject the_particles;
 
@@ -23,23 +21,27 @@ public class player_ship_script : MonoBehaviour
     [SerializeField]
     private Stopwatch bullet_timer = new Stopwatch(.1333f);
 
-    GameObject manager;
-    audio_manager audiomanager;
+    [Header("Public Data - DO NOT EDIT")]
     public float speed;
     public Vector3 velocity;
-    float velocity_angle;
-    private float max_og_speed;
+
+    private manager_script manager;
+    private audio_manager audiomanager;
+    private Material _material;
+    private Player_Actions.Player_ControlsActions player_input;
     private Stopwatch magnet_timer = new Stopwatch(1.5f);
-    
     private Vector2 input_value;
-
-    Player_Actions.Player_ControlsActions player_input;
-
+    private Vector2 player_size = new Vector2(.5f, .5f);
+    private Color outline_color;
+    private int health = 1;
+    private float outline_thickness;
+    private float velocity_angle;
+    private float max_og_speed;
+    
     private void OnEnable()
     {
         Player_Actions player_actions = input_manager_script.input_actions;
         player_input = player_actions.Player_Controls;
-
         //Input
         player_input.Shoot.Enable();
         player_input.Acceleration.Enable();
@@ -60,13 +62,17 @@ public class player_ship_script : MonoBehaviour
     }
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
-        manager = GameObject.FindGameObjectWithTag("manager");
+        manager = GameObject.FindGameObjectWithTag("manager").GetComponent<manager_script>();
         audiomanager = GameObject.FindGameObjectWithTag("audio manager").GetComponent<audio_manager>();
+        _material = GetComponent<SpriteRenderer>().material;
         immune_timer = 180;
         velocity_angle = transform.eulerAngles.z;
         max_og_speed = max_speed;
+        outline_color = _material.GetColor("_OutlineColor");
+        outline_thickness = _material.GetFloat("_OutlineThickness");
+        _material.SetColor("_FlashColor", Color.red);
 
         //Sound settings
         engine.Play(); //Play sound immediately
@@ -79,7 +85,8 @@ public class player_ship_script : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.tag != "boundary" && 
-            collision.gameObject.tag != "mineral" && 
+            collision.gameObject.tag != "mineral" &&
+            collision.gameObject.tag != "whitemineral" &&
             collision.gameObject.tag != "bullet" && 
             collision.gameObject.tag != "ebullet" && 
             collision.gameObject.tag != "player")
@@ -101,25 +108,46 @@ public class player_ship_script : MonoBehaviour
                 velocity *= -1;
         }
 
-        if (collision.gameObject.tag == "ebullet")
+        if (collision.gameObject.tag == "ebullet" || collision.gameObject.tag == "bossbullet")
         {
             if (immune_timer <= 0)
             {
-                //Particle
-                Instantiate(the_particles, transform.position, transform.rotation);
+                health--;
+                _material.SetFloat("_FlashAlpha", 1f);
+                Invoke("Flash_Off", .05f);
+                if (health <= 0)
+                {
+                    //Particle
+                    Instantiate(the_particles, transform.position, transform.rotation);
 
-                //Sound
-                audiomanager.Play_Sound(audio_manager.Sound.explosion_01, transform.position);
+                    //Sound
+                    audiomanager.Play_Sound(audio_manager.Sound.explosion_01, transform.position);
 
-                Destroy(gameObject); //It can only destroy player if the immune_timer is 0
+                    Destroy(gameObject); //It can only destroy player if the immune_timer is 0
+                }
             }
         }
 
         if (collision.gameObject.tag == "mineral")
         {
-            manager.GetComponent<manager_script>().Add_Damage();
+            manager.Add_Damage();
+            _material.SetColor("_OutlineColor", new Color(80f/255f, 120f/255f, 1f));
+            _material.SetFloat("_OutlineThickness", 3f);
             Destroy(collision.gameObject);
         }
+
+        if (collision.gameObject.tag == "whitemineral")
+        {
+            health += 1;
+            outline_color = Color.white;
+            _material.SetFloat("_OutlineThickness", health / 4f);
+            Destroy(collision.gameObject);
+        }
+    }
+
+    private void Flash_Off()
+    {
+        _material.SetFloat("_FlashAlpha", 0f);
     }
 
     private void Update()
@@ -131,7 +159,6 @@ public class player_ship_script : MonoBehaviour
     {
         immune_timer--;
         Vector3 old_position = transform.position;
-        bullet_damage = manager.GetComponent<manager_script>().player_bullet_damage;
 
         input_value = new Vector2(player_input.TurnRight.ReadValue<float>() + (player_input.TurnLeft.ReadValue<float>() * -1f), player_input.Acceleration.ReadValue<float>() + (player_input.Deceleration.ReadValue<float>() * -1f));
 
@@ -142,7 +169,7 @@ public class player_ship_script : MonoBehaviour
             if (bullet_timer.isFinished()) //only fire a shot when countdown is done
             {
                 bullet_timer.Reset();
-                Instantiate(bullet);
+                Instantiate(bullet, transform.position, transform.rotation);
                 audiomanager.Play_Sound(audio_manager.Sound.shoot_01, transform.position);
             }
         }
@@ -182,7 +209,7 @@ public class player_ship_script : MonoBehaviour
             transform.Rotate(Vector3.forward * (rotation_speed * -input_value.x)); //rotation to the right
         }
 
-        if(player_input.Slow.ReadValue<float>() == 1f)
+        if(player_input.Slow.ReadValue<float>() == 1f) //Lowers the max_speed to very slow when held
         {
             max_speed = Mathf.Lerp(max_speed, 2f, .1f);
         }
@@ -211,25 +238,48 @@ public class player_ship_script : MonoBehaviour
         speed = Vector3.Distance(old_position, transform.position) / Time.deltaTime;
         //print(speed);
 
-        engine.volume = Mathf.Abs(speed / 30);
+        if (health > 1)
+        {
+            outline_thickness = health / 4;
+            if (outline_thickness >= 3f) //Make sure it doesn't go too thick
+            {
+                outline_thickness = 3;
+            }
+        }
+
+        //Return the outline color and thickness back to its current state if it was changed
+        Color current_outline_color = _material.GetColor("_OutlineColor");
+        float current_outline_thickness = _material.GetFloat("_OutlineThickness");
+        if (current_outline_color != outline_color && health > 1) //Only change color if health is above 1
+        {
+            _material.SetColor("_OutlineColor", Color.Lerp(current_outline_color, outline_color, 0.02f));
+        }
+        if (current_outline_thickness > outline_thickness + .001)
+        {
+            _material.SetFloat("_OutlineThickness", Mathf.Lerp(current_outline_thickness, outline_thickness, .035f));
+        }
+        
+
+        engine.volume = Mathf.Abs(speed / 30f);
+        engine.pitch = 1 + Mathf.Abs(speed / 200f);
 
         //Boundary check
         //The number here are the current edges of the screen. If you ever change the size, please check these numbers. HARDCODE MASTER LMAOOOO
-        if (transform.position.x > 178f) // Right
+        if (transform.position.x > manager.level_bounds.x - player_size.x) // Right
         {
-            transform.position = new Vector2(178f, transform.position.y);
+            transform.position = new Vector2(manager.level_bounds.x - player_size.x, transform.position.y);
         }
-        if (transform.position.x < -178f) // Left
+        if (transform.position.x < -manager.level_bounds.x + player_size.x) // Left
         {
-            transform.position = new Vector2(-178f, transform.position.y);
+            transform.position = new Vector2(-manager.level_bounds.x + player_size.x, transform.position.y);
         }
-        if (transform.position.y > 150.7f) //Top
+        if (transform.position.y > manager.level_bounds.y - player_size.y) //Top
         {
-            transform.position = new Vector2(transform.position.x, 150.7f);
+            transform.position = new Vector2(transform.position.x, manager.level_bounds.y - player_size.y);
         }
-        if (transform.position.y < -150.7f) //Bottom
+        if (transform.position.y < -manager.level_bounds.y + player_size.y) //Bottom
         {
-            transform.position = new Vector2(transform.position.x, -150.7f);
+            transform.position = new Vector2(transform.position.x, -manager.level_bounds.y + player_size.y);
         }
 
         if(!ui_script.game_is_paused && engine.mute)
@@ -237,6 +287,6 @@ public class player_ship_script : MonoBehaviour
             engine.mute = false;
         }
 
-        //print(manager.GetComponent<manager_script>().player_bullet_damage);
+        //print(manager.player_bullet_damage);
     }
 }
