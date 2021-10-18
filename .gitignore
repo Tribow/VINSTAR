@@ -57,6 +57,7 @@ sysinfo.txt
 
 ArtifactDB
 il2cpp_cache/
+Artifacts/
 
 # Crashlytics generated file
 crashlytics-build.properties
