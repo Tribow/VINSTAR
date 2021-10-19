@@ -84,7 +84,13 @@ public class asteroid_script : MonoBehaviour
         if (collision.gameObject.tag == "bullet")
         {
             //You're my dad <3 -Liam        "n        i         c         e" -Trinity
-            if (manager != null)
+            if (mango == null) //Be doubly sure to access the manager script
+            {
+                manager = GameObject.FindGameObjectWithTag("manager");
+                mango = manager.GetComponent<manager_script>();
+                mango.Add_Ascore(2);
+            }
+            else
             {
                 mango.Add_Ascore(2);
             }

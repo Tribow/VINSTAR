@@ -9,7 +9,6 @@ public class camera_script : MonoBehaviour
     public bool transitioning;
     float speed = 0.1f;
     float max_speed = 0.2f;
-    float slowdown = 1;
 
     // Start is called before the first frame update
     void Start()
@@ -24,12 +23,12 @@ public class camera_script : MonoBehaviour
         if (player != null)
         {
             // + (cam.orthographicSize - 9f)*1.5f
-            if (Vector2.Distance(player.position, transform.position) > 15)
+            if (Vector2.Distance(player.position, transform.position) > 8 + cam.orthographicSize)
             {
 
                 if (transitioning)
                 {
-                    max_speed = 2f;
+                    max_speed = 1f;
 
                 }
                 else
@@ -37,8 +36,8 @@ public class camera_script : MonoBehaviour
                     if (player_script.speed / 50 > 2f)
                         max_speed = player_script.speed / 50;
                     else
-                        max_speed = 2f;
-                    speed = max_speed;
+                        max_speed = 1f;
+                    speed = Mathf.Lerp(speed, max_speed, .01f);
                 }
             }
             else
@@ -52,16 +51,13 @@ public class camera_script : MonoBehaviour
 
             if (Vector2.Distance(player.position, transform.position) < 5)
             {
-                slowdown += 0.1f;
-
-                speed -= 0.0055f / slowdown;
+                speed = Mathf.Lerp(speed, 0, .05f);
 
                 transform.position = Vector3.MoveTowards(transform.position, new Vector3(player.position.x, player.position.y, transform.position.z), speed);
             }
             else
             {
-                slowdown = 1;
-                speed += 0.005f;
+                speed = Mathf.Lerp(speed, max_speed, .05f);
 
                 //Based on the speed above the camera will follow the player.
                 transform.position = Vector3.MoveTowards(transform.position, new Vector3(player.position.x, player.position.y, transform.position.z), speed);
@@ -111,14 +107,7 @@ public class camera_script : MonoBehaviour
             }
         }
 
-        if (speed > max_speed)
-        {
-            speed = max_speed; //Make sure speed never goes above max_speed
-        }
-        else if (speed < 0)
-        {
-            speed = 0; //Make sure it never goes into negatives
-        }
+        speed = Mathf.Clamp(speed, 0, max_speed);
 
         //print(Vector2.Distance(player.position, transform.position));
 
@@ -126,22 +115,22 @@ public class camera_script : MonoBehaviour
         //The number here are the current edges of the camera screen. If you ever change the size, please check these numbers.
         if (transform.position.x > manager.level_bounds.x - cam.orthographicSize* (16f / 9f)) // Right
         {
-            transitioning = true;
+            //transitioning = true;
             transform.position = new Vector3(manager.level_bounds.x - cam.orthographicSize* (16f / 9f), transform.position.y, transform.position.z);
         }
         if (transform.position.x < -manager.level_bounds.x + cam.orthographicSize * (16f/9f)) // Left
         {
-            transitioning = true;
+            //transitioning = true;
             transform.position = new Vector3(-manager.level_bounds.x + cam.orthographicSize * (16f / 9f), transform.position.y, transform.position.z);
         }
         if (transform.position.y > manager.level_bounds.y - cam.orthographicSize) //Top
         {
-            transitioning = true;
+            //transitioning = true;
             transform.position = new Vector3(transform.position.x, manager.level_bounds.y - cam.orthographicSize, transform.position.z);
         }
         if (transform.position.y < -manager.level_bounds.y + cam.orthographicSize) //Bottom
         {
-            transitioning = true;
+            //transitioning = true;
             transform.position = new Vector3(transform.position.x, -manager.level_bounds.y + cam.orthographicSize, transform.position.z);
         }
 

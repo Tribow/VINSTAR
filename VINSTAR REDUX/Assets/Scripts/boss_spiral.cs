@@ -98,6 +98,23 @@ public class boss_spiral : Base_Enemy_Script
         return current_health - bullet_strength; //lower health;
     }
 
+    public new void Im_White()
+    {
+        am_i_white = true;
+        if (mango == null) //Be doubly sure to access the manager script
+        {
+            manager = GameObject.FindGameObjectWithTag("manager");
+            mango = manager.GetComponent<manager_script>();
+            health += mango.player_bullet_damage;
+        }
+        else
+        {
+            health += mango.player_bullet_damage;
+        }
+        _material.SetColor("_OutlineColor", Color.white);
+        _material.SetFloat("_OutlineThickness", 3f); //Just needed this value for the boss
+    }
+
     public override void Attack_Method()
     {
         for (int i = 0; i < 4; i++)
@@ -115,6 +132,7 @@ public class boss_spiral : Base_Enemy_Script
     {
         if (player != null)
         {
+            //If the boss hasn't been hit yet and the player isn't close by, move at fast speed
             if (Vector2.Distance(transform.position, player.transform.position) > 100f && !got_hit)
             {
                 maxspeed = 20;
@@ -122,6 +140,7 @@ public class boss_spiral : Base_Enemy_Script
             }
             else
             {
+                //Boss has been hit, so keep track of berserk phase
                 if (berserk_phase)
                 {
                     maxspeed = 20;
@@ -133,6 +152,7 @@ public class boss_spiral : Base_Enemy_Script
                 }
             }
 
+            //Start shooting when close enough to player, don't shoot during berserk movement
             if (Vector2.Distance(transform.position, player.transform.position) < 60f && !berserk_wait.isFinished())
             {
                 if (fire_rate.isFinished())
@@ -151,6 +171,7 @@ public class boss_spiral : Base_Enemy_Script
             player = GameObject.FindGameObjectWithTag("player");
         }
 
+        //At half health the berserk phase becomes active
         if (health < oghealth / 2)
         {
             if (berserk_wait.finished)

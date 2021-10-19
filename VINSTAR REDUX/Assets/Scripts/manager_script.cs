@@ -145,7 +145,7 @@ public class manager_script : MonoBehaviour
 
                 boss_object = Instantiate(bosses[0], boss_position, boss_rotation);
                 Add_To_Enemy_List(boss_object);
-                boss_health = boss_object.GetComponent<Base_Enemy_Script>().health * player_bullet_damage;
+                boss_health = boss_object.GetComponent<Base_Enemy_Script>().health;
                 boss_exist = true;
                 boss_spawnrate = 0;
             }
@@ -472,10 +472,35 @@ public class manager_script : MonoBehaviour
             Destroy(temp_canvas_array[i3]);
         }
 
-        GameObject[] temp_mineral_array = GameObject.FindGameObjectsWithTag("mineral");
-        for (int i4 = 0; i4 < temp_mineral_array.Length; i4++) //Remove minerals
+        GameObject[] temp_mineral_array = FindGameObjectsWithLayer(8);
+        if (temp_mineral_array != null)
         {
-            Destroy(temp_mineral_array[i4]);
+            for (int i4 = 0; i4 < temp_mineral_array.Length; i4++) //Remove minerals
+            {
+                Destroy(temp_mineral_array[i4]);
+            }
         }
+    }
+
+    //Using this specifically for powerups
+    private GameObject[] FindGameObjectsWithLayer(int layer_mask)
+    {
+        GameObject[] obj_array = FindObjectsOfType(typeof(GameObject)) as GameObject[];
+        List<GameObject> obj_list = new List<GameObject>();
+        
+        for (int i = 0; i < obj_array.Length; i++)
+        {
+            if (obj_array[i].layer == layer_mask)
+            {
+                obj_list.Add(obj_array[i]);
+            }
+        }
+
+        if (obj_list.Count == 0)
+        {
+            return null;
+        }
+
+        return obj_list.ToArray();
     }
 }

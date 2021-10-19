@@ -94,10 +94,17 @@ public class bluesplitter_worker : Base_Enemy_Script
         {
             if (do_give_points)
             {
-                if (manager != null)
+                if (mango == null) //Be doubly sure to access the manager script
                 {
-                    manager.GetComponent<manager_script>().Add_Score(1);
-                    manager.GetComponent<manager_script>().Enemy_Death(am_i_the_boss);
+                    manager = GameObject.FindGameObjectWithTag("manager");
+                    mango = manager.GetComponent<manager_script>();
+                    mango.Add_Score(score);
+                    mango.Enemy_Death(am_i_the_boss);
+                }
+                else
+                {
+                    mango.Add_Score(score);
+                    mango.Enemy_Death(am_i_the_boss);
                 }
             }
 

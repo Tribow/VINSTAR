@@ -290,7 +290,14 @@ public class Base_Enemy_Script : MonoBehaviour
         {
             if(give_points) //if give points get set, it will give points. This should be set to true if the player is dealing the killing blow
             {
-                if (manager != null)
+                if (mango == null) //Be doubly sure to access the manager script
+                {
+                    manager = GameObject.FindGameObjectWithTag("manager");
+                    mango = manager.GetComponent<manager_script>();
+                    mango.Add_Score(score);
+                    mango.Enemy_Death(am_i_the_boss);
+                }
+                else
                 {
                     mango.Add_Score(score);
                     mango.Enemy_Death(am_i_the_boss);
@@ -339,12 +346,17 @@ public class Base_Enemy_Script : MonoBehaviour
         if (minerals_got == minerals_needed)
             {
             new_object = Instantiate(upgraded_object, gameObject.transform.position,gameObject.transform.rotation);
-            if(manager == null) //Be doubly sure to access the manager script
+            if (mango == null) //Be doubly sure to access the manager script
             {
                 manager = GameObject.FindGameObjectWithTag("manager");
                 mango = manager.GetComponent<manager_script>();
+                mango.Add_To_Enemy_List(new_object);
             }
-            mango.Add_To_Enemy_List(new_object);
+            else
+            {
+                mango.Add_To_Enemy_List(new_object);
+            }
+
             if (am_i_white) //Make sure that the upgraded object is also white
             {
                 new_object.GetComponent<Base_Enemy_Script>().am_i_white = true;
@@ -357,12 +369,16 @@ public class Base_Enemy_Script : MonoBehaviour
     public void Im_White()
     {
         am_i_white = true;
-        if (manager == null) //Be doubly sure to access the manager script
+        if (mango == null) //Be doubly sure to access the manager script
         {
             manager = GameObject.FindGameObjectWithTag("manager");
             mango = manager.GetComponent<manager_script>();
+            health += mango.player_bullet_damage;
         }
-        health += mango.player_bullet_damage;
+        else
+        {
+            health += mango.player_bullet_damage;
+        }
         _material.SetColor("_OutlineColor", Color.white);
         _material.SetFloat("_OutlineThickness", 1f);
     }
