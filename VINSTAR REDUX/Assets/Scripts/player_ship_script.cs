@@ -37,6 +37,8 @@ public class player_ship_script : MonoBehaviour
     private float outline_thickness;
     private float velocity_angle;
     private float max_og_speed;
+    private float true_max_og_speed;
+    private float og_acceleration;
     
     private void OnEnable()
     {
@@ -70,6 +72,8 @@ public class player_ship_script : MonoBehaviour
         immune_timer = 180;
         velocity_angle = transform.eulerAngles.z;
         max_og_speed = max_speed;
+        true_max_og_speed = max_og_speed;
+        og_acceleration = acceleration;
         outline_color = _material.GetColor("_OutlineColor");
         outline_thickness = _material.GetFloat("_OutlineThickness");
         _material.SetColor("_FlashColor", Color.red);
@@ -87,6 +91,7 @@ public class player_ship_script : MonoBehaviour
         if (collision.gameObject.tag != "boundary" && 
             collision.gameObject.tag != "mineral" &&
             collision.gameObject.tag != "whitemineral" &&
+            collision.gameObject.tag != "powerup" &&
             collision.gameObject.tag != "bullet" && 
             collision.gameObject.tag != "ebullet" && 
             collision.gameObject.tag != "player")
@@ -96,13 +101,18 @@ public class player_ship_script : MonoBehaviour
 
                 Vector3 enemy_velocity = collision.gameObject.GetComponent<Base_Enemy_Script>().velocity;
                 //print(Vector3.Angle(enemy_velocity, velocity));
+                int slow_modifier = 0;
+                if (player_input.Slow.ReadValue<float>() == 1)
+                {
+                    slow_modifier = 1;
+                }
                 if (Vector3.Angle(enemy_velocity, velocity) > 90)
                 {
-                    velocity *= -1;
+                    velocity *= -1 - slow_modifier;
                     velocity += enemy_velocity;
                 }
                 else
-                    velocity *= -1;
+                    velocity *= -1 - slow_modifier;
             }
             else
                 velocity *= -1;
@@ -122,6 +132,8 @@ public class player_ship_script : MonoBehaviour
 
                     //Sound
                     audiomanager.Play_Sound(audio_manager.Sound.explosion_01, transform.position);
+
+                    manager.Drop_Player_Powerups();
 
                     Destroy(gameObject); //It can only destroy player if the immune_timer is 0
                 }
@@ -143,11 +155,68 @@ public class player_ship_script : MonoBehaviour
             _material.SetFloat("_OutlineThickness", health / 4f);
             Destroy(collision.gameObject);
         }
+
+        if (collision.gameObject.tag == "powerup")
+        {
+            Which_Powerup(collision.GetComponent<p_script>().powerup);
+            Destroy(collision.gameObject);
+        }
     }
 
     private void Flash_Off()
     {
         _material.SetFloat("_FlashAlpha", 0f);
+    }
+
+    private void Which_Powerup(Powerup.P_Type the_powerup)
+    {
+        switch (the_powerup) //Color of the asteroid will be different based on this value
+        {
+            case Powerup.P_Type.Speed:
+                manager.p_speed++;
+                manager.player_powerups.Add_Powerup(LoadPrefab.speed_powerup);
+                _material.SetColor("_OutlineColor", Color.cyan);
+                _material.SetFloat("_OutlineThickness", 3f);
+                break;
+            case Powerup.P_Type.Acceleration:
+                manager.p_acceleration++;
+                manager.player_powerups.Add_Powerup(LoadPrefab.acceleration_powerup);
+                _material.SetColor("_OutlineColor", new Color(215f / 255f, 96f / 255f, 250f / 255f));
+                _material.SetFloat("_OutlineThickness", 3f);
+                break;
+            case Powerup.P_Type.Fire_Rate:
+                _material.SetColor("_OutlineColor", new Color(1f, 162f / 255f, 0f));
+                _material.SetFloat("_OutlineThickness", 3f);
+                break;
+            case Powerup.P_Type.Bullet_Life:
+                _material.SetColor("_OutlineColor", Color.magenta);
+                _material.SetFloat("_OutlineThickness", 3f);
+                break;
+            case Powerup.P_Type.Bullet_Speed:
+                _material.SetColor("_OutlineColor", Color.yellow);
+                _material.SetFloat("_OutlineThickness", 3f);
+                break;
+            case Powerup.P_Type.Handling:
+                _material.SetColor("_OutlineColor", Color.green);
+                _material.SetFloat("_OutlineThickness", 3f);
+                break;
+            case Powerup.P_Type.Ship_Size:
+                _material.SetColor("_OutlineColor", Color.red);
+                _material.SetFloat("_OutlineThickness", 3f);
+                break;
+            case Powerup.P_Type.Bullet_Size:
+                _material.SetColor("_OutlineColor", Color.blue);
+                _material.SetFloat("_OutlineThickness", 3f);
+                break;
+            case Powerup.P_Type.Magnet_Range:
+                _material.SetColor("_OutlineColor", new Color(1f, 192f / 255f, 140f / 255f));
+                _material.SetFloat("_OutlineThickness", 3f);
+                break;
+            case Powerup.P_Type.Extra_Bullet:
+                _material.SetColor("_OutlineColor", new Color(0f, 1f, 135f / 255f));
+                _material.SetFloat("_OutlineThickness", 3f);
+                break;
+        }
     }
 
     private void Update()
@@ -161,6 +230,11 @@ public class player_ship_script : MonoBehaviour
         Vector3 old_position = transform.position;
 
         input_value = new Vector2(player_input.TurnRight.ReadValue<float>() + (player_input.TurnLeft.ReadValue<float>() * -1f), player_input.Acceleration.ReadValue<float>() + (player_input.Deceleration.ReadValue<float>() * -1f));
+
+        //Manager Powerup Check
+        max_og_speed = true_max_og_speed + manager.p_speed;
+        acceleration = og_acceleration + (manager.p_acceleration * .1f);
+        
 
         if (player_input.Shoot.ReadValue<float>() == 1f) //Start shooting when button is held
         {
@@ -188,11 +262,14 @@ public class player_ship_script : MonoBehaviour
                         if(nearby_minerals[i] != null) //Pull close enough minerals into the player with a "magnet" if the player isn't shooting
                         {
                             mineral_script the_script = nearby_minerals[i].GetComponent<mineral_script>();
-                            Quaternion look_rotation = Quaternion.LookRotation(Vector3.forward, transform.position - nearby_minerals[i].transform.position);
-                            look_rotation = look_rotation * Quaternion.Euler(0, 0, 90);
-                            the_script.velocity_angle = look_rotation.eulerAngles.z;
-                            the_script.movement_speed_x = .08f;
-                            the_script.movement_speed_y = .08f;
+                            if (the_script != null)
+                            {
+                                Quaternion look_rotation = Quaternion.LookRotation(Vector3.forward, transform.position - nearby_minerals[i].transform.position);
+                                look_rotation = look_rotation * Quaternion.Euler(0, 0, 90);
+                                the_script.velocity_angle = look_rotation.eulerAngles.z;
+                                the_script.movement_speed_x = .08f;
+                                the_script.movement_speed_y = .08f;
+                            }
                         }
                     }
                 }

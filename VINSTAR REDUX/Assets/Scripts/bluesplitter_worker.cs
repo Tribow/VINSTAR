@@ -36,6 +36,7 @@ public class bluesplitter_worker : Base_Enemy_Script
         if (collision.gameObject.tag != "boundary" &&
             collision.gameObject.tag != "mineral" &&
             collision.gameObject.tag != "whitemineral" &&
+            collision.gameObject.tag != "powerup" &&
             collision.gameObject.tag != "bullet" &&
             collision.gameObject.tag != "ebullet" &&
             collision.gameObject.tag != "bossbullet") //All of these collision checks are for what the cant be bounced off of.
@@ -83,6 +84,12 @@ public class bluesplitter_worker : Base_Enemy_Script
         if (collision.gameObject.tag == "whitemineral")
         {
             Im_White();
+            Destroy(collision.gameObject);
+        }
+
+        if (collision.gameObject.tag == "powerup")
+        {
+            Which_Powerup(collision.GetComponent<p_script>().powerup);
             Destroy(collision.gameObject);
         }
     }
@@ -160,7 +167,7 @@ public class bluesplitter_worker : Base_Enemy_Script
                 if (amount_nearby > 0)
                 {//Switch to the Mine AI the moment there's a mineral nearby and gun for it
                     StopAllCoroutines();
-                    StartCoroutine(Mineral_Movement(nearby_minerals, new Stopwatch(2), 10f, 5f, .3f, 9f));
+                    StartCoroutine(Mineral_Movement(nearby_minerals, new Stopwatch(2), 10f, 5f, .3f, 9f + p_speed));
                     AI = State.Mine;
                 }
                 if (player != null)
@@ -209,7 +216,7 @@ public class bluesplitter_worker : Base_Enemy_Script
                 if (amount_nearby > 0)
                 {//Will immediately get distracted if there are minerals nearby
                     StopAllCoroutines();
-                    StartCoroutine(Mineral_Movement(nearby_minerals, new Stopwatch(2), 10f, 5f, .3f, 9f));
+                    StartCoroutine(Mineral_Movement(nearby_minerals, new Stopwatch(2), 10f, 5f, .3f, 9f + p_speed));
                     AI = State.Mine;
                 }
                 break;

@@ -27,8 +27,10 @@ public class Base_Enemy_Script : MonoBehaviour
     protected GameObject manager; //The manager of the object
     protected GameObject player;
     protected GameObject my_canvas; //reference for instantiation of the canvas
+    protected Powerup powerup = new Powerup();
     protected manager_script mango;
     protected List<GameObject> mybullets = new List<GameObject>();
+    protected List<GameObject> powerup_temp_list = new List<GameObject>();
     protected Collider2D boundary; //The boundaries the enemy can travel too
     protected Collider2D[] nearby_minerals = new Collider2D[5]; //The ship can see up to 5 minerals within its radius
     protected Coroutine my_coroutine;
@@ -45,6 +47,19 @@ public class Base_Enemy_Script : MonoBehaviour
     protected float maxspeed; //absolute top speed the enemy can manage
     protected float velocity_angle; //The current angle of the velocity
     protected float turning_speed; //how fast the enemy can turns at any time
+    protected Color my_outline_color;
+    protected float my_outline_thickness;
+    //Powerup Related Variables
+    protected float p_speed;
+    protected float p_acceleration;
+    protected float p_firerate;
+    protected float p_bulletlife;
+    protected float p_bulletspeed;
+    protected float p_handling;
+    protected float p_shipsize;
+    protected float p_bulletsize;
+    protected bool p_magnetrange;
+    protected bool p_extrabullet;
 
     [Header("Public Data - DO NOT EDIT")]
     public Vector3 velocity; //The velocity at any given time
@@ -72,10 +87,27 @@ public class Base_Enemy_Script : MonoBehaviour
     // Start is called before the first frame update
     public void Start() 
     {
+        Apply_Powerups(); //Apply any powerup it may have gotten from the previous object it upgraded from
+
         if (am_i_white) //If this enemy has am_i_white as true right at the start then give it the white buffs
         {
             Im_White();
         }
+
+        _material.SetColor("_OutlineColor", my_outline_color);
+        _material.SetFloat("_OutlineThickness", my_outline_thickness);
+
+        //In case this object upgraded from a previous object, this is to make sure it has the powerups
+        powerup.powerup_list = new List<GameObject>(powerup_temp_list);
+
+        /*if (powerup.powerup_list.Count > 0)
+        {
+            for(int i = 0; i < powerup.powerup_list.Count; i++)
+            {
+                print("Hey I'm checking for powerup at the start");
+                Which_Powerup(powerup.powerup_list[i].GetComponent<p_script>().powerup);
+            }
+        }*/
     }
 
     public void OnDestroy()
@@ -92,6 +124,7 @@ public class Base_Enemy_Script : MonoBehaviour
         if (collision.gameObject.tag != "boundary" && 
             collision.gameObject.tag != "mineral" &&
             collision.gameObject.tag != "whitemineral" &&
+            collision.gameObject.tag != "powerup" &&
             collision.gameObject.tag != "bullet" && 
             collision.gameObject.tag != "ebullet" &&
             collision.gameObject.tag != "bossbullet") //All of these collision checks are for what cant be bounced off of.
@@ -139,6 +172,12 @@ public class Base_Enemy_Script : MonoBehaviour
         if (collision.gameObject.tag == "whitemineral")
         {
             Im_White();
+            Destroy(collision.gameObject);
+        }
+
+        if (collision.gameObject.tag == "powerup")
+        {
+            Which_Powerup(collision.GetComponent<p_script>().powerup);
             Destroy(collision.gameObject);
         }
     }
@@ -326,6 +365,10 @@ public class Base_Enemy_Script : MonoBehaviour
                     Instantiate(white_mineral, gameObject.transform.position, gameObject.transform.rotation);
                 }
             }
+
+            //Also drop any powerups owned
+            powerup.Drop_Powerups(transform.position);
+
             //Be sure to destroy extra objects
             Destroy(my_canvas);
             Destroy(gameObject);
@@ -346,6 +389,7 @@ public class Base_Enemy_Script : MonoBehaviour
         if (minerals_got == minerals_needed)
             {
             new_object = Instantiate(upgraded_object, gameObject.transform.position,gameObject.transform.rotation);
+            Base_Enemy_Script object_script = new_object.GetComponent<Base_Enemy_Script>();
             if (mango == null) //Be doubly sure to access the manager script
             {
                 manager = GameObject.FindGameObjectWithTag("manager");
@@ -359,16 +403,115 @@ public class Base_Enemy_Script : MonoBehaviour
 
             if (am_i_white) //Make sure that the upgraded object is also white
             {
-                new_object.GetComponent<Base_Enemy_Script>().am_i_white = true;
+                object_script.am_i_white = true;
             }
+
+            object_script.powerup_temp_list = new List<GameObject>(powerup.powerup_list);
+            object_script.my_outline_color = my_outline_color;
+            object_script.my_outline_thickness = my_outline_thickness;
+            object_script.p_speed = p_speed;
+            object_script.p_acceleration = p_acceleration;
+            object_script.p_firerate = p_firerate;
+            object_script.p_bulletlife = p_bulletlife;
+            object_script.p_bulletspeed = p_bulletspeed;
+            object_script.p_handling = p_handling;
+            object_script.p_shipsize = p_shipsize;
+            object_script.p_bulletsize = p_bulletsize;
+            object_script.p_magnetrange = p_magnetrange;
+            object_script.p_extrabullet = p_extrabullet;
+
             Destroy(my_canvas);
             Destroy(gameObject);
             }
     }
 
+    #region Powerup Related Functions
+    protected void Which_Powerup(Powerup.P_Type the_powerup)
+    {
+        switch (the_powerup) //Color of the asteroid will be different based on this value
+        {
+            case Powerup.P_Type.Speed:
+                p_speed += 10;
+                ogspeed += 10;
+                powerup.Add_Powerup(LoadPrefab.speed_powerup);
+                _material.SetColor("_OutlineColor", Color.cyan);
+                _material.SetFloat("_OutlineThickness", 1f);
+                my_outline_color = Color.cyan;
+                my_outline_thickness = 1f;
+                break;
+            case Powerup.P_Type.Acceleration:
+                acceleration += 0.2f;
+                p_acceleration += 0.2f;
+                powerup.Add_Powerup(LoadPrefab.acceleration_powerup);
+                _material.SetColor("_OutlineColor", new Color(215f / 255f, 96f / 255f, 250f / 255f));
+                _material.SetFloat("_OutlineThickness", 1f);
+                my_outline_color = new Color(215f / 255f, 96f / 255f, 250f / 255f);
+                my_outline_thickness = 1f;
+                break;
+            case Powerup.P_Type.Fire_Rate:
+                _material.SetColor("_OutlineColor", new Color(1f, 162f / 255f, 0f));
+                _material.SetFloat("_OutlineThickness", 1f);
+                my_outline_color = new Color(1f, 162f / 255f, 0f);
+                my_outline_thickness = 1f;
+                break;
+            case Powerup.P_Type.Bullet_Life:
+                _material.SetColor("_OutlineColor", Color.magenta);
+                _material.SetFloat("_OutlineThickness", 1f);
+                my_outline_color = Color.magenta;
+                my_outline_thickness = 1f;
+                break;
+            case Powerup.P_Type.Bullet_Speed:
+                _material.SetColor("_OutlineColor", Color.yellow);
+                _material.SetFloat("_OutlineThickness", 1f);
+                my_outline_color = Color.yellow;
+                my_outline_thickness = 1f;
+                break;
+            case Powerup.P_Type.Handling:
+                _material.SetColor("_OutlineColor", Color.green);
+                _material.SetFloat("_OutlineThickness", 1f);
+                my_outline_color = Color.green;
+                my_outline_thickness = 1f;
+                break;
+            case Powerup.P_Type.Ship_Size:
+                _material.SetColor("_OutlineColor", Color.red);
+                _material.SetFloat("_OutlineThickness", 1f);
+                my_outline_color = Color.white;
+                my_outline_thickness = 1f;
+                break;
+            case Powerup.P_Type.Bullet_Size:
+                _material.SetColor("_OutlineColor", Color.blue);
+                _material.SetFloat("_OutlineThickness", 1f);
+                my_outline_color = Color.blue;
+                my_outline_thickness = 1f;
+                break;
+            case Powerup.P_Type.Magnet_Range:
+                _material.SetColor("_OutlineColor", new Color(1f, 192f / 255f, 140f / 255f));
+                _material.SetFloat("_OutlineThickness", 1f);
+                my_outline_color = new Color(1f, 192f / 255f, 140f / 255f);
+                my_outline_thickness = 1f;
+                break;
+            case Powerup.P_Type.Extra_Bullet:
+                _material.SetColor("_OutlineColor", new Color(0f, 1f, 135f / 255f));
+                _material.SetFloat("_OutlineThickness", 1f);
+                my_outline_color = new Color(0f, 1f, 135f / 255f);
+                my_outline_thickness = 1f;
+                break;
+        }
+    }
+
+    protected void Apply_Powerups()
+    {
+        ogspeed += p_speed;
+        acceleration += p_acceleration;
+    }
+
     public void Im_White()
     {
         am_i_white = true;
+        _material.SetColor("_OutlineColor", Color.white);
+        _material.SetFloat("_OutlineThickness", 1f);
+        my_outline_color = Color.white;
+        my_outline_thickness = 1f;
         if (mango == null) //Be doubly sure to access the manager script
         {
             manager = GameObject.FindGameObjectWithTag("manager");
@@ -379,9 +522,8 @@ public class Base_Enemy_Script : MonoBehaviour
         {
             health += mango.player_bullet_damage;
         }
-        _material.SetColor("_OutlineColor", Color.white);
-        _material.SetFloat("_OutlineThickness", 1f);
     }
+    #endregion
 
     /// <summary>
     /// Write over whenever the enemy is going to attack in some sort of way. Write how it attacks here
@@ -543,7 +685,7 @@ public class Base_Enemy_Script : MonoBehaviour
         bool choose_mineral = true;
         Vector3 target_position = new Vector3(0, 0, 0);
         turning_speed = 0; //Make sure you're not turning for some reason
-        maxspeed = new_max_speed; //Use new speed
+        maxspeed = new_max_speed + p_speed; //Use new speed
         if (mineral_turn_accuracy > 1) //if it was above 1 it would miss the point of the variable
             mineral_turn_accuracy = 1;
 
@@ -647,7 +789,7 @@ public class Base_Enemy_Script : MonoBehaviour
                     turning_speed = chase_speed;
                     maxspeed = ogspeed;
                     if (distance_from_angle <= angle_desired)
-                        maxspeed = new_max_speed;
+                        maxspeed = new_max_speed + p_speed;
                 }
 
                 if (Vector2.Distance(transform.position, target_position) < firing_distance)

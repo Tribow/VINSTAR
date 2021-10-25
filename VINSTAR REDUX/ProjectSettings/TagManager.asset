@@ -20,6 +20,7 @@ TagManager:
   - splitter
   - background
   - whitemineral
+  - powerup
   layers:
   - Default
   - TransparentFX
@@ -29,7 +30,7 @@ TagManager:
   - UI
   - 
   - 
-  - material
+  - item
   - player
   - radar
   - boss

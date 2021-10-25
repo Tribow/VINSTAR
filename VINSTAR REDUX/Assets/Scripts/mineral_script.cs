@@ -13,7 +13,6 @@ public class mineral_script : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        mango = GameObject.FindGameObjectWithTag("manager").GetComponent<manager_script>();
         movement_speed_x = Random.Range(-.01f, .01f);
         movement_speed_y = Random.Range(-.01f, .01f);
         velocity_angle = transform.eulerAngles.z;
@@ -28,9 +27,6 @@ public class mineral_script : MonoBehaviour
 
         transform.position += velocity;
         transform.Rotate(Vector3.forward * 7); //Mineral movement and rotation
-
-        if (mango.make_next_level) //Mineral will remove itself if manager is making the next level
-            destroy_timer = 0;
 
         if (destroy_timer == 0)
         {

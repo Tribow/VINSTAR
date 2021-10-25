@@ -41,8 +41,18 @@ public class manager_script : MonoBehaviour
     public bool game_over = false; //is the game over yet
     public bool start_game = false; //For playing a second time
     public bool make_next_level = false; //Whether or not the next level is being made
+    public Powerup player_powerups = new Powerup();
+    public int p_speed;
+    public int p_acceleration;
+    /*public int p_firerate;
+    public int p_bulletlife;
+    public int p_bulletspeed;
+    public int p_handling;
+    public int p_shipsize;
+    public int p_bulletsize;
+    public int p_magnetrange;
+    public int p_extrabullet;*/
 
-    
     Stopwatch next_level_timer = new Stopwatch(3f);
     Stopwatch respawn_timer = new Stopwatch(2f); //how long it takes to respawn
     Stopwatch reset_countdown = new Stopwatch(5f); //The amount of time the leaderboard stays up until it kills entire game, ready to reset
@@ -52,6 +62,7 @@ public class manager_script : MonoBehaviour
     Quaternion player_rotation;
     //int time_score = 0;
     int kills_needed = 6; //Kills needed to move on
+    int minimum_enemies; //This number is a modifier for the minimum enemies in the level
     int enemies_spawned = 20; //amount of enemies that spawn
     int enemy_difficulty = 500; //this number may not change, it is the number used to decide what spawns
     int boss_likelihood = 2000; //this number will likely not change for same reasons
@@ -78,96 +89,6 @@ public class manager_script : MonoBehaviour
     {
         player_input.RadarButton.Disable();
         player_input.Pause.Disable();
-    }
-
-    public void Add_To_Asteroid_List(GameObject asteroid)
-    {
-        asteroid_amount.Add(asteroid);
-    }
-
-    public void Add_To_Enemy_List(GameObject enemy)
-    {
-        enemy_amount.Add(enemy);
-    }
-
-    public void Spawn_Asteroid(Vector3 position, float scale)
-    {
-        int asteroid_index = Random.Range(0, 5);
-        GameObject the_asteroid = Instantiate(asteroids[asteroid_index], position, Quaternion.identity);
-        the_asteroid.transform.localScale *= scale;
-        the_asteroid.transform.GetChild(0).transform.localScale /= scale;
-        the_asteroid.GetComponent<asteroid_script>().is_baby_asteroid = true;
-        Add_To_Asteroid_List(the_asteroid);
-    }
-
-    public void Add_Score(int score_amount)
-    {
-        enemy_score += score_amount;
-    }
-
-    public void Add_Ascore(int score_amount)
-    {
-        asteroid_score += score_amount;
-    }
-
-    public void Enemy_Death(bool is_boss)
-    {
-        if (!boss_exist)
-        {
-            int temp_number = Random.Range(0, boss_likelihood);
-            if (temp_number < boss_spawnrate) //spawn boss
-            {
-                //spawn the boss and also add it to the enemy list
-                int safety_net = 0;
-                Vector2 boss_position = new Vector2(Random.Range(-160, 160), Random.Range(-130, 130)); //make the random enemy position
-                Quaternion boss_rotation = new Quaternion();
-                boss_rotation.eulerAngles = new Vector3(0.0f, 0.0f, Random.Range(0.0f, 360f)); //set the rotation
-
-                if (player != null)
-                {
-                    while (Vector2.Distance(player_object.transform.position, boss_position) < 50) //so if the position is too close to player
-                    {
-                        boss_position = new Vector2(Random.Range(-160, 160), Random.Range(-130, 130)); //choose a different position
-
-                        if (Vector2.Distance(player.transform.position, boss_position) >= 50) //it will keep doing it until this is true
-                        {
-                            break;
-                        }
-
-                        safety_net++;
-                        if (safety_net == 10) //The safety net is here to stop the while loop from going too far
-                        {
-                            boss_position = new Vector2(160, 130); //If it tries 10 times to change position, the position will default to here
-                            break;
-                        }
-                    }
-                }
-
-                boss_object = Instantiate(bosses[0], boss_position, boss_rotation);
-                Add_To_Enemy_List(boss_object);
-                boss_health = boss_object.GetComponent<Base_Enemy_Script>().health;
-                boss_exist = true;
-                boss_spawnrate = 0;
-            }
-            else //raise likelihood of boss spawning otherwise
-            {
-                boss_spawnrate++;
-            }
-        }
-        else
-        {
-            if(is_boss)
-            {
-                boss_died = true;
-            }
-        }
-
-        kills_left--;
-    }
-
-    public void Add_Damage()
-    {
-        player_bullet_damage += .1f;
     }
 
     public void Toggle_Radar(InputAction.CallbackContext value)
@@ -219,8 +140,14 @@ public class manager_script : MonoBehaviour
             player_position = player.transform.position;
             player_rotation = player.transform.rotation;
 
+            minimum_enemies = Mathf.RoundToInt(current_level / 25f); //Scaling math for the minimum amount of enemies spawned for each level
+            if(minimum_enemies > 160)
+            {
+                minimum_enemies = 160;
+            }
+
             //Checking Enemies
-            if (enemy_amount.Count < 20 && !make_next_level && !boss_exist) //If the amount of enemies fall under this number, make a new one.
+            if (enemy_amount.Count < 20 + minimum_enemies && !make_next_level && !boss_exist) //If the amount of enemies fall under this number, make a new one.
             {
                 Spawn_Enemy();
             }
@@ -347,6 +274,96 @@ public class manager_script : MonoBehaviour
         }
     }
 
+    public void Add_To_Asteroid_List(GameObject asteroid)
+    {
+        asteroid_amount.Add(asteroid);
+    }
+
+    public void Add_To_Enemy_List(GameObject enemy)
+    {
+        enemy_amount.Add(enemy);
+    }
+
+    public void Spawn_Asteroid(Vector3 position, float scale)
+    {
+        int asteroid_index = Random.Range(0, 5);
+        GameObject the_asteroid = Instantiate(asteroids[asteroid_index], position, Quaternion.identity);
+        the_asteroid.transform.localScale *= scale;
+        the_asteroid.transform.GetChild(0).transform.localScale /= scale;
+        the_asteroid.GetComponent<asteroid_script>().is_baby_asteroid = true;
+        Add_To_Asteroid_List(the_asteroid);
+    }
+
+    public void Add_Score(int score_amount)
+    {
+        enemy_score += score_amount;
+    }
+
+    public void Add_Ascore(int score_amount)
+    {
+        asteroid_score += score_amount;
+    }
+
+    public void Enemy_Death(bool is_boss)
+    {
+        if (!boss_exist)
+        {
+            int temp_number = Random.Range(0, boss_likelihood);
+            if (temp_number < boss_spawnrate) //spawn boss
+            {
+                //spawn the boss and also add it to the enemy list
+                int safety_net = 0;
+                Vector2 boss_position = new Vector2(Random.Range(-160, 160), Random.Range(-130, 130)); //make the random enemy position
+                Quaternion boss_rotation = new Quaternion();
+                boss_rotation.eulerAngles = new Vector3(0.0f, 0.0f, Random.Range(0.0f, 360f)); //set the rotation
+
+                if (player != null)
+                {
+                    while (Vector2.Distance(player_object.transform.position, boss_position) < 50) //so if the position is too close to player
+                    {
+                        boss_position = new Vector2(Random.Range(-160, 160), Random.Range(-130, 130)); //choose a different position
+
+                        if (Vector2.Distance(player.transform.position, boss_position) >= 50) //it will keep doing it until this is true
+                        {
+                            break;
+                        }
+
+                        safety_net++;
+                        if (safety_net == 10) //The safety net is here to stop the while loop from going too far
+                        {
+                            boss_position = new Vector2(160, 130); //If it tries 10 times to change position, the position will default to here
+                            break;
+                        }
+                    }
+                }
+
+                boss_object = Instantiate(bosses[0], boss_position, boss_rotation);
+                Add_To_Enemy_List(boss_object);
+                boss_health = boss_object.GetComponent<Base_Enemy_Script>().health;
+                boss_exist = true;
+                boss_spawnrate = 0;
+            }
+            else //raise likelihood of boss spawning otherwise
+            {
+                boss_spawnrate++;
+            }
+        }
+        else
+        {
+            if (is_boss)
+            {
+                boss_died = true;
+            }
+        }
+
+        kills_left--;
+    }
+
+    public void Add_Damage()
+    {
+        player_bullet_damage += .1f;
+    }
+
     //This is to make the levels, adjustments may need to be made to produce future levels
     public void Generate_Level()
     {
@@ -361,10 +378,10 @@ public class manager_script : MonoBehaviour
             Add_To_Asteroid_List(the_asteroid);
         }
 
-        /*if (enemies_spawned >= 100) I TOOK THE ENEMY CAP AND I FREAKED IT
+        if (enemies_spawned >= 220)
         {
-            enemies_spawned = 100; //Make sure there isn't too many enemies that spawn
-        }*/
+            enemies_spawned = 220; //Make sure there isn't too many enemies that spawn
+        }
 
         for (int i = 0; i < enemies_spawned; i++)
         {
@@ -482,7 +499,7 @@ public class manager_script : MonoBehaviour
         }
     }
 
-    //Using this specifically for powerups
+    //Using this specifically for all items No other object is going to need to do this except for the manager
     private GameObject[] FindGameObjectsWithLayer(int layer_mask)
     {
         GameObject[] obj_array = FindObjectsOfType(typeof(GameObject)) as GameObject[];
@@ -502,5 +519,39 @@ public class manager_script : MonoBehaviour
         }
 
         return obj_list.ToArray();
+    }
+
+    public void Drop_Player_Powerups()
+    {
+        List<GameObject> player_powerups = new List<GameObject>();
+        int average_stats = (p_speed + p_acceleration /*+ p_bulletlife + p_bulletspeed + p_extrabullet + p_firerate + p_handling + p_magnetrange + p_shipsize + p_bulletsize*/) / 2;
+
+        p_speed = New_Powerup_Stat(p_speed, average_stats, LoadPrefab.speed_powerup);
+        p_acceleration = New_Powerup_Stat(p_speed, average_stats, LoadPrefab.acceleration_powerup);
+        /*p_bulletspeed = New_Powerup_Stat(p_speed, average_stats, Powerup.bulletspeed_powerup);
+        p_bulletlife = New_Powerup_Stat(p_speed, average_stats, Powerup.bulletlife_powerup);
+        p_extrabullet = New_Powerup_Stat(p_speed, average_stats, Powerup.extrabullet_powerup);
+        p_firerate = New_Powerup_Stat(p_speed, average_stats, Powerup.firerate_powerup);
+        p_handling = New_Powerup_Stat(p_speed, average_stats, Powerup.handling_powerup);
+        p_magnetrange = New_Powerup_Stat(p_speed, average_stats, Powerup.magnetrange_powerup);
+        p_shipsize = New_Powerup_Stat(p_speed, average_stats, Powerup.shipsize_powerup);
+        p_bulletsize = New_Powerup_Stat(p_speed, average_stats, Powerup.bulletsize_powerup);*/
+
+
+    }
+
+    //This will just be used by the above function, it also spawns a powerup owned
+    private int New_Powerup_Stat(int original_stat, int average_stat, GameObject the_powerup)
+    {
+        if (original_stat != 0 && average_stat != 0)
+        {
+            int new_stat = original_stat / average_stat;
+            for (int i = 0; i < original_stat - new_stat; i++)
+            {
+                Instantiate(the_powerup, player.transform.position, Quaternion.identity);
+            }
+            return new_stat;
+        }
+        return original_stat;
     }
 }

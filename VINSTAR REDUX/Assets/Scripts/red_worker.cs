@@ -24,7 +24,7 @@ public class red_worker : Base_Enemy_Script
                 if (amount_nearby > 0)
                 {//Switch to the Mine AI the moment there's a mineral nearby and gun for it
                     StopAllCoroutines();
-                    StartCoroutine(Mineral_Movement(nearby_minerals, new Stopwatch(2), 20f, 3f, .16f, 16f));
+                    StartCoroutine(Mineral_Movement(nearby_minerals, new Stopwatch(2), 20f, 3f, .16f, 16f + p_speed));
                     AI = State.Mine;
                 }
                 break;

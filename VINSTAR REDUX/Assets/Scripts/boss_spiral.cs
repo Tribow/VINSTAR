@@ -38,6 +38,7 @@ public class boss_spiral : Base_Enemy_Script
         if (collision.gameObject.tag != "boundary" &&
             collision.gameObject.tag != "mineral" &&
             collision.gameObject.tag != "whitemineral" &&
+            collision.gameObject.tag != "powerup" &&
             collision.gameObject.tag != "bullet" &&
             collision.gameObject.tag != "ebullet" &&
             collision.gameObject.tag != "bossbullet") //All of these collision checks are for what the cant be bounced off of.
@@ -82,6 +83,12 @@ public class boss_spiral : Base_Enemy_Script
             Im_White();
             Destroy(collision.gameObject);
         }
+
+        if (collision.gameObject.tag == "powerup")
+        {
+            Which_Powerup(collision.GetComponent<p_script>().powerup);
+            Destroy(collision.gameObject);
+        }
     }
 
     public new float Take_Damage(float current_health, float bullet_strength)
@@ -96,23 +103,6 @@ public class boss_spiral : Base_Enemy_Script
             Invoke("Flash_Off", .05f);
         }
         return current_health - bullet_strength; //lower health;
-    }
-
-    public new void Im_White()
-    {
-        am_i_white = true;
-        if (mango == null) //Be doubly sure to access the manager script
-        {
-            manager = GameObject.FindGameObjectWithTag("manager");
-            mango = manager.GetComponent<manager_script>();
-            health += mango.player_bullet_damage;
-        }
-        else
-        {
-            health += mango.player_bullet_damage;
-        }
-        _material.SetColor("_OutlineColor", Color.white);
-        _material.SetFloat("_OutlineThickness", 3f); //Just needed this value for the boss
     }
 
     public override void Attack_Method()
@@ -135,16 +125,16 @@ public class boss_spiral : Base_Enemy_Script
             //If the boss hasn't been hit yet and the player isn't close by, move at fast speed
             if (Vector2.Distance(transform.position, player.transform.position) > 100f && !got_hit)
             {
-                maxspeed = 20;
-                speed = 20;
+                maxspeed = 20 + p_speed;
+                speed = 20 + p_speed;
             }
             else
             {
                 //Boss has been hit, so keep track of berserk phase
                 if (berserk_phase)
                 {
-                    maxspeed = 20;
-                    speed = 20;
+                    maxspeed = 20 + p_speed;
+                    speed = 20 + p_speed;
                 }
                 else
                 {

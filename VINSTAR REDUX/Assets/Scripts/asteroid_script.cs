@@ -2,14 +2,21 @@
 
 public class asteroid_script : MonoBehaviour
 {
+    [Header("Required References")]
     public GameObject mineral;
     public GameObject white_mineral;
     public GameObject death_particle;
     public bool is_baby_asteroid;
+
     GameObject manager;
+    GameObject my_powerup;
     manager_script mango;
     audio_manager audiomanager;
+    Powerup powerup = new Powerup();
+    SpriteRenderer sprite_renderer;
     Material _material;
+    Color particle_color = Color.white;
+    ParticleSystem.MainModule my_particle;
     bool white_asteroid = false;
     float rotation_speed;
     float movement_speed_x;
@@ -24,7 +31,8 @@ public class asteroid_script : MonoBehaviour
         manager = GameObject.FindGameObjectWithTag("manager");
         mango = manager.GetComponent<manager_script>();
         audiomanager = GameObject.FindGameObjectWithTag("audio manager").GetComponent<audio_manager>();
-        _material = GetComponent<SpriteRenderer>().material;
+        sprite_renderer = GetComponent<SpriteRenderer>();
+        _material = sprite_renderer.material;
 
         shake_amt[0] = -0.03f; shake_amt[1] = 0f; shake_amt[2] = 0.03f; //Assigning the shake numbers
     }
@@ -44,6 +52,7 @@ public class asteroid_script : MonoBehaviour
         }
         rotation_speed = Random.Range(-1.0f, 1.0f);
 
+        //20% chance the asteroid is a white asteroid
         int health_chance = Random.Range(0, 100);
         if (health_chance < 20)
         {
@@ -51,8 +60,59 @@ public class asteroid_script : MonoBehaviour
             white_asteroid = true;
         }
 
-        //health = 50 * (transform.localScale.x / 2); //Health will scale with size
+        //5% chance the asteroid is a powerup asteroid
+        int powerup_chance = Random.Range(0, 100);
+        if (powerup_chance < 5)
+        {
+            powerup.Set_Powerup((Powerup.P_Type)Random.Range(1, 3)); //This number must be changed with each new powerup
+            switch (powerup.my_powerup) //Color of the asteroid will be different based on this value
+            {
+                case Powerup.P_Type.Speed:
+                    my_powerup = LoadPrefab.speed_powerup;
+                    sprite_renderer.color = Color.cyan;
+                    particle_color = Color.cyan;
+                    break;
+                case Powerup.P_Type.Acceleration:
+                    my_powerup = LoadPrefab.acceleration_powerup;
+                    sprite_renderer.color = new Color(215f / 255f, 96f / 255f, 250f / 255f); //purple
+                    particle_color = new Color(215f / 255f, 96f / 255f, 250f / 255f);
+                    break;
+                case Powerup.P_Type.Fire_Rate:
+                    sprite_renderer.color = new Color(1f, 162f / 255f, 0f); //orange
+                    particle_color = new Color(1f, 162f / 255f, 0f);
+                    break;
+                case Powerup.P_Type.Bullet_Life:
+                    sprite_renderer.color = Color.magenta;
+                    particle_color = Color.magenta;
+                    break;
+                case Powerup.P_Type.Bullet_Speed:
+                    sprite_renderer.color = Color.yellow;
+                    particle_color = Color.yellow;
+                    break;
+                case Powerup.P_Type.Handling:
+                    sprite_renderer.color = Color.green;
+                    particle_color = Color.green;
+                    break;
+                case Powerup.P_Type.Ship_Size:
+                    sprite_renderer.color = Color.red;
+                    particle_color = Color.red;
+                    break;
+                case Powerup.P_Type.Bullet_Size:
+                    sprite_renderer.color = Color.blue;
+                    particle_color = Color.blue;
+                    break;
+                case Powerup.P_Type.Magnet_Range:
+                    sprite_renderer.color = new Color(1f, 192f / 255f, 140f / 255f); //Tan Color
+                    particle_color = new Color(1f, 192f / 255f, 140f / 255f);
+                    break;
+                case Powerup.P_Type.Extra_Bullet:
+                    sprite_renderer.color = new Color(0f, 1f, 135f / 255f); //Turqoise Color
+                    particle_color = new Color(0f, 1f, 135f / 255f);
+                    break;
+            }
+        }
 
+        //health = 50 * (transform.localScale.x / 2); //Health will scale with size
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -131,8 +191,17 @@ public class asteroid_script : MonoBehaviour
                 mango.Spawn_Asteroid(transform.position, transform.localScale.x / 2);
                 mango.Spawn_Asteroid(transform.position, transform.localScale.x / 2);
             }
-            Instantiate(death_particle, transform.position, Quaternion.identity);
+            GameObject particle_object = Instantiate(death_particle, transform.position, Quaternion.identity);
+            my_particle = particle_object.GetComponent<ParticleSystem>().main;
+            my_particle.startColor = particle_color;
+
             audiomanager.Play_Sound(audio_manager.Sound.explosion_01, transform.position, .4f);
+
+            if(my_powerup != null)
+            {
+                Instantiate(my_powerup, transform.position, Quaternion.identity);
+            }
+
             Destroy(gameObject);
         }
     }
