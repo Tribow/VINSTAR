@@ -759,7 +759,7 @@ ScriptsOnlyBuild:
     className: player_ship_script
   - hash:
       serializedVersion: 2
-      Hash: 09d719c38d5008e047d614a9e88f7737
+      Hash: eb027e8e1f84dda026f35ad408969c80
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: bluesplitter_worker
@@ -807,7 +807,7 @@ ScriptsOnlyBuild:
     className: TMP_SpriteAsset
   - hash:
       serializedVersion: 2
-      Hash: 6b4686dd3035d574a0cd06828426655f
+      Hash: 754815e16ae8836d1f283507d32a61fb
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: red_warrior
@@ -969,7 +969,7 @@ ScriptsOnlyBuild:
     className: NetworkManager
   - hash:
       serializedVersion: 2
-      Hash: 6b4686dd3035d574a0cd06828426655f
+      Hash: 754815e16ae8836d1f283507d32a61fb
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: red_worker
@@ -1257,7 +1257,7 @@ ScriptsOnlyBuild:
     className: ShadowsMidtonesHighlights
   - hash:
       serializedVersion: 2
-      Hash: 1f7f4d89e424ad098e8173bbe82281f4
+      Hash: 49691b4daeffc70bdb95ea3c059ba36f
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: bluesplitter_fighter
@@ -1269,7 +1269,7 @@ ScriptsOnlyBuild:
     className: Tonemapping
   - hash:
       serializedVersion: 2
-      Hash: 984bc287bb291ded3a38f9d393cbe2fb
+      Hash: daa3c5c61fb7d17c6541068f02a7881d
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: manager_script
@@ -1347,7 +1347,7 @@ ScriptsOnlyBuild:
     className: DebugUIHandlerVector2
   - hash:
       serializedVersion: 2
-      Hash: 6b4686dd3035d574a0cd06828426655f
+      Hash: 754815e16ae8836d1f283507d32a61fb
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: boss_spiral
@@ -1371,7 +1371,7 @@ ScriptsOnlyBuild:
     className: CinemachineUniversalPixelPerfect
   - hash:
       serializedVersion: 2
-      Hash: 6b4686dd3035d574a0cd06828426655f
+      Hash: 754815e16ae8836d1f283507d32a61fb
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: red_fighter
@@ -1383,7 +1383,7 @@ ScriptsOnlyBuild:
     className: LiftGammaGain
   - hash:
       serializedVersion: 2
-      Hash: 6b4686dd3035d574a0cd06828426655f
+      Hash: 754815e16ae8836d1f283507d32a61fb
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: Base_Enemy_Script
@@ -1527,7 +1527,7 @@ ScriptsOnlyBuild:
     className: input_rebind_script
   - hash:
       serializedVersion: 2
-      Hash: 6b4686dd3035d574a0cd06828426655f
+      Hash: 754815e16ae8836d1f283507d32a61fb
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: bluesplitter_scatterer

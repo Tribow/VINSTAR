@@ -3,7 +3,7 @@ using UnityEngine.UI;
 
 public class boss_spiral : Base_Enemy_Script
 {
-    private Stopwatch fire_rate = new Stopwatch(.16f);
+    private Stopwatch boss_fire_rate = new Stopwatch(.16f);
     private Stopwatch berserk_wait;
     private Stopwatch berserk_time;
     private Vector2 boss_size;
@@ -22,6 +22,7 @@ public class boss_spiral : Base_Enemy_Script
         speed = set_speed.Random;
         ogspeed = speed;
         maxspeed = ogspeed;
+        boss_fire_rate.initial_time = fire_rate;
         velocity_angle = Choice.Choose(45f, 135f, 225f, 315f);
         AI = State.Idle;
         _material = gameObject.GetComponent<SpriteRenderer>().material;
@@ -145,14 +146,15 @@ public class boss_spiral : Base_Enemy_Script
             //Start shooting when close enough to player, don't shoot during berserk movement
             if (Vector2.Distance(transform.position, player.transform.position) < 60f && !berserk_wait.isFinished())
             {
-                if (fire_rate.isFinished())
+                boss_fire_rate.initial_time = fire_rate;
+                if (boss_fire_rate.isFinished())
                 {
                     Attack_Method();
-                    fire_rate.Reset();
+                    boss_fire_rate.Reset();
                 }
                 else
                 {
-                    fire_rate.Countdown();
+                    boss_fire_rate.Countdown();
                 }
             }
         }

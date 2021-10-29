@@ -43,7 +43,7 @@ public class red_warrior : Base_Enemy_Script
                     if (Vector2.Distance(transform.position, player.transform.position) <= 30f)
                     {
                         StopAllCoroutines();
-                        StartCoroutine(Attack_Movement(25f + p_speed, 5f, 25f, 20f, new Stopwatch(.25f), new FloatRange(2f, 4f), new FloatRange(.85f, 1f), .5f, 2f, 4f));
+                        StartCoroutine(Attack_Movement(25f + p_speed, 5f, 25f, 20f, new Stopwatch(fire_rate), new FloatRange(2f, 4f), new FloatRange(.85f, 1f), .5f, 2f, 4f));
                         AI = State.Attack;
                     }
                 }

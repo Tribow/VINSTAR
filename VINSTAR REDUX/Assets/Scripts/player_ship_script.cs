@@ -34,11 +34,13 @@ public class player_ship_script : MonoBehaviour
     private Vector2 player_size = new Vector2(.5f, .5f);
     private Color outline_color;
     private int health = 1;
+    private float rotate = 0;
     private float outline_thickness;
     private float velocity_angle;
     private float max_og_speed;
     private float true_max_og_speed;
     private float og_acceleration;
+    private float og_firerate;
     
     private void OnEnable()
     {
@@ -74,6 +76,7 @@ public class player_ship_script : MonoBehaviour
         max_og_speed = max_speed;
         true_max_og_speed = max_og_speed;
         og_acceleration = acceleration;
+        og_firerate = bullet_timer.initial_time;
         outline_color = _material.GetColor("_OutlineColor");
         outline_thickness = _material.GetFloat("_OutlineThickness");
         _material.SetColor("_FlashColor", Color.red);
@@ -185,6 +188,8 @@ public class player_ship_script : MonoBehaviour
                 _material.SetFloat("_OutlineThickness", 3f);
                 break;
             case Powerup.P_Type.Fire_Rate:
+                manager.p_firerate++;
+                manager.player_powerups.Add_Powerup(LoadPrefab.firerate_powerup);
                 _material.SetColor("_OutlineColor", new Color(1f, 162f / 255f, 0f));
                 _material.SetFloat("_OutlineThickness", 3f);
                 break;
@@ -234,6 +239,7 @@ public class player_ship_script : MonoBehaviour
         //Manager Powerup Check
         max_og_speed = true_max_og_speed + manager.p_speed;
         acceleration = og_acceleration + (manager.p_acceleration * .1f);
+        bullet_timer.initial_time = og_firerate - (manager.p_firerate / 120f);
         
 
         if (player_input.Shoot.ReadValue<float>() == 1f) //Start shooting when button is held
@@ -277,13 +283,20 @@ public class player_ship_script : MonoBehaviour
             }
         }
 
+
         if (input_value.x > 0)
         {
-            transform.Rotate(Vector3.forward * (-rotation_speed * input_value.x)); //rotation to the left
+            rotate = Mathf.Lerp(rotate, -rotation_speed, .5f);
+            transform.Rotate(Vector3.forward * (rotate * input_value.x)); //rotation to the left
         }
         else if (input_value.x < 0)
         {
-            transform.Rotate(Vector3.forward * (rotation_speed * -input_value.x)); //rotation to the right
+            rotate = Mathf.Lerp(rotate, rotation_speed, .5f);
+            transform.Rotate(Vector3.forward * (rotate * -input_value.x)); //rotation to the right
+        }
+        else
+        {
+            rotate = 0;
         }
 
         if(player_input.Slow.ReadValue<float>() == 1f) //Lowers the max_speed to very slow when held

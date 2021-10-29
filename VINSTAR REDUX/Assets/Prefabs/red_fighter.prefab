@@ -120,6 +120,7 @@ MonoBehaviour:
   health: 30
   acceleration: 0.4
   deceleration: 0.00008
+  fire_rate: 0.167
   mineral_radius: 30
   velocity: {x: 0, y: 0, z: 0}
   upgrade_points: 0

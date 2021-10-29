@@ -18,7 +18,7 @@ public class bluesplitter_fighter : Base_Enemy_Script
 
     private List<GameObject> splitter_list = new List<GameObject>();
     private List<Material> material_part = new List<Material>();
-    private Stopwatch fire_rate = new Stopwatch(.4f);
+    private Stopwatch splitter_fire_rate = new Stopwatch(.4f);
 
     //Need to redo start event because the different idle values
     private new void Awake()
@@ -32,6 +32,7 @@ public class bluesplitter_fighter : Base_Enemy_Script
         ogspeed = speed;
         maxspeed = ogspeed;
         velocity_angle = transform.eulerAngles.z;
+        splitter_fire_rate.initial_time = fire_rate;
         StartCoroutine(Base_Idle(new FloatRange(.45f, .8f), new FloatRange(1f, 7f), 8f)); //Starts the original coroutine
         AI = State.Idle;
         _material = gameObject.GetComponent<SpriteRenderer>().material;
@@ -228,15 +229,16 @@ public class bluesplitter_fighter : Base_Enemy_Script
         {
             if (Vector2.Distance(transform.position, player.transform.position) < 30f && AI != State.Mine)
             {
-                fire_rate.Countdown();
-                if (fire_rate.isFinished())
+                splitter_fire_rate.initial_time = fire_rate;
+                splitter_fire_rate.Countdown();
+                if (splitter_fire_rate.isFinished())
                 {
                     GameObject bullet = Instantiate(my_bullet, splitter_list[splitter_list.Count - 1].transform.position, Quaternion.identity);
                     bullet.GetComponent<enemy_bullet_script>().speed = 0;
                     bullet.GetComponent<enemy_bullet_script>().destroy_timer = 600;
                     bullet.GetComponent<SpriteRenderer>().sprite = bullet_sprite;
                     mybullets.Add(bullet);
-                    fire_rate.Reset();
+                    splitter_fire_rate.Reset();
                     audiomanager.Play_Sound(audio_manager.Sound.shoot_01, transform.position, 1.8f);
                 }
             }

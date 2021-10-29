@@ -36,7 +36,7 @@ public class red_fighter : Base_Enemy_Script
                     if (Vector2.Distance(transform.position, player.transform.position) <= 40f)
                     {
                         StopAllCoroutines();
-                        StartCoroutine(Attack_Movement(20f + p_speed, 10f, 30f, 20f, new Stopwatch(.167f), new FloatRange(1.67f, 3.33f), new FloatRange(.67f, .68f), .5f, 1f, 2f));
+                        StartCoroutine(Attack_Movement(20f + p_speed, 10f, 30f, 20f, new Stopwatch(fire_rate), new FloatRange(1.67f, 3.33f), new FloatRange(.67f, .68f), .5f, 1f, 2f));
                         AI = State.Attack;
                     }
                 }
@@ -64,7 +64,7 @@ public class red_fighter : Base_Enemy_Script
                     if (Vector2.Distance(transform.position, player.transform.position) <= 40f)
                     {
                         StopAllCoroutines();
-                        StartCoroutine(Attack_Movement(20f + p_speed, 10f, 30f, 20f, new Stopwatch(.167f), new FloatRange(1.67f, 3.33f), new FloatRange(.67f, .68f), .5f, 1f, 2f));
+                        StartCoroutine(Attack_Movement(20f + p_speed, 10f, 30f, 20f, new Stopwatch(fire_rate), new FloatRange(1.67f, 3.33f), new FloatRange(.67f, .68f), .5f, 1f, 2f));
                         AI = State.Attack;
                     }
                 }

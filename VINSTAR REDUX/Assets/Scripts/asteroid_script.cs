@@ -64,7 +64,7 @@ public class asteroid_script : MonoBehaviour
         int powerup_chance = Random.Range(0, 100);
         if (powerup_chance < 5)
         {
-            powerup.Set_Powerup((Powerup.P_Type)Random.Range(1, 3)); //This number must be changed with each new powerup
+            powerup.Set_Powerup((Powerup.P_Type)Random.Range(1, 4)); //This number must be changed with each new powerup
             switch (powerup.my_powerup) //Color of the asteroid will be different based on this value
             {
                 case Powerup.P_Type.Speed:
@@ -78,6 +78,7 @@ public class asteroid_script : MonoBehaviour
                     particle_color = new Color(215f / 255f, 96f / 255f, 250f / 255f);
                     break;
                 case Powerup.P_Type.Fire_Rate:
+                    my_powerup = LoadPrefab.firerate_powerup;
                     sprite_renderer.color = new Color(1f, 162f / 255f, 0f); //orange
                     particle_color = new Color(1f, 162f / 255f, 0f);
                     break;

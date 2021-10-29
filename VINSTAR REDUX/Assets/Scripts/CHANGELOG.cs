@@ -4,20 +4,8 @@
  
 Changelog:
 --------------------------------------------------------------------------
--The enemy spawn cap returns. It caps out at 220 enemies. You hit this cap at level 20.
--The minimum amount of enemies that can exist at once for each level now slowly scales with the level count.
--The minimum amount of enemies that can exist at once for each level caps at 180 enemies. You hit this cap at level 4,000.
--Minerals no longer check for the manager
--Asteroids have a 5% chance to be a powerup asteroid. (white asteroid can stack with powerup variant)
--Created a script for loading prefabs from Resources folder
--Created a powerup object for the speed upgrade and the acceleration upgrade
--The player is able to pick up powerups. These powerup upgrades persist between levels
--The enemies are able to pick up powerups. The most recent powerup the enemy gets affects their outline
--When an enemy upgrades with a powerup it keeps the powerup to its upgraded form
--When an enemy dies while holding a powerup it will drop it on death
--When a player dies approximately half of the powerups will be dropped (I might have to adjust the math here)
--The player now bounces a bit harder while in slow mode (might not notice it much)
--The player takes damage from touching the boss (FOR REAL THIS TIME)
+-Added a fire rate powerup that increases fire rate
+-Player no longer turns at maximum speed immediately, it now takes about 4 frames to reach max turning speed. This is to allow light tapping for aiming
 
 
 To-do: 

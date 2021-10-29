@@ -22,6 +22,7 @@ public class Base_Enemy_Script : MonoBehaviour
     public float health;
     public float acceleration; //How fast the enemy can reach max speed
     public float deceleration; //How fast the enemy can slow down
+    public float fire_rate; //How fast the enemy shoots
     public float mineral_radius; //How large the radius is for detecting minerals
 
     protected GameObject manager; //The manager of the object
@@ -449,6 +450,9 @@ public class Base_Enemy_Script : MonoBehaviour
                 my_outline_thickness = 1f;
                 break;
             case Powerup.P_Type.Fire_Rate:
+                fire_rate -= .04f;
+                p_firerate += .04f;
+                powerup.Add_Powerup(LoadPrefab.firerate_powerup);
                 _material.SetColor("_OutlineColor", new Color(1f, 162f / 255f, 0f));
                 _material.SetFloat("_OutlineThickness", 1f);
                 my_outline_color = new Color(1f, 162f / 255f, 0f);
@@ -503,6 +507,7 @@ public class Base_Enemy_Script : MonoBehaviour
     {
         ogspeed += p_speed;
         acceleration += p_acceleration;
+        fire_rate -= p_firerate;
     }
 
     public void Im_White()
