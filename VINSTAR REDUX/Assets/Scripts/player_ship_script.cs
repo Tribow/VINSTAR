@@ -194,10 +194,13 @@ public class player_ship_script : MonoBehaviour
                 _material.SetFloat("_OutlineThickness", 3f);
                 break;
             case Powerup.P_Type.Bullet_Life:
+                manager.p_bulletlife++;
+                manager.player_powerups.Add_Powerup(LoadPrefab.bulletlife_powerup);
                 _material.SetColor("_OutlineColor", Color.magenta);
                 _material.SetFloat("_OutlineThickness", 3f);
                 break;
             case Powerup.P_Type.Bullet_Speed:
+                manager.p_bulletspeed++;
                 _material.SetColor("_OutlineColor", Color.yellow);
                 _material.SetFloat("_OutlineThickness", 3f);
                 break;

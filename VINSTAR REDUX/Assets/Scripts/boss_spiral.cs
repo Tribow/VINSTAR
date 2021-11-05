@@ -112,8 +112,8 @@ public class boss_spiral : Base_Enemy_Script
         {
             GameObject new_bullet = Instantiate(my_bullet, gameObject.transform.position, Quaternion.Euler(0f, 0f, gameObject.transform.rotation.eulerAngles.z - 50 + (90 * i)));
             enemy_bullet_script bullet_script = new_bullet.GetComponent<enemy_bullet_script>();
-            bullet_script.speed = 5;
-            bullet_script.destroy_timer = 600;
+            bullet_script.speed = 5 + p_bulletspeed;
+            bullet_script.destroy_timer = 10 + p_bulletlife;
             mybullets.Add(new_bullet);
         }
         audiomanager.Play_Sound(audio_manager.Sound.shoot_01, transform.position, .5f);

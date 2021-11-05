@@ -8,6 +8,7 @@ public class player_bullet_script : MonoBehaviour
     manager_script manager;
     Stopwatch destroy_timer;
     Vector3 velocity; //Not set to anything atm
+    private int speed = 30;
 
     // Start is called before the first frame update
     void Start()
@@ -17,7 +18,8 @@ public class player_bullet_script : MonoBehaviour
         transform.position = player.transform.position;
         transform.rotation = player.transform.rotation;
 
-        destroy_timer = new Stopwatch(1f);
+        destroy_timer = new Stopwatch(1f + (manager.p_bulletlife/10f));
+        speed = 30 + manager.p_bulletspeed;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -31,7 +33,7 @@ public class player_bullet_script : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        transform.position += transform.right * Time.deltaTime * 30;
+        transform.position += transform.right * Time.deltaTime * speed;
 
         damage = manager.player_bullet_damage;
 

@@ -64,7 +64,7 @@ public class asteroid_script : MonoBehaviour
         int powerup_chance = Random.Range(0, 100);
         if (powerup_chance < 5)
         {
-            powerup.Set_Powerup((Powerup.P_Type)Random.Range(1, 4)); //This number must be changed with each new powerup
+            powerup.Set_Powerup((Powerup.P_Type)Random.Range(1, 6)); //This number must be changed with each new powerup
             switch (powerup.my_powerup) //Color of the asteroid will be different based on this value
             {
                 case Powerup.P_Type.Speed:
@@ -83,10 +83,12 @@ public class asteroid_script : MonoBehaviour
                     particle_color = new Color(1f, 162f / 255f, 0f);
                     break;
                 case Powerup.P_Type.Bullet_Life:
+                    my_powerup = LoadPrefab.bulletlife_powerup;
                     sprite_renderer.color = Color.magenta;
                     particle_color = Color.magenta;
                     break;
                 case Powerup.P_Type.Bullet_Speed:
+                    my_powerup = LoadPrefab.bulletspeed_powerup;
                     sprite_renderer.color = Color.yellow;
                     particle_color = Color.yellow;
                     break;
@@ -198,7 +200,7 @@ public class asteroid_script : MonoBehaviour
 
             audiomanager.Play_Sound(audio_manager.Sound.explosion_01, transform.position, .4f);
 
-            if(my_powerup != null)
+            if(my_powerup != null) //Create the powerup as long as you have one
             {
                 Instantiate(my_powerup, transform.position, Quaternion.identity);
             }

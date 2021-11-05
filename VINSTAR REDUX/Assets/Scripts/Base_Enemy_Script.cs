@@ -55,7 +55,7 @@ public class Base_Enemy_Script : MonoBehaviour
     protected float p_acceleration;
     protected float p_firerate;
     protected float p_bulletlife;
-    protected float p_bulletspeed;
+    protected int p_bulletspeed;
     protected float p_handling;
     protected float p_shipsize;
     protected float p_bulletsize;
@@ -459,12 +459,16 @@ public class Base_Enemy_Script : MonoBehaviour
                 my_outline_thickness = 1f;
                 break;
             case Powerup.P_Type.Bullet_Life:
+                p_bulletlife++;
+                powerup.Add_Powerup(LoadPrefab.bulletlife_powerup);
                 _material.SetColor("_OutlineColor", Color.magenta);
                 _material.SetFloat("_OutlineThickness", 1f);
                 my_outline_color = Color.magenta;
                 my_outline_thickness = 1f;
                 break;
             case Powerup.P_Type.Bullet_Speed:
+                p_bulletspeed += 5;
+                powerup.Add_Powerup(LoadPrefab.bulletspeed_powerup);
                 _material.SetColor("_OutlineColor", Color.yellow);
                 _material.SetFloat("_OutlineThickness", 1f);
                 my_outline_color = Color.yellow;
@@ -537,6 +541,9 @@ public class Base_Enemy_Script : MonoBehaviour
     public virtual void Attack_Method()
     {
         GameObject the_bullet = Instantiate(my_bullet, transform.position, transform.rotation);
+        enemy_bullet_script bullet_script = the_bullet.GetComponent<enemy_bullet_script>();
+        bullet_script.destroy_timer = 1 + p_bulletlife;
+        bullet_script.speed = 30 + p_bulletspeed;
         audiomanager.Play_Sound(audio_manager.Sound.shoot_01, transform.position, 1.8f);
         mybullets.Add(the_bullet);
     }

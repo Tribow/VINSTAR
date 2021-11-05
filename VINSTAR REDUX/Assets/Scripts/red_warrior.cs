@@ -14,7 +14,9 @@ public class red_warrior : Base_Enemy_Script
         for(int i = 0; i < 4; i++)
         {
             GameObject new_bullet = Instantiate(my_bullet, gameObject.transform.position, Quaternion.Euler(0f, 0f, gameObject.transform.rotation.eulerAngles.z + 30 - (20 * i)));
-            new_bullet.GetComponent<enemy_bullet_script>().speed = 20;
+            enemy_bullet_script bullet_script = new_bullet.GetComponent<enemy_bullet_script>();
+            bullet_script.speed = 20 + p_bulletspeed;
+            bullet_script.destroy_timer = 1 + p_bulletlife;
             mybullets.Add(new_bullet);
         }
         audiomanager.Play_Sound(audio_manager.Sound.shoot_01, transform.position, 1.8f);

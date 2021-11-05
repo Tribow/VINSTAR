@@ -45,9 +45,9 @@ public class manager_script : MonoBehaviour
     public int p_speed;
     public int p_acceleration;
     public int p_firerate;
-    /*public int p_bulletlife;
+    public int p_bulletlife;
     public int p_bulletspeed;
-    public int p_handling;
+    /*public int p_handling;
     public int p_shipsize;
     public int p_bulletsize;
     public int p_magnetrange;
@@ -524,14 +524,14 @@ public class manager_script : MonoBehaviour
     public void Drop_Player_Powerups()
     {
         List<GameObject> player_powerups = new List<GameObject>();
-        int average_stats = (p_speed + p_acceleration + p_firerate /*+ p_bulletlife + p_bulletspeed + p_extrabullet + p_handling + p_magnetrange + p_shipsize + p_bulletsize*/) / 3;
+        int average_stats = (p_speed + p_acceleration + p_firerate + p_bulletlife + p_bulletspeed /*+ p_extrabullet + p_handling + p_magnetrange + p_shipsize + p_bulletsize*/) / 5;
 
         p_speed = New_Powerup_Stat(p_speed, average_stats, LoadPrefab.speed_powerup);
         p_acceleration = New_Powerup_Stat(p_speed, average_stats, LoadPrefab.acceleration_powerup);
         p_firerate = New_Powerup_Stat(p_speed, average_stats, LoadPrefab.firerate_powerup);
-        /*p_bulletspeed = New_Powerup_Stat(p_speed, average_stats, Powerup.bulletspeed_powerup);
-        p_bulletlife = New_Powerup_Stat(p_speed, average_stats, Powerup.bulletlife_powerup);
-        p_extrabullet = New_Powerup_Stat(p_speed, average_stats, Powerup.extrabullet_powerup);
+        p_bulletlife = New_Powerup_Stat(p_speed, average_stats, LoadPrefab.bulletlife_powerup);
+        p_bulletspeed = New_Powerup_Stat(p_speed, average_stats, LoadPrefab.bulletspeed_powerup);
+        /*p_extrabullet = New_Powerup_Stat(p_speed, average_stats, Powerup.extrabullet_powerup);
         p_handling = New_Powerup_Stat(p_speed, average_stats, Powerup.handling_powerup);
         p_magnetrange = New_Powerup_Stat(p_speed, average_stats, Powerup.magnetrange_powerup);
         p_shipsize = New_Powerup_Stat(p_speed, average_stats, Powerup.shipsize_powerup);

@@ -234,8 +234,9 @@ public class bluesplitter_fighter : Base_Enemy_Script
                 if (splitter_fire_rate.isFinished())
                 {
                     GameObject bullet = Instantiate(my_bullet, splitter_list[splitter_list.Count - 1].transform.position, Quaternion.identity);
-                    bullet.GetComponent<enemy_bullet_script>().speed = 0;
-                    bullet.GetComponent<enemy_bullet_script>().destroy_timer = 600;
+                    enemy_bullet_script bullet_script = bullet.GetComponent<enemy_bullet_script>();
+                    bullet_script.speed = 0 + p_bulletspeed;
+                    bullet_script.destroy_timer = 10 + p_bulletlife;
                     bullet.GetComponent<SpriteRenderer>().sprite = bullet_sprite;
                     mybullets.Add(bullet);
                     splitter_fire_rate.Reset();

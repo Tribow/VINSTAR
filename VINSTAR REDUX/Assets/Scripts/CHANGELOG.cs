@@ -5,12 +5,15 @@
 Changelog:
 --------------------------------------------------------------------------
 -Added a fire rate powerup that increases fire rate
+-Added a bullet life powerup that increases the lifetime of a bullet
+-Added a bullet speed powerup that increases the speed of a bullet
 -Player no longer turns at maximum speed immediately, it now takes about 4 frames to reach max turning speed. This is to allow light tapping for aiming
 
 
 To-do: 
 --------------------------GAMEPLAY SHET------------------------------------
 -Bullets need velocity data (forgot why) (might not actually need to do this)
+-Asteroids should be able to bump the player ship away better
 -Add a new controls option where the ship will turn towards the direction the stick is angled
 -Change outline shader so instead of detecting the edges of the sprite and making an outline, just draw a version solid color version of the sprite below the sprite and scale it? Should work better maybe
 -Outline shader should gain the ability to be multicolored to communicate when an enemy has more than one powerup
@@ -111,6 +114,7 @@ To-do:
 -Add the ability to adjust resolution
 -Create UI for it in the options menu
 -Tutorial text detects if you start using controller (sorta works)
+-Add icons for player input that the game can easily use to remove the amount of text on screen
 
 
 ---------------------------AUDIO SHET-------------------------------------
