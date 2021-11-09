@@ -138,6 +138,19 @@ public class bluesplitter_worker : Base_Enemy_Script
                 }
             }
 
+            if (am_i_white)
+            {
+                int tempRan = Random.Range(0, 4);
+                if (tempRan == 0)
+                {
+                    //1/4th of a chance to spawn a white mineral if it got one
+                    Instantiate(white_mineral, gameObject.transform.position, gameObject.transform.rotation);
+                }
+            }
+
+            //Also drop any powerups owned
+            powerup.Drop_Powerups(transform.position, 1);
+
             //Be sure to destroy extra objects
             Destroy(my_canvas);
             Destroy(gameObject);
@@ -230,6 +243,6 @@ public class bluesplitter_worker : Base_Enemy_Script
         float scale_modifier = 1f + (upgrade_points * .0667f);
         if (scale_modifier >= 1.8f)
             scale_modifier = 1.8f;
-        gameObject.transform.localScale = new Vector3(1 * scale_modifier, 1 * scale_modifier, 1 * scale_modifier);
+        og_scale = new Vector3(1 * scale_modifier, 1 * scale_modifier, 1 * scale_modifier);
     }
 }

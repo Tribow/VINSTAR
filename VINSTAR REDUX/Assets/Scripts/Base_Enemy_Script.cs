@@ -40,6 +40,7 @@ public class Base_Enemy_Script : MonoBehaviour
     protected Material _material;
     protected audio_manager audiomanager;
     protected Vector3 target_position;
+    protected Vector3 og_scale;
     protected bool decelerating = false;
     protected bool flash = false;
     protected bool outline = false;
@@ -88,6 +89,7 @@ public class Base_Enemy_Script : MonoBehaviour
     // Start is called before the first frame update
     public void Start() 
     {
+        og_scale = gameObject.transform.localScale;
         Apply_Powerups(); //Apply any powerup it may have gotten from the previous object it upgraded from
 
         if (am_i_white) //If this enemy has am_i_white as true right at the start then give it the white buffs
@@ -178,8 +180,11 @@ public class Base_Enemy_Script : MonoBehaviour
 
         if (collision.gameObject.tag == "powerup")
         {
-            Which_Powerup(collision.GetComponent<p_script>().powerup);
-            Destroy(collision.gameObject);
+            if (collision.GetComponent<p_script>().tangible == true)
+            {
+                Which_Powerup(collision.GetComponent<p_script>().powerup);
+                Destroy(collision.gameObject);
+            }
         }
     }
 
@@ -289,6 +294,18 @@ public class Base_Enemy_Script : MonoBehaviour
             object_transform.Rotate(Vector3.forward * turning_speed); //This is what makes the enemy turn
         }
         object_transform.position += current_velocity * Time.deltaTime; //This is what actually makes the ship move
+        
+        if(object_transform.localScale.x > 10) //Maximum size for performance reasons
+        {
+            object_transform.localScale = new Vector3(10, 10, 10);
+        }
+        else
+        {
+            float scale_value = og_scale.x + (p_shipsize / 2);
+            scale_value = Mathf.Clamp(scale_value, .5f, 10f);
+            object_transform.localScale = new Vector3(scale_value, scale_value, scale_value);
+        }
+
         if (my_canvas != null)
         {
             my_canvas.transform.position = new Vector2(object_transform.position.x, object_transform.position.y + canvas_offset); //the enemy_canvas position relative to the worker
@@ -368,7 +385,14 @@ public class Base_Enemy_Script : MonoBehaviour
             }
 
             //Also drop any powerups owned
-            powerup.Drop_Powerups(transform.position);
+            if (am_i_the_boss) //Boss drops all powerups held
+            {
+                powerup.Drop_Powerups(transform.position);
+            }
+            else //Normal enemies can only drop up to 5
+            {
+                powerup.Drop_Powerups(transform.position, 5);
+            }
 
             //Be sure to destroy extra objects
             Destroy(my_canvas);
@@ -475,18 +499,24 @@ public class Base_Enemy_Script : MonoBehaviour
                 my_outline_thickness = 1f;
                 break;
             case Powerup.P_Type.Handling:
+                p_handling += 2;
+                powerup.Add_Powerup(LoadPrefab.handling_powerup);
                 _material.SetColor("_OutlineColor", Color.green);
                 _material.SetFloat("_OutlineThickness", 1f);
                 my_outline_color = Color.green;
                 my_outline_thickness = 1f;
                 break;
             case Powerup.P_Type.Ship_Size:
+                p_shipsize++;
+                powerup.Add_Powerup(LoadPrefab.shipsize_powerup);
                 _material.SetColor("_OutlineColor", Color.red);
                 _material.SetFloat("_OutlineThickness", 1f);
                 my_outline_color = Color.white;
                 my_outline_thickness = 1f;
                 break;
             case Powerup.P_Type.Bullet_Size:
+                p_bulletsize += 2;
+                powerup.Add_Powerup(LoadPrefab.bulletsize_powerup);
                 _material.SetColor("_OutlineColor", Color.blue);
                 _material.SetFloat("_OutlineThickness", 1f);
                 my_outline_color = Color.blue;
@@ -544,6 +574,8 @@ public class Base_Enemy_Script : MonoBehaviour
         enemy_bullet_script bullet_script = the_bullet.GetComponent<enemy_bullet_script>();
         bullet_script.destroy_timer = 1 + p_bulletlife;
         bullet_script.speed = 30 + p_bulletspeed;
+        p_bulletsize = Mathf.Clamp(p_bulletsize, 0f, 10f); //Cannot spawn bullet at a bigger scale than 10
+        the_bullet.transform.localScale = new Vector3(the_bullet.transform.localScale.x + p_bulletsize, the_bullet.transform.localScale.y + p_bulletsize, the_bullet.transform.localScale.z + p_bulletsize);
         audiomanager.Play_Sound(audio_manager.Sound.shoot_01, transform.position, 1.8f);
         mybullets.Add(the_bullet);
     }
@@ -566,7 +598,7 @@ public class Base_Enemy_Script : MonoBehaviour
 
             //Set turning speed. The Random.Range at the end decides which direction it will turn...or if it turns at all
             //Wait for a random amount of time before finally...
-            turning_speed = turning_amount.Random * (Random.Range(0, 3) + -1);
+            turning_speed = (turning_amount.Random + p_handling) * (Random.Range(0, 3) + -1);
             yield return new WaitForSeconds(turning_time.Random);
 
             //Setting the turn speed back to 0 and repeating the process
@@ -584,7 +616,7 @@ public class Base_Enemy_Script : MonoBehaviour
     /// <returns>Waits for fixed update</returns>
     public IEnumerator Edge_Movement(float distance_desired, FloatRange turning_velocity)
     {
-        float turn_direction = turning_velocity.Random * Choice.Choose(-1f, 1f);
+        float turn_direction = (turning_velocity.Random + p_handling) * Choice.Choose(-1f, 1f);
         for (;;)
         {
             target_position = new Vector3(0, 0, 0); //The new target for the enemy at this time is the center of the level
@@ -626,7 +658,7 @@ public class Base_Enemy_Script : MonoBehaviour
             float distance_from_angle = Distance_From_Desired_Rotation(transform.rotation, desired_angle);
             if (distance_from_angle < distance_desired)
             {
-                turning_speed = turn_speed;
+                turning_speed = turn_speed + p_handling;
             }
             else if (distance_from_angle >= distance_desired)
             {
@@ -664,7 +696,7 @@ public class Base_Enemy_Script : MonoBehaviour
                
                 if (distance_from_angle < distance_desired)
                 {
-                    turning_speed = turn_speed;
+                    turning_speed = turn_speed + p_handling;
                 }
                 else if (distance_from_angle >= distance_desired)
                 {
@@ -733,11 +765,11 @@ public class Base_Enemy_Script : MonoBehaviour
                 target_focus.Countdown(); //begin to countdown how long it will focus on getting this mineral
                 if (distance_from_angle > distance_desired)
                 { //Use maximum turning speed if it's not close enough to distance_desired
-                    turning_speed = mineral_turn_speed;
+                    turning_speed = mineral_turn_speed + p_handling;
                 }
                 else
                 { //Apply this calculation once it's in the distance_desired. The larger the accuracy, the more likely it will pick up the mineral
-                    turning_speed = mineral_turn_speed * mineral_turn_accuracy;
+                    turning_speed = (mineral_turn_speed + p_handling) * mineral_turn_accuracy;
                 }
 
                 transform.rotation = Quaternion.RotateTowards(transform.rotation, desired_angle, turning_speed); //New turning method
@@ -794,11 +826,11 @@ public class Base_Enemy_Script : MonoBehaviour
                 { //Once it gets close enough to the player, it will slow down to its aiming speed and turning
                     if (speed > aim_speed)
                         decelerating = true;
-                    turning_speed = aim_turning;
+                    turning_speed = aim_turning + p_handling;
                 }
                 else
                 { //If it isn't close enough then move faster and turn with the chase turning speed
-                    turning_speed = chase_speed;
+                    turning_speed = chase_speed + p_handling;
                     maxspeed = ogspeed;
                     if (distance_from_angle <= angle_desired)
                         maxspeed = new_max_speed + p_speed;

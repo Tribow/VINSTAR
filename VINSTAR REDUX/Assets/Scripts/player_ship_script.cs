@@ -41,6 +41,7 @@ public class player_ship_script : MonoBehaviour
     private float true_max_og_speed;
     private float og_acceleration;
     private float og_firerate;
+    private float og_rotation_speed;
     
     private void OnEnable()
     {
@@ -77,6 +78,7 @@ public class player_ship_script : MonoBehaviour
         true_max_og_speed = max_og_speed;
         og_acceleration = acceleration;
         og_firerate = bullet_timer.initial_time;
+        og_rotation_speed = rotation_speed;
         outline_color = _material.GetColor("_OutlineColor");
         outline_thickness = _material.GetFloat("_OutlineThickness");
         _material.SetColor("_FlashColor", Color.red);
@@ -96,7 +98,8 @@ public class player_ship_script : MonoBehaviour
             collision.gameObject.tag != "whitemineral" &&
             collision.gameObject.tag != "powerup" &&
             collision.gameObject.tag != "bullet" && 
-            collision.gameObject.tag != "ebullet" && 
+            collision.gameObject.tag != "ebullet" &&
+            collision.gameObject.tag != "bossbullet" &&
             collision.gameObject.tag != "player")
         {
             if (collision.gameObject.tag == "enemy")
@@ -201,18 +204,25 @@ public class player_ship_script : MonoBehaviour
                 break;
             case Powerup.P_Type.Bullet_Speed:
                 manager.p_bulletspeed++;
+                manager.player_powerups.Add_Powerup(LoadPrefab.bulletspeed_powerup);
                 _material.SetColor("_OutlineColor", Color.yellow);
                 _material.SetFloat("_OutlineThickness", 3f);
                 break;
             case Powerup.P_Type.Handling:
+                manager.p_handling++;
+                manager.player_powerups.Add_Powerup(LoadPrefab.handling_powerup);
                 _material.SetColor("_OutlineColor", Color.green);
                 _material.SetFloat("_OutlineThickness", 3f);
                 break;
             case Powerup.P_Type.Ship_Size:
+                manager.p_shipsize++;
+                manager.player_powerups.Add_Powerup(LoadPrefab.shipsize_powerup);
                 _material.SetColor("_OutlineColor", Color.red);
                 _material.SetFloat("_OutlineThickness", 3f);
                 break;
             case Powerup.P_Type.Bullet_Size:
+                manager.p_bulletsize++;
+                manager.player_powerups.Add_Powerup(LoadPrefab.bulletsize_powerup);
                 _material.SetColor("_OutlineColor", Color.blue);
                 _material.SetFloat("_OutlineThickness", 3f);
                 break;
@@ -243,6 +253,11 @@ public class player_ship_script : MonoBehaviour
         max_og_speed = true_max_og_speed + manager.p_speed;
         acceleration = og_acceleration + (manager.p_acceleration * .1f);
         bullet_timer.initial_time = og_firerate - (manager.p_firerate / 120f);
+        rotation_speed = og_rotation_speed + (manager.p_handling / 5f);
+        float scale_value = 1 + ((float)manager.p_shipsize / 2);
+        scale_value = Mathf.Clamp(scale_value, .5f, 20f);
+        transform.localScale = new Vector3(scale_value, scale_value, scale_value);
+
         
 
         if (player_input.Shoot.ReadValue<float>() == 1f) //Start shooting when button is held
@@ -328,6 +343,7 @@ public class player_ship_script : MonoBehaviour
         //print(velocity.x + ", " + velocity.y);
 
         transform.position += velocity * Time.deltaTime; //This is what actually makes the ship move
+        
         speed = Vector3.Distance(old_position, transform.position) / Time.deltaTime;
         //print(speed);
 

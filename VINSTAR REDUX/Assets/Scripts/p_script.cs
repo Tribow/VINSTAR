@@ -5,6 +5,7 @@ using UnityEngine;
 public class p_script : MonoBehaviour
 {
     public Powerup.P_Type powerup;
+    public bool tangible = false;
 
     private manager_script mango;
     private float velocity_angle;
@@ -21,6 +22,7 @@ public class p_script : MonoBehaviour
         movement_speed_y = Random.Range(-.2f, .2f);
         velocity_angle = Random.Range(0f, 360f);
         power_size = GetComponent<Collider2D>().bounds.extents;
+        tangible = true;
     }
 
     // Update is called once per frame

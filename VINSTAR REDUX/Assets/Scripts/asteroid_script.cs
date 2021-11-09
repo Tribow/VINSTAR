@@ -64,7 +64,7 @@ public class asteroid_script : MonoBehaviour
         int powerup_chance = Random.Range(0, 100);
         if (powerup_chance < 5)
         {
-            powerup.Set_Powerup((Powerup.P_Type)Random.Range(1, 6)); //This number must be changed with each new powerup
+            powerup.Set_Powerup((Powerup.P_Type)Random.Range(1, 9)); //This number must be changed with each new powerup
             switch (powerup.my_powerup) //Color of the asteroid will be different based on this value
             {
                 case Powerup.P_Type.Speed:
@@ -93,14 +93,17 @@ public class asteroid_script : MonoBehaviour
                     particle_color = Color.yellow;
                     break;
                 case Powerup.P_Type.Handling:
+                    my_powerup = LoadPrefab.handling_powerup;
                     sprite_renderer.color = Color.green;
                     particle_color = Color.green;
                     break;
                 case Powerup.P_Type.Ship_Size:
+                    my_powerup = LoadPrefab.shipsize_powerup;
                     sprite_renderer.color = Color.red;
                     particle_color = Color.red;
                     break;
                 case Powerup.P_Type.Bullet_Size:
+                    my_powerup = LoadPrefab.bulletsize_powerup;
                     sprite_renderer.color = Color.blue;
                     particle_color = Color.blue;
                     break;

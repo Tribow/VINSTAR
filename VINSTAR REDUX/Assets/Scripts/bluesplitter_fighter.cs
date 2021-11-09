@@ -190,6 +190,19 @@ public class bluesplitter_fighter : Base_Enemy_Script
                 Destroy(splitter_list[i]);
             }
 
+            if (am_i_white)
+            {
+                int tempRan = Random.Range(0, 4);
+                if (tempRan == 0)
+                {
+                    //1/4th of a chance to spawn a white mineral if it got one
+                    Instantiate(white_mineral, gameObject.transform.position, gameObject.transform.rotation);
+                }
+            }
+
+            //Also drop any powerups owned
+            powerup.Drop_Powerups(transform.position, 1);
+
             //Be sure to destroy extra objects
             Destroy(my_canvas);
             Destroy(gameObject);
@@ -211,6 +224,7 @@ public class bluesplitter_fighter : Base_Enemy_Script
         {
             float angle = Get_Angle(transform.position, splitter_list[i-1].transform.position);
             splitter_list[i-1].transform.rotation = Get_Desired_Rotation(angle);
+            splitter_list[i - 1].transform.localScale = transform.localScale;
 
             float distance = Vector3.Distance(transform.position, splitter_list[i-1].transform.position);
 
@@ -237,6 +251,8 @@ public class bluesplitter_fighter : Base_Enemy_Script
                     enemy_bullet_script bullet_script = bullet.GetComponent<enemy_bullet_script>();
                     bullet_script.speed = 0 + p_bulletspeed;
                     bullet_script.destroy_timer = 10 + p_bulletlife;
+                    p_bulletsize = Mathf.Clamp(p_bulletsize, 0f, 10f); //Cannot spawn bullet at a bigger scale than 10
+                    bullet.transform.localScale = new Vector3(bullet.transform.localScale.x + p_bulletsize, bullet.transform.localScale.y + p_bulletsize, bullet.transform.localScale.z + p_bulletsize);
                     bullet.GetComponent<SpriteRenderer>().sprite = bullet_sprite;
                     mybullets.Add(bullet);
                     splitter_fire_rate.Reset();

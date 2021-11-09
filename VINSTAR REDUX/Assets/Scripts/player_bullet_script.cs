@@ -20,6 +20,7 @@ public class player_bullet_script : MonoBehaviour
 
         destroy_timer = new Stopwatch(1f + (manager.p_bulletlife/10f));
         speed = 30 + manager.p_bulletspeed;
+        transform.localScale = new Vector3(1 + ((float)manager.p_bulletsize / 5), 1 + ((float)manager.p_bulletsize / 5), 1 + ((float)manager.p_bulletsize / 5));
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

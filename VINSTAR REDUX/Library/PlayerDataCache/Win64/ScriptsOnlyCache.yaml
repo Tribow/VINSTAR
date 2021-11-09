@@ -100,8 +100,6 @@ ScriptsOnlyBuild:
     - UnityEngine.UI.Text
     - UnityEngine.UI.Toggle
     - UnityEngine.UI.VerticalLayoutGroup
-    com.unity.multiplayer-hlapi.Runtime.dll:
-    - UnityEngine.Networking.NetworkCallbacks
   sceneClasses:
     Assets/Scenes/Game.unity:
     - Class: 1
@@ -213,75 +211,75 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 14718}
     - Class: 114
-      Script: {instanceID: 14788}
+      Script: {instanceID: 14790}
     - Class: 114
-      Script: {instanceID: 14882}
+      Script: {instanceID: 14884}
     - Class: 114
-      Script: {instanceID: 14916}
+      Script: {instanceID: 14918}
     - Class: 114
-      Script: {instanceID: 14932}
+      Script: {instanceID: 14934}
     - Class: 114
-      Script: {instanceID: 15160}
+      Script: {instanceID: 15162}
     - Class: 114
-      Script: {instanceID: 15196}
+      Script: {instanceID: 15198}
     - Class: 114
-      Script: {instanceID: 15238}
+      Script: {instanceID: 15240}
     - Class: 114
-      Script: {instanceID: 15398}
+      Script: {instanceID: 15400}
     - Class: 114
-      Script: {instanceID: 15480}
+      Script: {instanceID: 15482}
     - Class: 114
-      Script: {instanceID: 15508}
+      Script: {instanceID: 15510}
     - Class: 114
-      Script: {instanceID: 15534}
+      Script: {instanceID: 15536}
     - Class: 114
-      Script: {instanceID: 15756}
+      Script: {instanceID: 15758}
     - Class: 114
-      Script: {instanceID: 15798}
+      Script: {instanceID: 15800}
     - Class: 114
-      Script: {instanceID: 15812}
+      Script: {instanceID: 15814}
     - Class: 114
-      Script: {instanceID: 15856}
+      Script: {instanceID: 15858}
     - Class: 114
-      Script: {instanceID: 15884}
+      Script: {instanceID: 15886}
     - Class: 114
-      Script: {instanceID: 16040}
+      Script: {instanceID: 16042}
     - Class: 114
-      Script: {instanceID: 16098}
+      Script: {instanceID: 16100}
     - Class: 114
-      Script: {instanceID: 16290}
+      Script: {instanceID: 16292}
     - Class: 114
-      Script: {instanceID: 16366}
+      Script: {instanceID: 16368}
     - Class: 114
-      Script: {instanceID: 16398}
+      Script: {instanceID: 16400}
     - Class: 114
-      Script: {instanceID: 16584}
+      Script: {instanceID: 16586}
     - Class: 114
-      Script: {instanceID: 16736}
+      Script: {instanceID: 16738}
     - Class: 114
-      Script: {instanceID: 16774}
+      Script: {instanceID: 16776}
     - Class: 114
-      Script: {instanceID: 17060}
+      Script: {instanceID: 17062}
     - Class: 114
-      Script: {instanceID: 17136}
+      Script: {instanceID: 17138}
     - Class: 114
-      Script: {instanceID: 17340}
+      Script: {instanceID: 17342}
     - Class: 114
-      Script: {instanceID: 17356}
+      Script: {instanceID: 17358}
     - Class: 114
-      Script: {instanceID: 17464}
+      Script: {instanceID: 17466}
     - Class: 114
-      Script: {instanceID: 17468}
+      Script: {instanceID: 17470}
     - Class: 114
-      Script: {instanceID: 17534}
+      Script: {instanceID: 17536}
     - Class: 114
-      Script: {instanceID: 17566}
+      Script: {instanceID: 17568}
     - Class: 114
-      Script: {instanceID: 17616}
+      Script: {instanceID: 17618}
     - Class: 114
-      Script: {instanceID: 17750}
+      Script: {instanceID: 17752}
     - Class: 114
-      Script: {instanceID: 17758}
+      Script: {instanceID: 17760}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 124
@@ -387,7 +385,7 @@ ScriptsOnlyBuild:
     className: DebugUIHandlerBitField
   - hash:
       serializedVersion: 2
-      Hash: dc35bb89aa40b28601829d7dea85ebbf
+      Hash: e0a66dbec8b81938808e0383b705c81d
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: enemy_bullet_script
@@ -1006,6 +1004,12 @@ ScriptsOnlyBuild:
   - hash:
       serializedVersion: 2
       Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: boss_bullet_script
+  - hash:
+      serializedVersion: 2
+      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
     assemblyName: UnityEngine.Monetization.dll
     namespaceName: UnityEngine.Monetization
     className: Placeholder
@@ -1269,7 +1273,7 @@ ScriptsOnlyBuild:
     className: Tonemapping
   - hash:
       serializedVersion: 2
-      Hash: daa3c5c61fb7d17c6541068f02a7881d
+      Hash: 5bdae6b731b838019cd363de8beaa608
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: manager_script
@@ -1401,7 +1405,7 @@ ScriptsOnlyBuild:
     className: SwingArmModel
   - hash:
       serializedVersion: 2
-      Hash: c934c6ec807db7cc5ed8682ac7429861
+      Hash: d1d34ad72b726d4fb0f491dbb89324ad
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: p_script

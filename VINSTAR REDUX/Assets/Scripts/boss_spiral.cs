@@ -114,6 +114,9 @@ public class boss_spiral : Base_Enemy_Script
             enemy_bullet_script bullet_script = new_bullet.GetComponent<enemy_bullet_script>();
             bullet_script.speed = 5 + p_bulletspeed;
             bullet_script.destroy_timer = 10 + p_bulletlife;
+            p_bulletsize = Mathf.Clamp(p_bulletsize, 0f, 10f); //Cannot spawn bullet at a bigger scale than 10
+            new_bullet.transform.localScale = new Vector3(new_bullet.transform.localScale.x + p_bulletsize, new_bullet.transform.localScale.y + p_bulletsize, new_bullet.transform.localScale.z + p_bulletsize);
+            new_bullet.AddComponent<boss_bullet_script>();
             mybullets.Add(new_bullet);
         }
         audiomanager.Play_Sound(audio_manager.Sound.shoot_01, transform.position, .5f);
@@ -213,6 +216,9 @@ public class boss_spiral : Base_Enemy_Script
 
         transform.position += velocity * Time.deltaTime;
         transform.Rotate(0f, 0f, 1.7f);
+        float scale_value = og_scale.x + (p_shipsize / 2);
+        scale_value = Mathf.Clamp(scale_value, .5f, 10f);
+        transform.localScale = new Vector3(scale_value, scale_value, scale_value);
         if (my_canvas != null)
         {
             my_canvas.transform.position = new Vector2(transform.position.x, transform.position.y + 5f); //the enemy_canvas position relative to the worker

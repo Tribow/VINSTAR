@@ -13,6 +13,7 @@ public class enemy_bullet_script : MonoBehaviour
     void Start()
     {
         destroyer.initial_time = destroy_timer;
+        destroyer.current_time = destroy_timer;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

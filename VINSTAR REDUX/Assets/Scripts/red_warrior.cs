@@ -17,6 +17,8 @@ public class red_warrior : Base_Enemy_Script
             enemy_bullet_script bullet_script = new_bullet.GetComponent<enemy_bullet_script>();
             bullet_script.speed = 20 + p_bulletspeed;
             bullet_script.destroy_timer = 1 + p_bulletlife;
+            p_bulletsize = Mathf.Clamp(p_bulletsize, 0f, 10f); //Cannot spawn bullet at a bigger scale than 10
+            new_bullet.transform.localScale = new Vector3(new_bullet.transform.localScale.x + p_bulletsize, new_bullet.transform.localScale.y + p_bulletsize, new_bullet.transform.localScale.z + p_bulletsize);
             mybullets.Add(new_bullet);
         }
         audiomanager.Play_Sound(audio_manager.Sound.shoot_01, transform.position, 1.8f);
