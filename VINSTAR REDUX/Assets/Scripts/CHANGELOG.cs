@@ -4,18 +4,8 @@
  
 Changelog:
 --------------------------------------------------------------------------
--Added a fire rate powerup that increases fire rate
--Added a bullet life powerup that increases the lifetime of a bullet
--Added a bullet speed powerup that increases the speed of a bullet
--Addded a handling powerup that increases turning speed
--Added a ship size powerup that increases the size of a ship
--Added a bullet size powerup that increases the size of the bullet
--Player no longer turns at maximum speed immediately, it now takes about 4 frames to reach max turning speed. This is to allow light tapping for aiming
--The Boss's bullets now do 100 damage instead of 30
--Fixed an issue where your redistributed powerup stats on death all base themselves off of the speed value
--Fixed an issue where the splitter enemies did not drop their powerup or white mineral
--Enemies can now only drop the first 5 powerups they picked up. They cannot drop more. (does not apply to player or boss)
--The splitter enemies (except for the tiniest one) can only drop 1 powerup
+-Fixed an issue where the player's powerups will persist when starting a new game after getting a game over
+-The smallest blue splitter enemy will now only drop 1 powerup and not up to 5 like other enemies
 
 
 To-do: 
@@ -144,7 +134,8 @@ Issues:
 -Tutorial does not exist in the WebGL version now
 -You cannot enter a name on the WebGL version for some reason
 -Camera has trouble following the player at the edges of the level
--If an enemy picks up a powerup the instant it spawns then it does not recieve that powerup
+-Camera can lose the player at the start of the level if they keep moving
+-Occassionally when an enemy upgrades, it may not drop the powerup it holds
 -Powerups duplicate if two enemies pick it up at the same time (might not actually be a problem)
 -Splitter enemies can affectively duplicate powerups to an absolutely ridiculous degree. Unsure if I should remove it or nah (this happens because of above issue)
 

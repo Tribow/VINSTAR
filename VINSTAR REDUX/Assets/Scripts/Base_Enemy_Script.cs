@@ -103,14 +103,7 @@ public class Base_Enemy_Script : MonoBehaviour
         //In case this object upgraded from a previous object, this is to make sure it has the powerups
         powerup.powerup_list = new List<GameObject>(powerup_temp_list);
 
-        /*if (powerup.powerup_list.Count > 0)
-        {
-            for(int i = 0; i < powerup.powerup_list.Count; i++)
-            {
-                print("Hey I'm checking for powerup at the start");
-                Which_Powerup(powerup.powerup_list[i].GetComponent<p_script>().powerup);
-            }
-        }*/
+        //DO NOT PUT FOR LOOPS IN THE START FUNCTION THAT IS OMEGA DUMB
     }
 
     public void OnDestroy()

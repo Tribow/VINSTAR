@@ -27,6 +27,65 @@ public class bluesplitter_scatterer : Base_Enemy_Script
         my_canvas = Instantiate(enemy_canvas);
     }
 
+    public new void Death_Handler(bool give_points)
+    {
+        if (health <= 0) //if health low enough, the time to kill it, dont do anything otherwise
+        {
+            if (give_points) //if give points get set, it will give points. This should be set to true if the player is dealing the killing blow
+            {
+                if (mango == null) //Be doubly sure to access the manager script
+                {
+                    manager = GameObject.FindGameObjectWithTag("manager");
+                    mango = manager.GetComponent<manager_script>();
+                    mango.Add_Score(score);
+                    mango.Enemy_Death(am_i_the_boss);
+                }
+                else
+                {
+                    mango.Add_Score(score);
+                    mango.Enemy_Death(am_i_the_boss);
+                }
+            }
+            //Particle
+            Instantiate(death_particles, gameObject.transform.position, gameObject.transform.rotation);
+
+            //Sound
+            audiomanager.Play_Sound(audio_manager.Sound.explosion_01, transform.position);
+
+            if (upgrade_points > 0)
+            {
+                for (int drop = upgrade_points / 2; drop > 0; drop--)
+                {   //For every upgrade point drop a mineral when dead
+                    Instantiate(collected_minerals, gameObject.transform.position, gameObject.transform.rotation);
+                }
+            }
+
+            if (am_i_white)
+            {
+                int tempRan = Random.Range(0, 4);
+                if (tempRan == 0)
+                {
+                    //1/4th of a chance to spawn a white mineral if it got one
+                    Instantiate(white_mineral, gameObject.transform.position, gameObject.transform.rotation);
+                }
+            }
+
+            //Also drop any powerups owned
+            if (am_i_the_boss) //Boss drops all powerups held
+            {
+                powerup.Drop_Powerups(transform.position);
+            }
+            else //Normal enemies can only drop up to 5
+            {
+                powerup.Drop_Powerups(transform.position, 1);
+            }
+
+            //Be sure to destroy extra objects
+            Destroy(my_canvas);
+            Destroy(gameObject);
+        }
+    }
+
     private void FixedUpdate()
     {
         if (player == null)

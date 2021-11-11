@@ -198,6 +198,14 @@ public class manager_script : MonoBehaviour
                 boss_likelihood = 2000;
                 tier2_spawnrate = 0;
                 tier3_spawnrate = 0;
+                p_speed = 0;
+                p_acceleration = 0;
+                p_firerate = 0;
+                p_bulletlife = 0;
+                p_bulletspeed = 0;
+                p_handling = 0;
+                p_shipsize = 0;
+                p_bulletsize = 0;
             }
             else if (game_over == false)
             {
@@ -411,8 +419,16 @@ public class manager_script : MonoBehaviour
         boss_likelihood = 2000;
         tier2_spawnrate = 0;
         tier3_spawnrate = 0;
+         p_speed = 0;
+         p_acceleration = 0;
+         p_firerate = 0;
+         p_bulletlife = 0;
+         p_bulletspeed = 0;
+         p_handling = 0;
+         p_shipsize = 0;
+         p_bulletsize = 0;
 
-        reset_countdown.Reset();
+    reset_countdown.Reset();
         //Deactivate leaderboard
         leaderboard.SetActive(false);
         //Clear all level data
